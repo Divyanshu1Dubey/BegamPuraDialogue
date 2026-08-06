@@ -1,0 +1,208 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Mail, Phone, MapPin, Send, MessageCircle, UserPlus, HandHeart } from "lucide-react";
+import { brhf } from "@/data/brhf";
+import { LanguageAware } from "./LanguageAware";
+
+const connectOptions = [
+  {
+    icon: UserPlus,
+    title: "Membership",
+    titleHi: "सदस्यता",
+    titlePa: "ਮੈਂਬਰਸ਼ਿਪ",
+    desc: "Join the BRHF global family. Receive the Begampura message in your inbox.",
+  },
+  {
+    icon: HandHeart,
+    title: "Volunteer",
+    titleHi: "स्वयंसेवक",
+    titlePa: "ਵਲੰਟੀਅਰ",
+    desc: "Help organise exhibitions, yatras, and outreach programmes worldwide.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Donate",
+    titleHi: "दान",
+    titlePa: "ਦਾਨ",
+    desc: "Support the 650th Janam Jayanti Global Commemorative Series.",
+  },
+  {
+    icon: Send,
+    title: "Outreach",
+    titleHi: "सम्पर्क",
+    titlePa: "ਪਹੁੰਚ",
+    desc: "Interfaith dialogue, community events, university programmes.",
+  },
+];
+
+export function Connect() {
+  return (
+    <section id="connect" className="relative py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-royal/50 to-transparent" />
+
+      <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-4xl mx-auto mb-16"
+        >
+          <span className="inline-block px-3 py-1 mb-4 rounded-full bg-royal/20 border border-violet/40 text-xs font-medium text-violet uppercase tracking-widest">
+            <LanguageAware en="Chapter VIII" hi="अध्याय VIII" pa="ਅਧਿਆਇ VIII" />
+          </span>
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-saffron leading-tight">
+            <LanguageAware
+              en="Join the Begampura Family"
+              hi="बेगमपुरा परिवार में शामिल हों"
+              pa="ਬੇਗਮਪੁਰਾ ਪਰਿਵਾਰ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ"
+            />
+          </h2>
+          <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
+            <LanguageAware
+              en="Become a member, volunteer, or partner — the Begampura light grows stronger with every hand that holds it."
+              hi="सदस्य बनें, स्वयंसेवक बनें, या भागीदार बनें — बेगमपुरा का प्रकाश हर हाथ से जोड़ने पर अधिक मजबूत होता है।"
+              pa="ਮੈਂਬਰ ਬਣੋ, ਵਲੰਟੀਅਰ ਬਣੋ, ਜਾਂ ਭਾਗੀਦਾਰ — ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਹਰ ਹੱਥ ਨਾਲ ਮਜਬੂਤ ਹੁੰਦੀ।"
+            />
+          </p>
+        </motion.div>
+
+        {/* Connect options grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+          {connectOptions.map((opt, i) => {
+            const Icon = opt.icon;
+            return (
+              <motion.div
+                key={opt.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="group rounded-3xl p-7 card-glass card-saffron-glow hover:scale-[1.03] transition-all duration-300 cursor-pointer text-center"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-saffron/15 to-royal/15 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                  <Icon className="h-6 w-6 text-saffron" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-ink mb-0.5">{opt.title}</h3>
+                <p className="text-xs text-saffron/60 mb-3">{opt.titleHi}</p>
+                <p className="text-sm text-ink-soft leading-relaxed">{opt.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Contact form + info */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="grid lg:grid-cols-5 gap-8"
+        >
+          <div className="lg:col-span-2 rounded-3xl p-8 bg-gradient-to-br from-saffron/8 via-surface to-royal/8 border border-border/50">
+            <h3 className="font-display text-2xl font-bold text-gradient-saffron mb-6">
+              <LanguageAware en="Get In Touch" hi="संपर्क करें" pa="ਸੰਪਰਕ ਕਰੋ" />
+            </h3>
+            <form className="space-y-4">
+              <div>
+                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                  <LanguageAware en="Full Name" hi="पूरा नाम" pa="ਪੂਰਾ ਨਾਮ" />
+                </label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all"
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                  <LanguageAware en="Email" hi="ईमेल" pa="ਈਮੇਲ" />
+                </label>
+                <input
+                  type="email"
+                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all"
+                  placeholder="you@example.com"
+                />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                  <LanguageAware en="Message" hi="संदेश" pa="ਸੁਨੇਹਾ" />
+                </label>
+                <textarea
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all resize-none"
+                  placeholder="Your message..."
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              >
+                <Send className="h-4 w-4" />
+                <LanguageAware en="Send Message" hi="संदेश भेजें" pa="ਸੁਨੇਹਾ ਭੇਜੋ" />
+              </button>
+            </form>
+          </div>
+
+          <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
+            <div className="rounded-3xl p-7 card-glass card-saffron-glow">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron to-saffron-deep flex items-center justify-center">
+                  <Mail className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-ink-soft/70">
+                    <LanguageAware en="Email" hi="ईमेल" pa="ਈਮੇਲ" />
+                  </p>
+                  <p className="text-sm text-ink">{brhf.headquarters.email}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-3xl p-7 card-glass card-saffron-glow">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal to-violet flex items-center justify-center">
+                  <Phone className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-ink-soft/70">
+                    <LanguageAware en="Phone" hi="फोन" pa="ਫੋਨ" />
+                  </p>
+                  <p className="text-sm text-ink">{brhf.headquarters.phone}</p>
+                  <p className="text-xs text-ink-soft">{brhf.headquarters.phoneAlt}</p>
+                </div>
+              </div>
+            </div>
+            <div className="sm:col-span-2 rounded-3xl p-7 card-glass card-saffron-glow">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron/20 to-royal/20 flex items-center justify-center shrink-0">
+                  <MapPin className="h-4 w-4 text-saffron" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-ink-soft/70 mb-1">
+                    <LanguageAware en="Address" hi="पता" pa="ਪਤਾ" />
+                  </p>
+                  <p className="text-sm text-ink leading-relaxed">{brhf.headquarters.address}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Daily Quote */}
+            <div className="sm:col-span-2 rounded-3xl p-7 bg-gradient-to-br from-saffron/5 via-surface to-royal/5 border border-saffron/25">
+              <p className="text-xs uppercase tracking-widest text-saffron mb-3">
+                <LanguageAware en="Today's Shabad" hi="आज का शबद" pa="ਅੱਜ ਦਾ ਸ਼ਬਦ" />
+              </p>
+              <p className="font-display text-lg italic text-saffron/90 leading-relaxed">
+                &ldquo;Begampura, the city to which I bow — without worry, without fear, without tax.&rdquo;
+              </p>
+              <p className="text-xs text-ink-soft mt-2">
+                Sri Guru Granth Sahib Ji · Ang 345 · Raag Gaur
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

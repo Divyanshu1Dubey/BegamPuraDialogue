@@ -1,0 +1,17 @@
+{
+  "name": "BRHF Begampura Dialogue",
+  "short_name": "BRHF",
+  "description": "650th Janam Jayanti of Sant Ravidas Ji — British Ravidassia Heritage Foundation",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0710",
+  "theme_color": "#ff8a1e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

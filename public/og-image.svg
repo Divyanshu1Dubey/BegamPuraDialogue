@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0710"/>
+      <stop offset="100%" stop-color="#1a1126"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f5c34a"/>
+      <stop offset="50%" stop-color="#ff8a1e"/>
+      <stop offset="100%" stop-color="#f87171"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Decorative rays -->
+  <g opacity="0.08" stroke="#ff8a1e" stroke-width="1">
+    <line x1="600" y1="315" x2="600" y2="50"/>
+    <line x1="600" y1="315" x2="870" y2="80"/>
+    <line x1="600" y1="315" x2="1050" y2="315"/>
+    <line x1="600" y1="315" x2="870" y2="550"/>
+    <line x1="600" y1="315" x2="600" y2="580"/>
+    <line x1="600" y1="315" x2="330" y2="550"/>
+    <line x1="600" y1="315" x2="150" y2="315"/>
+    <line x1="600" y1="315" x2="330" y2="80"/>
+  </g>
+  <!-- Center circle -->
+  <circle cx="600" cy="315" r="180" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.15"/>
+  <circle cx="600" cy="315" r="130" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.2"/>
+  <!-- Text -->
+  <text x="600" y="255" text-anchor="middle" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="url(#gold)">Begampura</text>
+  <text x="600" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="#f6efe1" opacity="0.9">The Light of Equality</text>
+  <text x="600" y="375" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#cdbfd9" opacity="0.8">650th Janam Jayanti of Sant Ravidas Ji · 2027</text>
+  <!-- BRHF line -->
+  <text x="600" y="450" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#ff8a1e" opacity="0.7">British Ravidassia Heritage Foundation</text>
+</svg>
