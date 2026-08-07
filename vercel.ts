@@ -12,9 +12,7 @@ export const config: VercelConfig = {
   regions: ["iad1"],
 
   redirects: [
-    { source: "/begampura", destination: "/begampura", permanent: true },
     { source: "/raags", destination: "/shabads", permanent: true },
-    { source: "/shabads", destination: "/shabads", permanent: true },
     { source: "/bhagats", destination: "/teachings", permanent: true },
     { source: "/trailers", destination: "/gallery", permanent: true },
   ],
