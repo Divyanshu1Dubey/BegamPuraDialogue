@@ -12,15 +12,15 @@ import { DailyQuoteWidget } from "./DailyQuoteWidget";
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   return (
     <section
       ref={ref}
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-mandala"
+      className="relative min-h-screen flex items-start justify-center overflow-x-hidden overflow-y-visible bg-mandala"
     >
       {/* Sacred Geometry */}
       <SacredGeometry />
@@ -31,7 +31,7 @@ export function Hero() {
       {/* Content */}
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8 text-center pt-28"
+        className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8 text-center pt-24 lg:pt-32 pb-20 lg:pb-28"
       >
         {/* Top tag */}
         <motion.div
@@ -91,7 +91,7 @@ export function Hero() {
           className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <Link
-            href="#begampura"
+            href="/begampura"
             className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-2xl shadow-saffron/30 animate-pulse-saffron"
           >
             <span className="relative z-10">
@@ -103,7 +103,7 @@ export function Hero() {
             </span>
           </Link>
           <Link
-            href="#events"
+            href="/events"
             className="px-8 py-4 rounded-2xl border-2 border-saffron/30 bg-saffron/5 backdrop-blur-md text-saffron-bright font-semibold tracking-wide hover:bg-saffron/10 hover:border-saffron/60 transition-all"
           >
             <LanguageAware
@@ -119,7 +119,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.6 }}
-          className="mt-20"
+          className="mt-12 lg:mt-16"
         >
           <Countdown />
           <DailyQuoteWidget />

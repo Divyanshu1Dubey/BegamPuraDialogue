@@ -13,7 +13,7 @@ export function DailyQuoteWidget() {
       initial={{ opacity: 0, y: 30, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.9, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-      className="mt-14 max-w-3xl mx-auto"
+      className="mt-8 lg:mt-10"
     >
       <div className="relative rounded-[1.75rem] p-7 md:p-10 overflow-hidden
         bg-gradient-to-br from-saffron/10 via-royal/8 to-saffron/5

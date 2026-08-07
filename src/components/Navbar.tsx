@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,15 +11,15 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { languageMeta, Language } from "@/i18n/translations";
 
 const navItems = [
-  { href: "#home", labelEn: "Home" },
-  { href: "#about", labelEn: "About" },
-  { href: "#teachings", labelEn: "Teachings" },
-  { href: "#begampura", labelEn: "Begampura" },
-  { href: "#shabads", labelEn: "16 Raags" },
-  { href: "#events", labelEn: "Events" },
-  { href: "#library", labelEn: "E-Library" },
-  { href: "#gallery", labelEn: "Gallery" },
-  { href: "#connect", labelEn: "Connect" },
+  { href: "/", labelEn: "Home" },
+  { href: "/about", labelEn: "About" },
+  { href: "/teachings", labelEn: "Teachings" },
+  { href: "/begampura", labelEn: "Begampura" },
+  { href: "/shabads", labelEn: "16 Raags" },
+  { href: "/events", labelEn: "Events" },
+  { href: "/library", labelEn: "E-Library" },
+  { href: "/gallery", labelEn: "Gallery" },
+  { href: "/connect", labelEn: "Connect" },
 ];
 
 export function Navbar() {
@@ -35,19 +35,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const scrollTo = useCallback((id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      setMobileOpen(false);
-    }
-  }, []);
+  // On non-home pages, always show scrolled style
+  const isHome = pathname === "/";
 
   return (
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled
+        (scrolled || !isHome)
           ? "bg-bg/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-saffron/5"
           : "bg-transparent"
       )}
@@ -71,16 +66,29 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => (
-            <button
-              key={item.href}
-              onClick={() => scrollTo(item.href.replace("#", ""))}
-              className="px-3 py-2 text-sm text-ink-soft hover:text-saffron transition-colors duration-200 relative group"
-            >
-              {item.labelEn}
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300 group-hover:w-3/4" />
-            </button>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "px-3 py-2 text-sm transition-colors duration-200 relative group",
+                  isActive
+                    ? "text-saffron font-medium"
+                    : "text-ink-soft hover:text-saffron"
+                )}
+              >
+                {item.labelEn}
+                <span
+                  className={cn(
+                    "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
+                    isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
+                  )}
+                />
+              </Link>
+            );
+          })}
         </div>
 
         {/* Controls */}
@@ -126,18 +134,30 @@ export function Navbar() {
             className="lg:hidden overflow-hidden bg-bg/95 backdrop-blur-xl border-b border-border"
           >
             <div className="px-4 py-4 flex flex-col gap-1">
-              {navItems.map((item, i) => (
-                <motion.button
-                  key={item.href}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => scrollTo(item.href.replace("#", ""))}
-                  className="text-left px-3 py-3 rounded-xl hover:bg-surface text-ink-soft hover:text-saffron transition-colors"
-                >
-                  {item.labelEn}
-                </motion.button>
-              ))}
+              {navItems.map((item, i) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <motion.span
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: i * 0.05 }}
+                      className={cn(
+                        "block text-left px-3 py-3 rounded-xl transition-colors",
+                        isActive
+                          ? "text-saffron font-medium bg-saffron/10"
+                          : "text-ink-soft hover:text-saffron hover:bg-surface"
+                      )}
+                    >
+                      {item.labelEn}
+                    </motion.span>
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
         )}
