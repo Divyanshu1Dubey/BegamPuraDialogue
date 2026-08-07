@@ -7,12 +7,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "begampuradialogue.org" },
     ],
   },
-  async redirects() {
-    return [
-      { source: "/begampura", destination: "/#begampura", permanent: false },
-      { source: "/raags", destination: "/#shabads", permanent: false },
-    ];
-  },
 };
 
 export default nextConfig;

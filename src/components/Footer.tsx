@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
 export function Footer() {
@@ -43,22 +44,22 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {[
-                { label: "About BRHF", href: "#about" },
-                { label: "Teachings", href: "#teachings" },
-                { label: "Begampura Vision", href: "#begampura" },
-                { label: "16 Raags", href: "#shabads" },
-                { label: "Events 2026-27", href: "#events" },
-                { label: "E-Library", href: "#library" },
-                { label: "Gallery", href: "#gallery" },
-                { label: "Contact", href: "#connect" },
+                { label: "About BRHF", href: "/about" },
+                { label: "Teachings", href: "/teachings" },
+                { label: "Begampura Vision", href: "/begampura" },
+                { label: "16 Raags", href: "/shabads" },
+                { label: "Events 2026-27", href: "/events" },
+                { label: "E-Library", href: "/library" },
+                { label: "Gallery", href: "/gallery" },
+                { label: "Contact", href: "/connect" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     className="text-sm text-ink-soft hover:text-saffron transition-colors duration-200 hover:translate-x-1 inline-block"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
