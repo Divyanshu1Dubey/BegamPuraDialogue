@@ -4,15 +4,37 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  /* Light mode palette (Warm Ivory & Golden Saffron) */
+  --color-bg-val: #fffbf5;
+  --color-bg-soft-val: #f6ebd9;
+  --color-surface-val: #ffffff;
+  --color-surface-2-val: #f4e8d4;
+  --color-border-val: #e4d2b8;
+  --color-ink-val: #27170a;
+  --color-ink-soft-val: #5f4a36;
+}
+
+.dark {
+  /* Dark mode palette (Night Shrine & Saffron Aura) */
+  --color-bg-val: #0b0710;
+  --color-bg-soft-val: #120a1c;
+  --color-surface-val: #1a1126;
+  --color-surface-2-val: #221634;
+  --color-border-val: #2d1f44;
+  --color-ink-val: #f6efe1;
+  --color-ink-soft-val: #cdbfd9;
+}
+
 @theme {
-  /* Saffron-amber Devotional palette — derived from Sant Ravidas's memory */
-  --color-bg: #0b0710;
-  --color-bg-soft: #120a1c;
-  --color-surface: #1a1126;
-  --color-surface-2: #221634;
-  --color-border: #2d1f44;
-  --color-ink: #f6efe1;
-  --color-ink-soft: #cdbfd9;
+  /* Dynamic Devotional Palette */
+  --color-bg: var(--color-bg-val);
+  --color-bg-soft: var(--color-bg-soft-val);
+  --color-surface: var(--color-surface-val);
+  --color-surface-2: var(--color-surface-2-val);
+  --color-border: var(--color-border-val);
+  --color-ink: var(--color-ink-val);
+  --color-ink-soft: var(--color-ink-soft-val);
 
   --color-saffron: #ff8a1e;
   --color-saffron-bright: #ffb24d;
@@ -28,9 +50,9 @@
   --color-leaf: #4ade80;
   --color-cyan: #67e8f9;
 
-  --font-display: var(--font-playfair), "Playfair Display", "Noto Serif Devanagari", "Noto Serif Devanagari", serif;
-  --font-unicode: var(--font-inter), var(--font-noto-devanagari), var(--font-noto-gurmukhi), "Noto Sans", "Noto Sans Devanagari", "Noto Sans Gurmukhi", system-ui, sans-serif;
-  --font-sans: var(--font-inter), "Noto Sans", "Noto Sans Devanagari", "Noto Sans Gurmukhi", system-ui, sans-serif;
+  --font-display: var(--font-playfair), "Playfair Display", "Noto Serif Devanagari", serif;
+  --font-unicode: var(--font-inter), var(--font-noto-devanagari), var(--font-noto-gurmukhi), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
 @layer base {
@@ -49,11 +71,11 @@
 
   body {
     margin: 0;
-    background: var(--color-bg);
-    color: var(--color-ink);
+    background-color: var(--color-bg-val);
+    color: var(--color-ink-val);
     font-family: var(--font-unicode);
     overflow-x: hidden;
-    @apply bg-background text-foreground;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   ::selection {
@@ -62,17 +84,17 @@
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-bg-soft);
+    background: var(--color-bg-soft-val);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-royal), var(--color-saffron));
-    border-radius: 10px;
+    background: linear-gradient(180deg, var(--color-saffron-deep), var(--color-saffron));
+    border-radius: 8px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -82,34 +104,34 @@
 }
 
 @layer utilities {
-  /* Sacred light cone effect */
   .light-cone {
     background: conic-gradient(
       from 180deg at 50% 0%,
       rgba(255, 138, 30, 0) 0deg,
       rgba(255, 138, 30, 0.15) 30deg,
-      rgba(245, 195, 74, 0.3) 90deg,
+      rgba(245, 195, 74, 0.25) 90deg,
       rgba(255, 138, 30, 0.15) 150deg,
-      rgba(255, 138, 30, 0) 180deg,
-      rgba(255, 138, 30, 0.15) 210deg,
-      rgba(245, 195, 74, 0.3) 270deg,
-      rgba(255, 138, 30, 0.15) 330deg,
-      rgba(255, 138, 30, 0) 360deg
+      rgba(255, 138, 30, 0) 180deg
     );
   }
 
   .glow-saffron {
-    text-shadow: 0 0 24px rgba(255, 138, 30, 0.5),
-      0 0 64px rgba(255, 138, 30, 0.3),
-      0 0 96px rgba(255, 138, 30, 0.15);
+    text-shadow: 0 0 20px rgba(255, 138, 30, 0.4),
+      0 0 40px rgba(255, 138, 30, 0.2);
   }
 
   .glow-gold {
-    text-shadow: 0 0 20px rgba(245, 195, 74, 0.6),
-      0 0 60px rgba(245, 195, 74, 0.25);
+    text-shadow: 0 0 18px rgba(245, 195, 74, 0.5);
   }
 
   .text-gradient-saffron {
+    background: linear-gradient(120deg, #d97706 0%, #ea580c 40%, #dc2626 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-gradient-saffron {
     background: linear-gradient(120deg, #f5c34a 0%, #ff8a1e 40%, #f87171 80%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -117,6 +139,13 @@
   }
 
   .text-gradient-mandala {
+    background: linear-gradient(120deg, #b45309, #d97706, #ea580c, #b91c1c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dark .text-gradient-mandala {
     background: linear-gradient(120deg, #f5c34a, #ffb13b, #ff8a1e, #f87171);
     -webkit-background-clip: text;
     background-clip: text;
@@ -125,18 +154,26 @@
 
   .bg-mandala {
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(255, 138, 30, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse at 50% 100%, rgba(108, 58, 166, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse at 100% 50%, rgba(184, 51, 30, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 0% 50%, rgba(184, 51, 30, 0.08) 0%, transparent 60%),
-      var(--color-bg);
+      radial-gradient(ellipse at 50% 0%, rgba(255, 138, 30, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 100%, rgba(108, 58, 166, 0.08) 0%, transparent 60%),
+      var(--color-bg-val);
   }
 
   .card-glass {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 228, 0.7));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-val);
+    box-shadow: 0 8px 32px rgba(180, 130, 80, 0.06);
+    will-change: transform;
+  }
+
+  .dark .card-glass {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
   }
 
   .card-saffron-glow {
@@ -148,7 +185,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(255, 138, 30, 0.5), rgba(245, 195, 74, 0.3), rgba(108, 58, 166, 0.3));
+    background: linear-gradient(135deg, rgba(255, 138, 30, 0.4), rgba(245, 195, 74, 0.25), rgba(108, 58, 166, 0.2));
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -168,11 +205,11 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 138, 30, 0.5),
+      rgba(255, 138, 30, 0.4),
       transparent
     );
     transform: translateX(-100%);
-    animation: shimmer 3s infinite;
+    animation: shimmer 3.5s infinite;
   }
 
   @keyframes shimmer {
@@ -183,7 +220,7 @@
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
   }
 
   @keyframes spin-slow {
@@ -192,17 +229,17 @@
   }
 
   @keyframes pulse-saffron {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 138, 30, 0.4); }
-    50% { box-shadow: 0 0 0 16px rgba(255, 138, 30, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 138, 30, 0.35); }
+    50% { box-shadow: 0 0 0 14px rgba(255, 138, 30, 0); }
   }
 
   @keyframes drift {
     0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(10px, -20px, 0); }
+    50% { transform: translate3d(8px, -14px, 0); }
   }
 
   .animate-float { animation: float 6s ease-in-out infinite; }
-  .animate-spin-slow { animation: spin-slow 40s linear infinite; }
+  .animate-spin-slow { animation: spin-slow 45s linear infinite; }
   .animate-pulse-saffron { animation: pulse-saffron 2.5s ease-in-out infinite; }
   .animate-drift { animation: drift 10s ease-in-out infinite; }
 
@@ -213,19 +250,13 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(255, 138, 30, 0.05) 1px, transparent 1px);
     background-size: 3px 3px;
     opacity: 0.3;
     pointer-events: none;
-    mix-blend-mode: overlay;
   }
 }
 
-/* Light theme overrides (since dark is primary to honor the soulful night-shrine mood) */
-.light body {
-  background: #fffaf2;
-  color: #2a1820;
-}
 
 @theme inline {
   --font-heading: var(--font-sans);

@@ -122,6 +122,15 @@ export function ELibrary() {
             </div>
           </div>
         </motion.div>
+
+        <div className="mt-12 text-center">
+          <a
+            href="/library"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+          >
+            <LanguageAware en="Browse Full E-Library Archive" hi="पूरा ई-लाइब्रेरी आर्काइव देखें" pa="ਪੂਰੀ ਈ-ਲਾਇਬ੍ਰੇਰੀ ਵੇਖੋ" />
+          </a>
+        </div>
       </div>
     </section>
   );

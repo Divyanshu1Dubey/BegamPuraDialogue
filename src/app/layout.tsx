@@ -134,9 +134,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
       className={`${playfair.variable} ${inter.variable} ${notoDevanagari.variable} ${notoGurmukhi.variable} h-full antialiased`}
     >
-      <head>
+      <body
+        suppressHydrationWarning
+        className="min-h-screen flex flex-col bg-bg text-ink font-unicode overflow-x-hidden"
+      >
         {/* JSON-LD Organization Schema */}
         <script
+          id="json-ld-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -183,8 +187,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }),
           }}
         />
-      </head>
-      <body className="min-h-screen flex flex-col bg-bg text-ink font-unicode overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -124,12 +124,21 @@ export function Teachings() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex items-start gap-3 p-4 rounded-2xl bg-surface/30 hover:bg-surface/70 transition-colors"
+                className="flex items-start gap-3 p-4 rounded-2xl bg-surface/30 hover:bg-surface/70 transition-colors border border-border/40"
               >
                 <span className="text-saffron mt-0.5 text-lg">✦</span>
-                <p className="text-sm text-ink-soft leading-relaxed">{miracle}</p>
+                <p className="text-sm text-ink-soft leading-relaxed font-medium">{miracle}</p>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <a
+              href="/teachings"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+            >
+              <LanguageAware en="Explore All 16 Raags & Philosophy" hi="सभी 16 राग और दर्शन देखें" pa="ਸਾਰੇ 16 ਰਾਗ ਅਤੇ ਦਰਸ਼ਨ ਵੇਖੋ" />
+            </a>
           </div>
         </motion.div>
       </div>

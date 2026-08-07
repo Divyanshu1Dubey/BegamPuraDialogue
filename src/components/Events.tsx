@@ -222,6 +222,15 @@ export function Events() {
               </motion.figure>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <a
+              href="/events"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+            >
+              <LanguageAware en="View All Global Commemorative Events & Register" hi="सभी कार्यक्रम देखें और पंजीकरण करें" pa="ਸਾਰੇ ਕਾਰਯਕ੍ਰਮ ਵੇਖੋ ਅਤੇ ਰਜਿਸਟਰੇਸ਼ਨ ਕਰੋ" />
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

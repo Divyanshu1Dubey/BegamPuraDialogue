@@ -231,6 +231,15 @@ export function Gallery() {
             </motion.div>
           ))}
         </div>
+
+        <div className="mt-12 text-center">
+          <a
+            href="/gallery"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+          >
+            <LanguageAware en="Explore Full Media & Photographic Archive" hi="पूरा फोटो आर्काइव देखें" pa="ਪੂਰੀ ਫੋਟੋ ਆਰਕਾਈਵ ਵੇਖੋ" />
+          </a>
+        </div>
       </div>
     </section>
   );

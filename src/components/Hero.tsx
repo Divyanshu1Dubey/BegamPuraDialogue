@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { SacredGeometry } from "./SacredGeometry";
 import { Countdown } from "./Countdown";
@@ -13,16 +14,8 @@ import { SignatureMark } from "./SignatureMark";
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   return (
     <section
@@ -46,12 +39,12 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center gap-3 px-4 py-1.5 mb-6 rounded-full border border-saffron/30 bg-saffron/5 backdrop-blur-md"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="inline-flex items-center gap-3 px-4 py-1.5 mb-6 rounded-full border border-saffron/30 bg-saffron/10 backdrop-blur-sm"
         >
           <SignatureMark size={56} />
           <Sparkles className="h-3.5 w-3.5 text-saffron" />
-          <span className="text-xs font-medium tracking-widest uppercase text-saffron-bright">
+          <span className="text-xs font-semibold tracking-widest uppercase text-saffron-deep dark:text-saffron-bright">
             <LanguageAware
               en="650th Birth Anniversary · 2027"
               hi="650वीं जन्म जयंती · 2027"
@@ -60,40 +53,38 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* Saint portrait — drawn-on-load */}
+        {/* Saint portrait */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
+          transition={{ duration: 0.8, delay: 0.15 }}
           className="mb-6 flex justify-center relative z-10"
         >
           <div className="relative">
-            {/* Solid backdrop so portrait is always readable */}
-            <div className="absolute inset-0 -z-10 rounded-full bg-bg/60 backdrop-blur-sm scale-110" />
-            {/* Soft glow behind */}
-            <div className="absolute inset-0 -z-20 blur-3xl opacity-50">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/30 via-gold/20 to-royal/30" />
+            <div className="absolute inset-0 -z-10 rounded-full bg-bg/70 backdrop-blur-sm scale-110" />
+            <div className="absolute inset-0 -z-20 blur-2xl opacity-40">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/20 to-royal/30" />
             </div>
             <RavidassImage
               src="/assets/OIP.webp"
-              alt="Sant Ravidas Ji — drawn-on-load portrait"
-              size={260}
-              revealDuration={2.6}
+              alt="Sant Ravidas Ji — portrait"
+              size={240}
+              revealDuration={2}
               className="relative animate-float"
             />
           </div>
         </motion.div>
 
         {/* Main title */}
-        <motion.div style={{ scale }}>
+        <div>
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight text-ink drop-shadow-[0_2px_12px_rgba(11,7,16,0.55)]"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight text-ink"
           >
             <span className="block text-gradient-saffron">Begampura</span>
-            <span className="block text-3xl md:text-5xl lg:text-6xl mt-3 text-ink/95">
+            <span className="block text-3xl md:text-5xl lg:text-6xl mt-3 text-ink">
               <LanguageAware
                 en="The Light of Equality"
                 hi="समता का प्रकाश"
@@ -101,14 +92,14 @@ export function Hero() {
               />
             </span>
           </motion.h1>
-        </motion.div>
+        </div>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="mt-8 text-base md:text-lg lg:text-xl text-ink-soft max-w-3xl mx-auto leading-relaxed"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-8 text-base md:text-lg lg:text-xl text-ink-soft max-w-3xl mx-auto leading-relaxed font-medium"
         >
           <LanguageAware
             en="Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned a city without sorrow, without fear, without tax on labour. Where every voice is equal and the Name of the Lord resounds."
@@ -117,16 +108,16 @@ export function Hero() {
           />
         </motion.p>
 
-        {/* CTA */}
+        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button
-            onClick={() => scrollToSection("begampura")}
-            className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-2xl shadow-saffron/30 animate-pulse-saffron"
+          <Link
+            href="/begampura"
+            className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-xl shadow-saffron/20 animate-pulse-saffron inline-flex items-center justify-center"
           >
             <span className="relative z-10">
               <LanguageAware
@@ -135,24 +126,24 @@ export function Hero() {
                 pa="ਮਿਸ਼ਨ ਵੇਖੋ"
               />
             </span>
-          </button>
-          <button
-            onClick={() => scrollToSection("events")}
-            className="px-8 py-4 rounded-2xl border-2 border-saffron/30 bg-saffron/5 backdrop-blur-md text-saffron-bright font-semibold tracking-wide hover:bg-saffron/10 hover:border-saffron/60 transition-all"
+          </Link>
+          <Link
+            href="/events"
+            className="px-8 py-4 rounded-2xl border-2 border-saffron/40 bg-saffron/10 backdrop-blur-sm text-ink hover:text-saffron-deep dark:text-saffron-bright font-semibold tracking-wide hover:bg-saffron/20 hover:border-saffron transition-all inline-flex items-center justify-center"
           >
             <LanguageAware
               en="Register for the 650th"
               hi="650वीं के लिए पंजीकरण"
               pa="650ਵੀਂ ਲਈ ਰਜਿਸਟਰੇਸ਼ਨ"
             />
-          </button>
+          </Link>
         </motion.div>
 
         {/* Countdown */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.6 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
           className="mt-12 lg:mt-16"
         >
           <Countdown />
@@ -164,47 +155,47 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 2 }}
+        transition={{ duration: 0.8, delay: 1.1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
       >
-        <button
-          onClick={() => scrollToSection("about")}
-          className="group flex flex-col items-center gap-2 text-ink-soft/70 hover:text-saffron transition-colors"
-          aria-label="Scroll down"
+        <Link
+          href="/about"
+          className="group flex flex-col items-center gap-2 text-ink-soft hover:text-saffron transition-colors"
+          aria-label="Learn about Sant Ravidas Ji"
         >
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center gap-1.5"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-            <ChevronDown className="h-4 w-4" />
+            <span className="text-[10px] uppercase tracking-[0.3em] font-semibold">Explore</span>
+            <ChevronDown className="h-4 w-4 text-saffron" />
           </motion.div>
-        </button>
+        </Link>
       </motion.div>
     </section>
   );
 }
 
 function FloatingParticles() {
-  const particles = Array.from({ length: 24 });
+  const particles = Array.from({ length: 12 });
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((_, i) => {
-        const size = 2 + (i % 5);
-        const duration = 8 + (i % 6);
-        const delay = (i * 0.4) % 6;
+        const size = 3 + (i % 4);
+        const duration = 10 + (i % 6);
+        const delay = (i * 0.8) % 6;
         return (
           <motion.div
             key={i}
             initial={{
-              x: `${(i * 137) % 100}%`,
-              y: "110%",
+              x: `${(i * 145) % 100}%`,
+              y: "105%",
               opacity: 0,
             }}
             animate={{
-              y: "-10%",
-              opacity: [0, 0.6, 0.6, 0],
+              y: "-5%",
+              opacity: [0, 0.5, 0.5, 0],
             }}
             transition={{
               duration,
@@ -222,7 +213,6 @@ function FloatingParticles() {
                   : i % 3 === 1
                     ? "#f5c34a"
                     : "#ff8a1e",
-              boxShadow: `0 0 ${size * 4}px currentColor`,
             }}
           />
         );
