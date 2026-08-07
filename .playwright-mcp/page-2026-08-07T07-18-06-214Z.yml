@@ -1,0 +1,133 @@
+- generic [active] [ref=f3e1]:
+  - navigation [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - link "BR BRHF 650th Janam Jayanti" [ref=f3e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f3e5]: BR
+        - generic [ref=f3e8]:
+          - generic [ref=f3e9]: BRHF
+          - generic [ref=f3e10]: 650th Janam Jayanti
+      - generic [ref=f3e11]:
+        - link "Home" [ref=f3e12] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f3e14] [cursor=pointer]:
+          - /url: /about
+        - link "Teachings" [ref=f3e15] [cursor=pointer]:
+          - /url: /teachings
+        - link "Begampura" [ref=f3e16] [cursor=pointer]:
+          - /url: /begampura
+        - link "16 Raags" [ref=f3e17] [cursor=pointer]:
+          - /url: /shabads
+        - link "Events" [ref=f3e18] [cursor=pointer]:
+          - /url: /events
+        - link "E-Library" [ref=f3e19] [cursor=pointer]:
+          - /url: /library
+        - link "Gallery" [ref=f3e20] [cursor=pointer]:
+          - /url: /gallery
+        - link "Connect" [ref=f3e21] [cursor=pointer]:
+          - /url: /connect
+      - generic [ref=f3e22]:
+        - button "EN" [ref=f3e25]
+        - button "Toggle theme" [ref=f3e33]
+  - main [ref=f3e40]:
+    - generic [ref=f3e41]:
+      - generic [ref=f3e42]:
+        - generic [ref=f3e43]: 650th Birth Anniversary · 2027
+        - heading "Begampura The Light of Equality" [level=1] [ref=f3e49]:
+          - generic [ref=f3e50]: Begampura
+          - generic [ref=f3e51]: The Light of Equality
+        - paragraph [ref=f3e52]: Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned a city without sorrow, without fear, without tax on labour. Where every voice is equal and the Name of the Lord resounds.
+        - generic [ref=f3e53]:
+          - link "Explore the Mission" [ref=f3e54] [cursor=pointer]:
+            - /url: /begampura
+          - link "Register for the 650th" [ref=f3e56] [cursor=pointer]:
+            - /url: /events
+        - generic [ref=f3e57]:
+          - generic [ref=f3e58]:
+            - generic [ref=f3e59]:
+              - generic [ref=f3e60]:
+                - generic [ref=f3e61]: "--"
+                - generic [ref=f3e62]: Days
+              - generic [ref=f3e63]: ":"
+            - generic [ref=f3e64]:
+              - generic [ref=f3e65]:
+                - generic [ref=f3e66]: "--"
+                - generic [ref=f3e67]: Hours
+              - generic [ref=f3e68]: ":"
+            - generic [ref=f3e69]:
+              - generic [ref=f3e70]:
+                - generic [ref=f3e71]: "--"
+                - generic [ref=f3e72]: Minutes
+              - generic [ref=f3e73]: ":"
+            - generic [ref=f3e75]:
+              - generic [ref=f3e76]: "--"
+              - generic [ref=f3e77]: Seconds
+          - generic [ref=f3e79]:
+            - generic [ref=f3e80]: Daily Shabad
+            - generic [ref=f3e85]:
+              - paragraph [ref=f3e89]: “I am not learned, I am not wise — I am simply a servant of the Lord.”
+              - paragraph [ref=f3e90]: “मैं न पंडित हूँ, न ज्ञानी — मैं तो केवल प्रभु का सेवक हूँ।”
+              - paragraph [ref=f3e91]: ਮੈਂ ਨਾ ਪੰਡਤ, ਨਾ ਜ੍ਞਾਨੀ — ਮੈਂ ਤਾਂ ਸਿਰਫ਼ ਪ੍ਰਭੂ ਦਾ ਸੇਵਕ।
+            - generic [ref=f3e92]: Sri Guru Granth Sahib Ji, Ang 657
+      - generic [ref=f3e96]: Scroll
+  - contentinfo [ref=f3e101]:
+    - generic [ref=f3e103]:
+      - generic [ref=f3e104]:
+        - generic [ref=f3e105]:
+          - generic [ref=f3e106]:
+            - generic [ref=f3e107]: BR
+            - generic [ref=f3e110]:
+              - heading "British Ravidassia Heritage Foundation" [level=3] [ref=f3e111]
+              - paragraph [ref=f3e112]: Charity Reg. 1199953 (UK)
+          - paragraph [ref=f3e113]: Dedicated to preserving and propagating the timeless teachings of Sant Ravidas Ji — the light of Begampura for a world free from sorrow, fear, and inequality.
+          - paragraph [ref=f3e114]: 1 Chaucer Drive, Biggleswade, Bedfordshire SG18 8QG, UK
+        - generic [ref=f3e115]:
+          - heading "Quick Links" [level=4] [ref=f3e116]
+          - list [ref=f3e117]:
+            - listitem [ref=f3e118]:
+              - link "About BRHF" [ref=f3e119] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f3e120]:
+              - link "Teachings" [ref=f3e121] [cursor=pointer]:
+                - /url: /teachings
+            - listitem [ref=f3e122]:
+              - link "Begampura Vision" [ref=f3e123] [cursor=pointer]:
+                - /url: /begampura
+            - listitem [ref=f3e124]:
+              - link "16 Raags" [ref=f3e125] [cursor=pointer]:
+                - /url: /shabads
+            - listitem [ref=f3e126]:
+              - link "Events 2026-27" [ref=f3e127] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f3e128]:
+              - link "E-Library" [ref=f3e129] [cursor=pointer]:
+                - /url: /library
+            - listitem [ref=f3e130]:
+              - link "Gallery" [ref=f3e131] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f3e132]:
+              - link "Contact" [ref=f3e133] [cursor=pointer]:
+                - /url: /connect
+        - generic [ref=f3e134]:
+          - heading "Stay Connected" [level=4] [ref=f3e135]
+          - paragraph [ref=f3e136]: Daily Shabad from Sri Guru Granth Sahib Ji in your inbox.
+          - generic [ref=f3e137]:
+            - textbox "your@email.com" [ref=f3e138]
+            - button "Join" [ref=f3e139]
+          - separator [ref=f3e140]
+          - generic [ref=f3e141]:
+            - button "FB" [ref=f3e142]
+            - button "TW" [ref=f3e143]
+            - button "IG" [ref=f3e144]
+            - button "YT" [ref=f3e145]
+      - separator [ref=f3e146]
+      - generic [ref=f3e147]:
+        - paragraph [ref=f3e148]: © 2026 British Ravidassia Heritage Foundation. All rights reserved. | BRHF Charity No. 1199953
+        - generic [ref=f3e149]:
+          - link "Privacy Policy" [ref=f3e150] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Use" [ref=f3e151] [cursor=pointer]:
+            - /url: "#"
+          - link "Sitemap" [ref=f3e152] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f3e158] [cursor=pointer]

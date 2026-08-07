@@ -8,19 +8,104 @@ import { Menu, X, Sun, Moon, Languages, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { languageMeta, Language } from "@/i18n/translations";
+import { languageMeta, Language, t } from "@/i18n/translations";
+import { LanguageAware } from "./LanguageAware";
 
 const navItems = [
-  { href: "/", labelEn: "Home" },
-  { href: "/about", labelEn: "About" },
-  { href: "/teachings", labelEn: "Teachings" },
-  { href: "/begampura", labelEn: "Begampura" },
-  { href: "/shabads", labelEn: "16 Raags" },
-  { href: "/events", labelEn: "Events" },
-  { href: "/library", labelEn: "E-Library" },
-  { href: "/gallery", labelEn: "Gallery" },
-  { href: "/connect", labelEn: "Connect" },
+  { href: "/", key: "home", section: "" },
+  { href: "/about", key: "about", section: "about" },
+  { href: "/teachings", key: "teachings", section: "teachings" },
+  { href: "/begampura", key: "begampura", section: "begampura" },
+  { href: "/shabads", key: "shabads", section: "shabads" },
+  { href: "/events", key: "events", section: "events" },
+  { href: "/library", key: "library", section: "library" },
+  { href: "/gallery", key: "gallery", section: "gallery" },
+  { href: "/connect", key: "connect", section: "connect" },
 ];
+
+function navLabel(key: string) {
+  const entry = (t.nav as Record<string, { en: string; hi: string; pa: string }>)[key];
+  return entry ? <LanguageAware {...entry} /> : key;
+}
+
+function NavLink({ item, isActive }: { item: typeof navItems[0]; isActive: boolean }) {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  // On home page, use anchor links for in-page scroll
+  if (item.key === "home") {
+    return (
+      <Link
+        href="/"
+        className={cn(
+          "px-3 py-2 text-sm transition-colors duration-200 relative group",
+          isActive
+            ? "text-saffron font-medium"
+            : "text-ink-soft hover:text-saffron"
+        )}
+      >
+        {navLabel(item.key)}
+        <span
+          className={cn(
+            "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
+            isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
+          )}
+        />
+      </Link>
+    );
+  }
+
+  // On home page, scroll to section instead of navigating
+  if (isHome && item.section) {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      const el = document.getElementById(item.section);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    return (
+      <button
+        onClick={handleClick}
+        className={cn(
+          "px-3 py-2 text-sm transition-colors duration-200 relative group",
+          isActive
+            ? "text-saffron font-medium"
+            : "text-ink-soft hover:text-saffron"
+        )}
+      >
+        {navLabel(item.key)}
+        <span
+          className={cn(
+            "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
+            isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
+          )}
+        />
+      </button>
+    );
+  }
+
+  // On other pages, use Next.js Link
+  return (
+    <Link
+      href={item.href}
+      className={cn(
+        "px-3 py-2 text-sm transition-colors duration-200 relative group",
+        isActive
+          ? "text-saffron font-medium"
+          : "text-ink-soft hover:text-saffron"
+      )}
+    >
+      {navLabel(item.key)}
+      <span
+        className={cn(
+          "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
+          isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
+        )}
+      />
+    </Link>
+  );
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -59,7 +144,11 @@ export function Navbar() {
               BRHF
             </span>
             <span className="text-[9px] uppercase tracking-widest text-ink-soft leading-tight">
-              650th Janam Jayanti
+              <LanguageAware
+                en="650th Janam Jayanti"
+                hi="650वीं जन्म जयंती"
+                pa="650ਵੀਂ ਜਨਮ ਜਯੰਤੀ"
+              />
             </span>
           </div>
         </Link>
@@ -68,26 +157,7 @@ export function Navbar() {
         <div className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "px-3 py-2 text-sm transition-colors duration-200 relative group",
-                  isActive
-                    ? "text-saffron font-medium"
-                    : "text-ink-soft hover:text-saffron"
-                )}
-              >
-                {item.labelEn}
-                <span
-                  className={cn(
-                    "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
-                    isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
-                  )}
-                />
-              </Link>
-            );
+            return <NavLink key={item.href} item={item} isActive={isActive} />;
           })}
         </div>
 
@@ -136,25 +206,52 @@ export function Navbar() {
             <div className="px-4 py-4 flex flex-col gap-1">
               {navItems.map((item, i) => {
                 const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
+                const isHome = pathname === "/";
+
+                const content = (
+                  <motion.span
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                    className={cn(
+                      "block text-left px-3 py-3 rounded-xl transition-colors",
+                      isActive
+                        ? "text-saffron font-medium bg-saffron/10"
+                        : "text-ink-soft hover:text-saffron hover:bg-surface"
+                    )}
                   >
-                    <motion.span
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: i * 0.05 }}
-                      className={cn(
-                        "block text-left px-3 py-3 rounded-xl transition-colors",
-                        isActive
-                          ? "text-saffron font-medium bg-saffron/10"
-                          : "text-ink-soft hover:text-saffron hover:bg-surface"
-                      )}
+                    {navLabel(item.key)}
+                  </motion.span>
+                );
+
+                if (item.key === "home") {
+                  return (
+                    <Link key={item.href} href="/" onClick={() => setMobileOpen(false)}>
+                      {content}
+                    </Link>
+                  );
+                }
+
+                if (isHome && item.section) {
+                  return (
+                    <button
+                      key={item.href}
+                      onClick={() => {
+                        setMobileOpen(false);
+                        const el = document.getElementById(item.section);
+                        if (el) {
+                          setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+                        }
+                      }}
                     >
-                      {item.labelEn}
-                    </motion.span>
+                      {content}
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
+                    {content}
                   </Link>
                 );
               })}

@@ -4,9 +4,13 @@ import { motion } from "framer-motion";
 import { Quote, BookOpen, Music2 } from "lucide-react";
 import { getTodayQuote } from "@/data/quotes";
 import { LanguageAware } from "./LanguageAware";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { t } from "@/i18n/translations";
 
 export function DailyQuoteWidget() {
   const quote = getTodayQuote();
+  const { language } = useLanguage();
+  const raagLabel = t.raag[language] || t.raag.en;
 
   return (
     <motion.div
@@ -35,7 +39,7 @@ export function DailyQuoteWidget() {
             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold">
               <LanguageAware
                 en="Daily Shabad"
-                hi="आज का शabad"
+                hi="आज का शबद"
                 pa="ਅੱਜ ਦਾ ਸ਼ਬਦ"
               />
             </span>
@@ -44,7 +48,7 @@ export function DailyQuoteWidget() {
             <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-royal/20 border border-violet/40">
               <Music2 className="h-3 w-3 text-violet" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
-                Raag {quote.raag}
+                {raagLabel} {quote.raag}
               </span>
             </div>
           )}

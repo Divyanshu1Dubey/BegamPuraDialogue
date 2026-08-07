@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Quote, MapPin, Users, Building, Landmark, Scale, ShieldCheck, Heart, Sprout } from "lucide-react";
 import { guru } from "@/data/guru";
 import { LanguageAware } from "./LanguageAware";
+import { RavidassImage } from "./RavidassPortrait";
 
 const begampuraEntry = guru.philosophy.find(p => p.title.startsWith("Begampura"));
 
@@ -56,6 +57,28 @@ export function Begampura() {
               pa="ਆਧੁਨਿਕ ਸੰਵਿਧਾਨਾਂ ਤੋਂ ਪੰਜ ਸਦੀਆਂ ਪਹਿਲਾਂ — ਵਾਰਾਣਸੀ ਦੇ ਇੱਕ ਸੰਤ ਨੇ ਦੁਨੀਆਂ ਦੀ ਪਹਿਲੀ ਸਮਾਨਤਾਵਾਦੀ ਸਮਾਜ ਦੀ ਚਾਰਟਰ ਲਿਖੀ।"
             />
           </p>
+        </motion.div>
+
+        {/* Portrait */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: [0.2, 0.8, 0.2, 1] }}
+          className="flex justify-center mb-20"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/30 to-royal/40" />
+            </div>
+            <RavidassImage
+              src="/assets/OIP.webp"
+              alt="Sant Ravidas Ji"
+              size={200}
+              revealDuration={2.4}
+              className="relative animate-float"
+            />
+          </div>
         </motion.div>
 
         {/* The Shabad */}
@@ -213,6 +236,60 @@ export function Begampura() {
                 <p className="text-lg font-display font-bold text-saffron">{item.en}</p>
                 <p className="text-sm text-saffron/70 mt-1">{item.hi}</p>
               </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Visual archive strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-20"
+        >
+          <div className="text-center mb-10">
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron">
+              <LanguageAware
+                en="The Many Faces of Devotion"
+                hi="भक्ति के अनेक रूप"
+                pa="ਭਗਤੀ ਦੇ ਬਹੁਤ ਰੂਪ"
+              />
+            </h3>
+            <p className="mt-3 text-sm text-ink-soft max-w-2xl mx-auto">
+              <LanguageAware
+                en="Paintings, sculptures and offerings — across centuries, the devotion to Guru Ravidas has taken many beautiful forms."
+                hi="चित्रकारी, मूर्तियाँ और अर्पण — सदियों में गुरु रविदास की भक्ति ने अनेक सुंदर रूप लिए।"
+                pa="ਪੇਂਟਿੰਗਾਂ, ਮੂਰਤੀਆਂ ਅਤੇ ਅਰਪਣ — ਸਦੀਆਂ ਵਿੱਚ ਗੁਰੂ ਰਵਿਦਾਸ ਪ੍ਰਤੀ ਭਗਤੀ ਨੇ ਬਹੁਤ ਸੋਹਣੇ ਰੂਪ ਲਏ।"
+              />
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { src: "/assets/Sri-Guru-Ravidas-Photo-Download-Free.jpg", alt: "Devotional painting" },
+              { src: "/assets/Shri-Guru-Ravidas-Ji-Image-Pictures-Download.jpg", alt: "Temple sculpture" },
+              { src: "/assets/guru-ravidass-hindu-holy-saint-qdl6bp29umg4uvrl.jpg", alt: "Saintly portrait" },
+              { src: "/assets/guru-ravidas-jayanti-illustration-vector.jpg", alt: "Jayanti illustration" },
+            ].map((img, i) => (
+              <motion.figure
+                key={img.src}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group relative aspect-square rounded-2xl overflow-hidden card-glass card-saffron-glow"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent pointer-events-none" />
+                <figcaption className="absolute bottom-2 left-2 right-2 text-[10px] uppercase tracking-wider text-saffron-bright text-center drop-shadow-lg">
+                  {img.alt}
+                </figcaption>
+              </motion.figure>
             ))}
           </div>
         </motion.div>

@@ -3,14 +3,127 @@
 import { motion } from "framer-motion";
 import { ImageIcon, Play } from "lucide-react";
 import { LanguageAware } from "./LanguageAware";
+import { RavidassImage } from "./RavidassPortrait";
 
-const galleries = [
-  { title: "Varanasi Pilgrimage 2026", count: 248, icon: "🕌" },
-  { title: "House of Lords Exhibition", count: 156, icon: "🇬🇧" },
-  { title: "Brussels European Parliament", count: 198, icon: "🇪🇺" },
-  { title: "Diwali at Gali Begampura", count: 312, icon: "🪔" },
-  { title: "Guru Ravidas Birthday Mahotsav", count: 421, icon: "🕉️" },
-  { title: "Youth Sangam Programme", count: 187, icon: "👥" },
+type GalleryItem = {
+  title: string;
+  subtitle?: string;
+  count: number;
+  icon?: string;
+  image: string; // path under /assets/
+  alt: string;
+  category: "devotional" | "event" | "leader" | "illustration";
+};
+
+const galleries: GalleryItem[] = [
+  {
+    title: "Varanasi Pilgrimage 2026",
+    subtitle: "On the banks of the Ganges",
+    count: 248,
+    icon: "🕌",
+    image: "/assets/sant-ravidasss.jpg",
+    alt: "Varanasi pilgrimage — Sant Ravidas portrait",
+    category: "event",
+  },
+  {
+    title: "House of Lords Exhibition",
+    subtitle: "BRHF · UK Parliament",
+    count: 156,
+    icon: "🇬🇧",
+    image: "/assets/bjp-ravidas.jpg",
+    alt: "BJP leader bowing at Ravidas portrait",
+    category: "leader",
+  },
+  {
+    title: "Brussels European Parliament",
+    subtitle: "European dialogue",
+    count: 198,
+    icon: "🇪🇺",
+    image: "/assets/jp-nadda(bjp).jpg",
+    alt: "JP Nadda at Brussels Parliament",
+    category: "leader",
+  },
+  {
+    title: "Diwali at Gali Begampura",
+    subtitle: "Festival of lights",
+    count: 312,
+    icon: "🪔",
+    image: "/assets/lotsofsantravi.jpg",
+    alt: "Diwali celebration at Gali Begampura",
+    category: "event",
+  },
+  {
+    title: "Guru Ravidas Birthday Mahotsav",
+    subtitle: "Janam Jayanti 2026",
+    count: 421,
+    icon: "🕉️",
+    image: "/assets/booj-ravidas.webp",
+    alt: "Guru Ravidas Janam Jayanti Mahotsav",
+    category: "devotional",
+  },
+  {
+    title: "Bowing at the Shrine",
+    subtitle: "Devotee offering",
+    count: 187,
+    icon: "🙏",
+    image: "/assets/bowing.webp",
+    alt: "Devotee bowing before Ravidas statue",
+    category: "devotional",
+  },
+  {
+    title: "Painted Portrait",
+    subtitle: "Devotional art",
+    count: 92,
+    icon: "🎨",
+    image: "/assets/Sri-Guru-Ravidas-Photo-Download-Free.jpg",
+    alt: "Painted portrait of Guru Ravidas",
+    category: "devotional",
+  },
+  {
+    title: "Sculpted Murti",
+    subtitle: "Temple icon",
+    count: 124,
+    icon: "🛕",
+    image: "/assets/Shri-Guru-Ravidas-Ji-Image-Pictures-Download.jpg",
+    alt: "Sculpted portrait of Guru Ravidas",
+    category: "devotional",
+  },
+  {
+    title: "Saint of the People",
+    subtitle: "Devotional painting",
+    count: 78,
+    icon: "👤",
+    image: "/assets/guru-ravidass-hindu-holy-saint-qdl6bp29umg4uvrl.jpg",
+    alt: "Painted illustration of Guru Ravidas",
+    category: "devotional",
+  },
+  {
+    title: "Janam Jayanti Illustration",
+    subtitle: "Vector art",
+    count: 64,
+    icon: "✨",
+    image: "/assets/guru-ravidas-jayanti-illustration-vector.jpg",
+    alt: "Vector illustration of Guru Ravidas on throne",
+    category: "illustration",
+  },
+  {
+    title: "Laser-Cut Portrait",
+    subtitle: "Modern art",
+    count: 53,
+    icon: "🖼️",
+    image: "/assets/LaserCutting-Sant-ravidas-Portrait.png",
+    alt: "Laser-cut portrait of Sant Ravidas",
+    category: "illustration",
+  },
+  {
+    title: "Leader's Reverence",
+    subtitle: "Political tribute",
+    count: 41,
+    icon: "🎗️",
+    image: "/assets/bjp(bowing).jpg",
+    alt: "Leader bowing before Guru Ravidas statue",
+    category: "leader",
+  },
 ];
 
 export function Gallery() {
@@ -46,6 +159,28 @@ export function Gallery() {
           </p>
         </motion.div>
 
+        {/* Hero portrait */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: [0.2, 0.8, 0.2, 1] }}
+          className="flex justify-center mb-14"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/30 to-royal/40" />
+            </div>
+            <RavidassImage
+              src="/assets/OIP.webp"
+              alt="Sant Ravidas Ji"
+              size={200}
+              revealDuration={2.4}
+              className="relative animate-float"
+            />
+          </div>
+        </motion.div>
+
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {galleries.map((gallery, i) => (
             <motion.div
@@ -53,20 +188,38 @@ export function Gallery() {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
               className="group relative aspect-square rounded-2xl overflow-hidden card-glass card-saffron-glow cursor-pointer hover:scale-[1.02] transition-all duration-300"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-saffron/15 via-royal/15 to-saffron/15 group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                <span className="text-5xl mb-3">{gallery.icon}</span>
-                <h3 className="font-display font-bold text-ink text-sm md:text-base leading-tight">
+              {/* Background image */}
+              <img
+                src={gallery.image}
+                alt={gallery.alt}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              {/* Color tint to maintain palette */}
+              <div className="absolute inset-0 bg-gradient-to-br from-saffron/30 via-royal/25 to-saffron/30 mix-blend-overlay" />
+              {/* Bottom dark fade for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-bg/30 to-transparent pointer-events-none" />
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-end p-4 text-center">
+                {gallery.icon && (
+                  <span className="absolute top-3 left-3 text-2xl">{gallery.icon}</span>
+                )}
+                <h3 className="font-display font-bold text-ink text-sm md:text-base leading-tight drop-shadow-lg">
                   {gallery.title}
                 </h3>
-                <p className="text-xs text-ink-soft mt-1.5">
+                {gallery.subtitle && (
+                  <p className="text-[10px] text-saffron-bright/90 uppercase tracking-wider mt-1 drop-shadow-lg">
+                    {gallery.subtitle}
+                  </p>
+                )}
+                <p className="text-xs text-ink-soft mt-1.5 drop-shadow-lg">
                   {gallery.count}{" "}
                   <LanguageAware en="photos" hi="तस्वीरें" pa="ਤਸਵੀਰਾਂ" />
                 </p>
-                <div className="absolute bottom-3 right-3 flex gap-1.5">
+                <div className="absolute top-3 right-3 flex gap-1.5">
                   <span className="w-7 h-7 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
                     <ImageIcon className="h-3.5 w-3.5 text-white" />
                   </span>
@@ -75,7 +228,6 @@ export function Gallery() {
                   </span>
                 </div>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-bg/60 to-transparent pointer-events-none" />
             </motion.div>
           ))}
         </div>

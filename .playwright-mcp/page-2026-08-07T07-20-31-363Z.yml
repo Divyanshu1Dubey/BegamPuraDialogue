@@ -1,0 +1,217 @@
+- generic [active] [ref=f5e1]:
+  - navigation [ref=f5e2]:
+    - generic [ref=f5e3]:
+      - link "BR BRHF 650th Janam Jayanti" [ref=f5e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f5e5]: BR
+        - generic [ref=f5e8]:
+          - generic [ref=f5e9]: BRHF
+          - generic [ref=f5e10]: 650th Janam Jayanti
+      - generic [ref=f5e11]:
+        - link "Home" [ref=f5e12] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f5e13] [cursor=pointer]:
+          - /url: /about
+        - link "Teachings" [ref=f5e14] [cursor=pointer]:
+          - /url: /teachings
+        - link "Begampura" [ref=f5e15] [cursor=pointer]:
+          - /url: /begampura
+        - link "16 Raags" [ref=f5e16] [cursor=pointer]:
+          - /url: /shabads
+        - link "Events" [ref=f5e18] [cursor=pointer]:
+          - /url: /events
+        - link "E-Library" [ref=f5e19] [cursor=pointer]:
+          - /url: /library
+        - link "Gallery" [ref=f5e20] [cursor=pointer]:
+          - /url: /gallery
+        - link "Connect" [ref=f5e21] [cursor=pointer]:
+          - /url: /connect
+      - generic [ref=f5e22]:
+        - button "EN" [ref=f5e25]
+        - button "Toggle theme" [ref=f5e33]
+  - main [ref=f5e40]:
+    - generic [ref=f5e43]:
+      - generic [ref=f5e44]:
+        - generic [ref=f5e45]: Chapter IV
+        - heading "16 Raags · 41 Shabads" [level=2] [ref=f5e46]
+        - paragraph [ref=f5e47]: The Musical Architecture of Equality
+        - paragraph [ref=f5e48]: Bhagat Ravidas Ji's bani is enshrined in 16 different raags of Sri Guru Granth Sahib Ji — from Ang 345 to Ang 1196. Each raag carries a unique emotional hue and a timeless teaching on how a society should be organised. Here are those 16 raags, the dhyapan (essence) of each, and what governance should look like in its spirit.
+        - generic [ref=f5e53]:
+          - strong [ref=f5e54]: "41"
+          - text: shabads across
+          - strong [ref=f5e55]: "16"
+          - text: raags
+      - generic [ref=f5e56]:
+        - button "🪔 Ang 345 Raag Sri Cosmic wealth, devotion, surrender 4 shabads" [ref=f5e57]:
+          - generic [ref=f5e59]:
+            - generic [ref=f5e60]: 🪔
+            - generic [ref=f5e61]: Ang 345
+          - heading "Raag Sri" [level=3] [ref=f5e62]
+          - paragraph [ref=f5e63]: Cosmic wealth, devotion, surrender
+          - generic [ref=f5e64]: 4 shabads
+        - button "🌅 Ang 396 Raag Gauri Transmutation, purity, awakening 3 shabads" [ref=f5e68]:
+          - generic [ref=f5e70]:
+            - generic [ref=f5e71]: 🌅
+            - generic [ref=f5e72]: Ang 396
+          - heading "Raag Gauri" [level=3] [ref=f5e73]
+          - paragraph [ref=f5e74]: Transmutation, purity, awakening
+          - generic [ref=f5e75]: 3 shabads
+        - button "🌬️ Ang 411 Raag Asa Hope, breath, equality 4 shabads" [ref=f5e79]:
+          - generic [ref=f5e81]:
+            - generic [ref=f5e82]: 🌬️
+            - generic [ref=f5e83]: Ang 411
+          - heading "Raag Asa" [level=3] [ref=f5e84]
+          - paragraph [ref=f5e85]: Hope, breath, equality
+          - generic [ref=f5e86]: 4 shabads
+        - button "💗 Ang 488 Raag Gujri Yearning, quest, sacred searching 1 shabad" [ref=f5e90]:
+          - generic [ref=f5e92]:
+            - generic [ref=f5e93]: 💗
+            - generic [ref=f5e94]: Ang 488
+          - heading "Raag Gujri" [level=3] [ref=f5e95]
+          - paragraph [ref=f5e96]: Yearning, quest, sacred searching
+          - generic [ref=f5e97]: 1 shabad
+        - button "⚔️ Ang 595 Raag Sorath Truth, straight speech, sword of word 2 shabads" [ref=f5e101]:
+          - generic [ref=f5e103]:
+            - generic [ref=f5e104]: ⚔️
+            - generic [ref=f5e105]: Ang 595
+          - heading "Raag Sorath" [level=3] [ref=f5e106]
+          - paragraph [ref=f5e107]: Truth, straight speech, sword of word
+          - generic [ref=f5e108]: 2 shabads
+        - button "💰 Ang 663 Raag Dhanasri Wealth, grace, contentment 1 shabad" [ref=f5e112]:
+          - generic [ref=f5e114]:
+            - generic [ref=f5e115]: 💰
+            - generic [ref=f5e116]: Ang 663
+          - heading "Raag Dhanasri" [level=3] [ref=f5e117]
+          - paragraph [ref=f5e118]: Wealth, grace, contentment
+          - generic [ref=f5e119]: 1 shabad
+        - button "🏹 Ang 696 Raag Jaitsri Victory, valour, divinity 4 shabads" [ref=f5e123]:
+          - generic [ref=f5e125]:
+            - generic [ref=f5e126]: 🏹
+            - generic [ref=f5e127]: Ang 696
+          - heading "Raag Jaitsri" [level=3] [ref=f5e128]
+          - paragraph [ref=f5e129]: Victory, valour, divinity
+          - generic [ref=f5e130]: 4 shabads
+        - button "🔥 Ang 728 Raag Suhi Refinement, endurance, tempering 5 shabads" [ref=f5e134]:
+          - generic [ref=f5e136]:
+            - generic [ref=f5e137]: 🔥
+            - generic [ref=f5e138]: Ang 728
+          - heading "Raag Suhi" [level=3] [ref=f5e139]
+          - paragraph [ref=f5e140]: Refinement, endurance, tempering
+          - generic [ref=f5e141]: 5 shabads
+        - button "🌸 Ang 795 Raag Gaur City of bliss, equanimity, joy 4 shabads" [ref=f5e145]:
+          - generic [ref=f5e147]:
+            - generic [ref=f5e148]: 🌸
+            - generic [ref=f5e149]: Ang 795
+          - heading "Raag Gaur" [level=3] [ref=f5e150]
+          - paragraph [ref=f5e151]: City of bliss, equanimity, joy
+          - generic [ref=f5e152]: 4 shabads
+        - button "🕊️ Ang 814 Raag Bilawal Innocence, celestial purity, wonder 2 shabads" [ref=f5e156]:
+          - generic [ref=f5e158]:
+            - generic [ref=f5e159]: 🕊️
+            - generic [ref=f5e160]: Ang 814
+          - heading "Raag Bilawal" [level=3] [ref=f5e161]
+          - paragraph [ref=f5e162]: Innocence, celestial purity, wonder
+          - generic [ref=f5e163]: 2 shabads
+        - button "🌱 Ang 878 Raag Basant Spring, renewal, blossoming 1 shabad" [ref=f5e167]:
+          - generic [ref=f5e169]:
+            - generic [ref=f5e170]: 🌱
+            - generic [ref=f5e171]: Ang 878
+          - heading "Raag Basant" [level=3] [ref=f5e172]
+          - paragraph [ref=f5e173]: Spring, renewal, blossoming
+          - generic [ref=f5e174]: 1 shabad
+        - button "🌄 Ang 1083 Raag Bhairav Dawn, protection, gravitas 2 shabads" [ref=f5e178]:
+          - generic [ref=f5e180]:
+            - generic [ref=f5e181]: 🌄
+            - generic [ref=f5e182]: Ang 1083
+          - heading "Raag Bhairav" [level=3] [ref=f5e183]
+          - paragraph [ref=f5e184]: Dawn, protection, gravitas
+          - generic [ref=f5e185]: 2 shabads
+        - button "🏜️ Ang 1017 Raag Maru Desert, endurance, hidden beauty 2 shabads" [ref=f5e189]:
+          - generic [ref=f5e191]:
+            - generic [ref=f5e192]: 🏜️
+            - generic [ref=f5e193]: Ang 1017
+          - heading "Raag Maru" [level=3] [ref=f5e194]
+          - paragraph [ref=f5e195]: Desert, endurance, hidden beauty
+          - generic [ref=f5e196]: 2 shabads
+        - button "🌾 Ang 889 Raag Kafi Folk, common, joyous 4 shabads" [ref=f5e200]:
+          - generic [ref=f5e202]:
+            - generic [ref=f5e203]: 🌾
+            - generic [ref=f5e204]: Ang 889
+          - heading "Raag Kafi" [level=3] [ref=f5e205]
+          - paragraph [ref=f5e206]: Folk, common, joyous
+          - generic [ref=f5e207]: 4 shabads
+        - button "🧘 Ang 878 Raag Ramkali Soothing, depth, contemplation 1 shabad" [ref=f5e211]:
+          - generic [ref=f5e213]:
+            - generic [ref=f5e214]: 🧘
+            - generic [ref=f5e215]: Ang 878
+          - heading "Raag Ramkali" [level=3] [ref=f5e216]
+          - paragraph [ref=f5e217]: Soothing, depth, contemplation
+          - generic [ref=f5e218]: 1 shabad
+        - button "⛰️ Ang 1118 Raag Kedara Mountains, fields, steadfastness 1 shabad" [ref=f5e222]:
+          - generic [ref=f5e224]:
+            - generic [ref=f5e225]: ⛰️
+            - generic [ref=f5e226]: Ang 1118
+          - heading "Raag Kedara" [level=3] [ref=f5e227]
+          - paragraph [ref=f5e228]: Mountains, fields, steadfastness
+          - generic [ref=f5e229]: 1 shabad
+  - contentinfo [ref=f5e233]:
+    - generic [ref=f5e235]:
+      - generic [ref=f5e236]:
+        - generic [ref=f5e237]:
+          - generic [ref=f5e238]:
+            - generic [ref=f5e239]: BR
+            - generic [ref=f5e242]:
+              - heading "British Ravidassia Heritage Foundation" [level=3] [ref=f5e243]
+              - paragraph [ref=f5e244]: Charity Reg. 1199953 (UK)
+          - paragraph [ref=f5e245]: Dedicated to preserving and propagating the timeless teachings of Sant Ravidas Ji — the light of Begampura for a world free from sorrow, fear, and inequality.
+          - paragraph [ref=f5e246]: 1 Chaucer Drive, Biggleswade, Bedfordshire SG18 8QG, UK
+        - generic [ref=f5e247]:
+          - heading "Quick Links" [level=4] [ref=f5e248]
+          - list [ref=f5e249]:
+            - listitem [ref=f5e250]:
+              - link "About BRHF" [ref=f5e251] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f5e252]:
+              - link "Teachings" [ref=f5e253] [cursor=pointer]:
+                - /url: /teachings
+            - listitem [ref=f5e254]:
+              - link "Begampura Vision" [ref=f5e255] [cursor=pointer]:
+                - /url: /begampura
+            - listitem [ref=f5e256]:
+              - link "16 Raags" [ref=f5e257] [cursor=pointer]:
+                - /url: /shabads
+            - listitem [ref=f5e258]:
+              - link "Events 2026-27" [ref=f5e259] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f5e260]:
+              - link "E-Library" [ref=f5e261] [cursor=pointer]:
+                - /url: /library
+            - listitem [ref=f5e262]:
+              - link "Gallery" [ref=f5e263] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f5e264]:
+              - link "Contact" [ref=f5e265] [cursor=pointer]:
+                - /url: /connect
+        - generic [ref=f5e266]:
+          - heading "Stay Connected" [level=4] [ref=f5e267]
+          - paragraph [ref=f5e268]: Daily Shabad from Sri Guru Granth Sahib Ji in your inbox.
+          - generic [ref=f5e269]:
+            - textbox "your@email.com" [ref=f5e270]
+            - button "Join" [ref=f5e271]
+          - separator [ref=f5e272]
+          - generic [ref=f5e273]:
+            - button "FB" [ref=f5e274]
+            - button "TW" [ref=f5e275]
+            - button "IG" [ref=f5e276]
+            - button "YT" [ref=f5e277]
+      - separator [ref=f5e278]
+      - generic [ref=f5e279]:
+        - paragraph [ref=f5e280]: © 2026 British Ravidassia Heritage Foundation. All rights reserved. | BRHF Charity No. 1199953
+        - generic [ref=f5e281]:
+          - link "Privacy Policy" [ref=f5e282] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Use" [ref=f5e283] [cursor=pointer]:
+            - /url: "#"
+          - link "Sitemap" [ref=f5e284] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f5e290] [cursor=pointer]

@@ -184,7 +184,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-ink font-unicode">
+      <body className="min-h-screen flex flex-col bg-bg text-ink font-unicode overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -194,7 +194,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <LanguageProvider>
             <TooltipProvider delay={150}>
               <Navbar />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 min-h-0">{children}</main>
               <Footer />
             </TooltipProvider>
           </LanguageProvider>

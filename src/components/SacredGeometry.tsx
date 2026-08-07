@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 
 /**
  * SacredGeometry — Animated mandala/sacred-geometry background.
- * Behaves like a rotating temple of light: concentric rings, lotus petals,
- * sunburst rays. Pure SVG so no extra deps; GPU-friendly.
+ * Rotating temple of light: concentric rings, lotus petals,
+ * sunburst rays, and layered glows for depth.
  */
 export function SacredGeometry({
   className = "",
-  rings = 6,
+  rings = 8,
 }: {
   className?: string;
   rings?: number;
@@ -18,83 +18,120 @@ export function SacredGeometry({
   return (
     <div className={`pointer-events-none absolute inset-0 ${className}`}>
       <svg
-        viewBox="0 0 800 800"
-        className="h-full w-full"
+        viewBox="0 0 1000 1000"
+        className="h-full w-full opacity-90"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
         <defs>
           <radialGradient id="saffron-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#ff8a1e" stopOpacity="0.7" />
-            <stop offset="50%" stopColor="#f5c34a" stopOpacity="0.25" />
+            <stop offset="0%" stopColor="#ff8a1e" stopOpacity="0.9" />
+            <stop offset="30%" stopColor="#ffb24d" stopOpacity="0.5" />
+            <stop offset="60%" stopColor="#f5c34a" stopOpacity="0.15" />
             <stop offset="100%" stopColor="#3d1c66" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="violet-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#6c3aa6" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#6c3aa6" stopOpacity="0.45" />
+            <stop offset="50%" stopColor="#3d1c66" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#3d1c66" stopOpacity="0" />
           </radialGradient>
-          <linearGradient id="ray-stroke" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="#ffb24d" stopOpacity="0.05" />
-            <stop offset="50%" stopColor="#f5c34a" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#ff8a1e" stopOpacity="0.05" />
+          <linearGradient id="ray-stroke" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#ffb24d" stopOpacity="0.8" />
+            <stop offset="60%" stopColor="#ff8a1e" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#3d1c66" stopOpacity="0.05" />
           </linearGradient>
+          <filter id="bindu-glow">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-        {/* Background glow */}
-        <circle cx="400" cy="400" r="400" fill="url(#violet-glow)" />
-        <circle cx="400" cy="400" r="220" fill="url(#saffron-glow)" />
+        {/* Outer violet aura */}
+        <circle cx="500" cy="500" r="480" fill="url(#violet-glow)" />
 
-        {/* Outer rotating rays */}
+        {/* Center saffron glow blob */}
+        <circle cx="500" cy="500" r="380" fill="url(#saffron-glow)" />
+
+        {/* Rotating sunburst rays — primary */}
         <motion.g
           animate={{ rotate: 360 }}
-          transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "400px 400px" }}
+          transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "500px 500px" }}
         >
-          {Array.from({ length: 36 }).map((_, i) => (
+          {Array.from({ length: 48 }).map((_, i) => {
+            const angle = i * 7.5;
+            return (
+              <line
+                key={`ray-${i}`}
+                x1="500"
+                y1="80"
+                x2="500"
+                y2="240"
+                stroke="url(#ray-stroke)"
+                strokeWidth={i % 4 === 0 ? "2.5" : "1"}
+                opacity={i % 4 === 0 ? "0.7" : "0.3"}
+                transform={`rotate(${angle} 500 500)`}
+              />
+            );
+          })}
+        </motion.g>
+
+        {/* Counter-rotating fine rays */}
+        <motion.g
+          animate={{ rotate: -360 }}
+          transition={{ duration: 180, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "500px 500px" }}
+        >
+          {Array.from({ length: 24 }).map((_, i) => (
             <line
-              key={`ray-${i}`}
-              x1="400"
-              y1="40"
-              x2="400"
-              y2="200"
-              stroke="url(#ray-stroke)"
-              strokeWidth="1.2"
-              transform={`rotate(${i * 10} 400 400)`}
+              key={`ray2-${i}`}
+              x1="500"
+              y1="160"
+              x2="500"
+              y2="280"
+              stroke="#ff8a1e"
+              strokeWidth="0.5"
+              opacity="0.15"
+              transform={`rotate(${i * 15} 500 500)`}
             />
           ))}
         </motion.g>
 
         {/* Petal rings — lotus */}
         {ringAngles.map((r) => {
-          const radius = 110 + r * 38;
-          const count = 12 + r * 4;
+          const radius = 140 + r * 42;
+          const count = 16 + r * 4;
           return (
             <motion.g
               key={`ring-${r}`}
               animate={{ rotate: r % 2 === 0 ? 360 : -360 }}
               transition={{
-                duration: 40 + r * 10,
+                duration: 60 + r * 15,
                 repeat: Infinity,
                 ease: "linear",
               }}
-              style={{ transformOrigin: "400px 400px" }}
+              style={{ transformOrigin: "500px 500px" }}
             >
               {Array.from({ length: count }).map((_, i) => {
                 const angle = (360 / count) * i;
+                const hue = (r * 25 + i * 4) % 50 + 20;
+                const lightness = 48 + r * 4;
+                const opacity = 0.15 + r * 0.05;
                 return (
                   <ellipse
                     key={`petal-${r}-${i}`}
-                    cx="400"
-                    cy={400 - radius}
-                    rx="10"
-                    ry="22"
+                    cx="500"
+                    cy={500 - radius}
+                    rx={14 + r * 1.5}
+                    ry={28 + r * 2}
                     fill="none"
-                    stroke={`hsl(${(r * 30 + i * 5) % 60 + 20}, 80%, ${
-                      50 + r * 5
-                    }%)`}
-                    strokeWidth="0.8"
-                    opacity={0.2 + r * 0.06}
-                    transform={`rotate(${angle} 400 400)`}
+                    stroke={`hsl(${hue}, 85%, ${lightness}%)`}
+                    strokeWidth={0.6 + r * 0.15}
+                    opacity={opacity}
+                    transform={`rotate(${angle} 500 500)`}
                   />
                 );
               })}
@@ -106,41 +143,73 @@ export function SacredGeometry({
         {ringAngles.map((r) => (
           <motion.circle
             key={`circle-${r}`}
-            cx="400"
-            cy="400"
-            r={40 + r * 18}
+            cx="500"
+            cy="500"
+            r={60 + r * 22}
             fill="none"
             stroke={
-              r % 2 === 0
-                ? "rgba(255, 178, 77, 0.4)"
-                : "rgba(108, 58, 166, 0.35)"
+              r % 3 === 0
+                ? "rgba(255, 178, 77, 0.5)"
+                : r % 3 === 1
+                  ? "rgba(108, 58, 166, 0.4)"
+                  : "rgba(245, 195, 74, 0.3)"
             }
-            strokeWidth={r === 3 ? 1.2 : 0.6}
-            strokeDasharray={r % 2 === 0 ? "2 6" : "0"}
+            strokeWidth={r === 0 ? 1.5 : 0.6}
+            strokeDasharray={r % 2 === 0 ? "4 8" : "0"}
             animate={{ rotate: r % 2 === 0 ? 360 : -360 }}
-            transition={{ duration: 30 + r * 6, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "400px 400px" }}
+            transition={{ duration: 45 + r * 8, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "500px 500px" }}
           />
         ))}
 
-        {/* Center — bindu */}
+        {/* Outer decorative dotted circle */}
         <motion.circle
-          cx="400"
-          cy="400"
-          r="14"
+          cx="500"
+          cy="500"
+          r="460"
+          fill="none"
+          stroke="#ff8a1e"
+          strokeWidth="0.4"
+          opacity="0.2"
+          strokeDasharray="2 12"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 200, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: "500px 500px" }}
+        />
+
+        {/* Center bindu with glow */}
+        <motion.circle
+          cx="500"
+          cy="500"
+          r="18"
           fill="#ffb24d"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
+          filter="url(#bindu-glow)"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.8, 1, 0.8],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.circle
+          cx="500"
+          cy="500"
+          r="30"
+          fill="none"
+          stroke="#ff8a1e"
+          strokeWidth="1.2"
+          opacity="0.6"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.8, 0.4] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
         />
-        <circle cx="400" cy="400" r="22" fill="none" stroke="#ff8a1e" strokeWidth="1" />
-        <circle cx="400" cy="400" r="32" fill="none" stroke="#ff8a1e" strokeWidth="0.5" opacity="0.5" />
+        <circle cx="500" cy="500" r="44" fill="none" stroke="#f5c34a" strokeWidth="0.5" opacity="0.35" />
+        <circle cx="500" cy="500" r="58" fill="none" stroke="#ff8a1e" strokeWidth="0.3" opacity="0.2" />
       </svg>
     </div>
   );
 }
 
 /**
- * MandalaRotator — A simpler, smaller floating mandala for in-page accents.
+ * MandalaRotator — smaller floating mandala for in-page accents.
  */
 export function MandalaRotator({ size = 200 }: { size?: number }) {
   return (

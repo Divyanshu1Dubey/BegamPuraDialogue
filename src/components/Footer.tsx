@@ -3,9 +3,29 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { LanguageAware } from "./LanguageAware";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { t } from "@/i18n/translations";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguage();
+
+  const quickLinks = [
+    { labelKey: "about", href: "/about" },
+    { labelKey: "teachings", href: "/teachings" },
+    { labelKey: "begampura", href: "/begampura" },
+    { labelKey: "shabads", href: "/shabads" },
+    { labelKey: "events", href: "/events" },
+    { labelKey: "library", href: "/library" },
+    { labelKey: "gallery", href: "/gallery" },
+    { labelKey: "connect", href: "/connect" },
+  ];
+
+  function navLabel(key: string) {
+    const entry = (t.nav as Record<string, { en: string; hi: string; pa: string }>)[key];
+    return entry ? <LanguageAware {...entry} /> : key;
+  }
   return (
     <footer className="relative mt-32 border-t border-border/50 bg-bg-soft">
       {/* Decorative top line */}
@@ -40,25 +60,16 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="font-display text-sm font-bold text-saffron mb-4 uppercase tracking-wider">
-              Quick Links
+              <LanguageAware en="Quick Links" hi="त्वरित लिंक" pa="ਤੇਜ਼ ਲਿੰਕ" />
             </h4>
             <ul className="space-y-2.5">
-              {[
-                { label: "About BRHF", href: "/about" },
-                { label: "Teachings", href: "/teachings" },
-                { label: "Begampura Vision", href: "/begampura" },
-                { label: "16 Raags", href: "/shabads" },
-                { label: "Events 2026-27", href: "/events" },
-                { label: "E-Library", href: "/library" },
-                { label: "Gallery", href: "/gallery" },
-                { label: "Contact", href: "/connect" },
-              ].map((item) => (
-                <li key={item.label}>
+              {quickLinks.map((item) => (
+                <li key={item.href}>
                   <Link
                     href={item.href}
                     className="text-sm text-ink-soft hover:text-saffron transition-colors duration-200 hover:translate-x-1 inline-block"
                   >
-                    {item.label}
+                    {navLabel(item.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -68,19 +79,23 @@ export function Footer() {
           {/* Stay Connected */}
           <div>
             <h4 className="font-display text-sm font-bold text-saffron mb-4 uppercase tracking-wider">
-              Stay Connected
+              <LanguageAware en="Stay Connected" hi="जुड़े रहें" pa="ਜੁੜੇ ਰਹੋ" />
             </h4>
             <p className="text-sm text-ink-soft mb-4">
-              Daily Shabad from Sri Guru Granth Sahib Ji in your inbox.
+              <LanguageAware
+                en="Daily Shabad from Sri Guru Granth Sahib Ji in your inbox."
+                hi="ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਦਾ ਰੋਜ਼ ਦਾ ਸ਼ਬਦ ਤੁਹਾਡੇ ਇਨਬਾਕਸ ਵਿੱਚ।"
+                pa="ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਦਾ ਰੋਜ਼ ਦਾ ਸ਼ਬਦ ਤੁਹਾਡੇ ਇਨਬਾਕਸ ਵਿੱਚ।"
+              />
             </p>
             <div className="flex gap-2">
               <input
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t.footer.emailPlaceholder[language]}
                 className="flex-1 px-3 py-2 rounded-xl bg-surface border border-border text-sm text-ink placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/50"
               />
               <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-sm font-medium hover:opacity-90 transition-opacity">
-                Join
+                <LanguageAware en="Join" hi="शामिल" pa="ਸ਼ਾਮਲ" />
               </button>
             </div>
             <Separator className="my-6 bg-border/50" />
@@ -102,19 +117,14 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-ink-soft/50">
-            © {currentYear} British Ravidassia Heritage Foundation. All rights
-            reserved. | BRHF Charity No. 1199953
+            &copy; {currentYear} British Ravidassia Heritage Foundation.{" "}
+            <LanguageAware en="All rights reserved." hi="सर्वाधिकार सुरक्षित।" pa="ਸਾਰੇ ਅਧਿਕਾਰ ਰਾਖਵੇਂ।" />{" "}
+            BRHF Charity No. 1199953
           </p>
           <div className="flex gap-6 text-xs text-ink-soft/50">
-            <a href="#" className="hover:text-saffron transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-saffron transition-colors">
-              Terms of Use
-            </a>
-            <a href="#" className="hover:text-saffron transition-colors">
-              Sitemap
-            </a>
+            <Link href="#" className="hover:text-saffron transition-colors"><LanguageAware en="Privacy Policy" hi="गोपनीयता नीति" pa="ਗੋਪਨੀਯਤਾ ਨੀਤੀ" /></Link>
+            <Link href="#" className="hover:text-saffron transition-colors"><LanguageAware en="Terms of Use" hi="ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ" pa="ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ" /></Link>
+            <Link href="#" className="hover:text-saffron transition-colors"><LanguageAware en="Sitemap" hi="ਸਾਇਟਮੈਪ" pa="ਸਾਈਟਮੈਪ" /></Link>
           </div>
         </div>
       </div>

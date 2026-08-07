@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin, Users, Heart, BookOpen, Globe, Award, Sparkles } from "lucide-react";
 import { guru } from "@/data/guru";
 import { LanguageAware } from "./LanguageAware";
+import { RavidassImage } from "./RavidassPortrait";
 
 const stats = [
   { value: "126", label: "Years Lived", icon: Calendar },
@@ -46,6 +47,31 @@ export function About() {
               hi="गंगा के तट पर चमड़ी के परिवार में जन्मे संत रविदास जी इतिहास के सबसे प्रकाशमान संतों में से एक बने — जातिविहीन समाज, निर्दोष नगर, और सभी श्रम की समान गरिमा को सबसे पहले मुखरित करने वाले।"
               pa="ਗੰਗਾ ਦੇ ਕੰਢੇ ਚਮੜੇ ਦੇ ਪਰਿਵਾਰ ਵਿੱਚ ਜੰਮੇ ਸੰਤ ਰਵਿਦਾਸ ਜੀ ਇਤਿਹਾਸ ਦੇ ਸਭ ਤੋਂ ਰੌਸ਼ਨ ਸੰਤਾਂ ਵਿੱਚੋਂ ਇੱਕ ਬਣੇ।"
             />
+          </p>
+        </motion.div>
+
+        {/* Saint portrait — drawn-on-load reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.2, 0.8, 0.2, 1] }}
+          className="flex flex-col items-center mb-16"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/30 to-royal/40" />
+            </div>
+            <RavidassImage
+              src="/assets/OIP.webp"
+              alt="Sant Ravidas Ji — drawn-on-load portrait"
+              size={260}
+              revealDuration={2.8}
+              className="relative"
+            />
+          </div>
+          <p className="mt-4 text-xs uppercase tracking-[0.3em] text-saffron/70">
+            Sant Ravidas Ji · 1377–1540
           </p>
         </motion.div>
 
@@ -143,6 +169,53 @@ export function About() {
                 over {guru.travels.journeys} journeys and {guru.travels.satsangs.toLocaleString()} satsangs.
               </p>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Devotional Art Strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-20"
+        >
+          <div className="text-center mb-10">
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron">
+              <LanguageAware
+                en="Devotional Art Through the Ages"
+                hi="सभी युगों में भक्ति कला"
+                pa="ਸਾਰੇ ਯੁੱਗਾਂ ਵਿੱਚ ਭਗਤੀ ਕਲਾ"
+              />
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { src: "/assets/Sri-Guru-Ravidas-Photo-Download-Free.jpg", alt: "Painted devotional portrait" },
+              { src: "/assets/Shri-Guru-Ravidas-Ji-Image-Pictures-Download.jpg", alt: "Temple sculpted murti" },
+              { src: "/assets/guru-ravidass-hindu-holy-saint-qdl6bp29umg4uvrl.jpg", alt: "Classical painting of Guru Ravidas" },
+              { src: "/assets/LaserCutting-Sant-ravidas-Portrait.png", alt: "Modern laser-cut portrait art" },
+            ].map((img, i) => (
+              <motion.figure
+                key={img.src}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group relative aspect-square rounded-2xl overflow-hidden card-glass card-saffron-glow"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent pointer-events-none" />
+                <figcaption className="absolute bottom-2 inset-x-2 text-center text-[10px] uppercase tracking-wider text-saffron-bright/90 drop-shadow-lg">
+                  {img.alt}
+                </figcaption>
+              </motion.figure>
+            ))}
           </div>
         </motion.div>
       </div>

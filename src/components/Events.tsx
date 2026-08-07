@@ -174,6 +174,55 @@ export function Events() {
             ))}
           </div>
         </motion.div>
+
+        {/* Photo strip — global celebrations */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron">
+              <LanguageAware
+                en="Celebrations Around the World"
+                hi="दुनिया भर में उत्सव"
+                pa="ਦੁਨੀਆਂ ਭਰ ਵਿੱਚ ਉਤਸਾਵ"
+              />
+            </h3>
+          </div>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            {[
+              { src: "/assets/sant-ravidasss.jpg", alt: "Varanasi" },
+              { src: "/assets/lotsofsantravi.jpg", alt: "Diwali at Gali Begampura" },
+              { src: "/assets/booj-ravidas.webp", alt: "Janam Jayanti Mahotsav" },
+              { src: "/assets/bjp-ravidas.jpg", alt: "UK House of Lords" },
+              { src: "/assets/jp-nadda(bjp).jpg", alt: "Brussels Parliament" },
+              { src: "/assets/bowing.webp", alt: "Devotee offering" },
+            ].map((img, i) => (
+              <motion.figure
+                key={img.src}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="group relative aspect-square rounded-xl overflow-hidden card-saffron-glow"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/70 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                <figcaption className="absolute bottom-1.5 left-1.5 right-1.5 text-[8px] md:text-[10px] uppercase tracking-wider text-white/90 text-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md">
+                  {img.alt}
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

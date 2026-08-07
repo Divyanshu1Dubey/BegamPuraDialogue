@@ -1,0 +1,186 @@
+- generic [active] [ref=f4e1]:
+  - navigation [ref=f4e2]:
+    - generic [ref=f4e3]:
+      - link "BR BRHF 650th Janam Jayanti" [ref=f4e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f4e5]: BR
+        - generic [ref=f4e8]:
+          - generic [ref=f4e9]: BRHF
+          - generic [ref=f4e10]: 650th Janam Jayanti
+      - generic [ref=f4e11]:
+        - link "Home" [ref=f4e12] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f4e13] [cursor=pointer]:
+          - /url: /about
+        - link "Teachings" [ref=f4e14] [cursor=pointer]:
+          - /url: /teachings
+        - link "Begampura" [ref=f4e15] [cursor=pointer]:
+          - /url: /begampura
+        - link "16 Raags" [ref=f4e16] [cursor=pointer]:
+          - /url: /shabads
+        - link "Events" [ref=f4e17] [cursor=pointer]:
+          - /url: /events
+        - link "E-Library" [ref=f4e19] [cursor=pointer]:
+          - /url: /library
+        - link "Gallery" [ref=f4e20] [cursor=pointer]:
+          - /url: /gallery
+        - link "Connect" [ref=f4e21] [cursor=pointer]:
+          - /url: /connect
+      - generic [ref=f4e22]:
+        - button "EN" [ref=f4e25]
+        - button "Toggle theme" [ref=f4e33]
+  - main [ref=f4e40]:
+    - generic [ref=f4e43]:
+      - generic [ref=f4e44]:
+        - generic [ref=f4e45]: Chapter V
+        - heading "Global Commemorative Events" [level=2] [ref=f4e46]
+        - paragraph [ref=f4e47]: From the heart of Varanasi to the House of Lords in London and the European Parliament in Brussels — the message of Begampura travels the world.
+      - generic [ref=f4e48]:
+        - generic [ref=f4e49]:
+          - generic [ref=f4e50]:
+            - generic [ref=f4e51]: 🇮🇳
+            - generic [ref=f4e52]: November 2026 2026
+            - heading "Bhashan Shivir — 'The Sound of Begampura'" [level=3] [ref=f4e56]
+            - paragraph [ref=f4e57]: भाषण शिविर — बेगमपुरा का स्वर
+            - generic [ref=f4e58]: New Delhi, India
+          - generic [ref=f4e63]:
+            - paragraph [ref=f4e64]: A week-long programme of discourses, exhibitions, and cultural performances leading up to the 650th Janam Jayanti celebration.
+            - button "Learn More" [ref=f4e65]
+        - generic [ref=f4e69]:
+          - generic [ref=f4e70]:
+            - generic [ref=f4e71]: 🇬🇧
+            - generic [ref=f4e72]: Early 2027 2027
+            - heading "Exhibition at the House of Lords, UK" [level=3] [ref=f4e76]
+            - paragraph [ref=f4e77]: UK हाउस ऑफ लॉर्ड्स में प्रदर्शनी
+            - generic [ref=f4e78]: Palace of Westminster, London, United Kingdom
+          - generic [ref=f4e83]:
+            - paragraph [ref=f4e84]: An exhibition on the life and teachings of Sant Ravidas Ji at the historic House of Lords — bringing the Begampura message to the UK Parliament.
+            - button "Learn More" [ref=f4e85]
+        - generic [ref=f4e89]:
+          - generic [ref=f4e90]:
+            - generic [ref=f4e91]: 🇪🇺
+            - generic [ref=f4e92]: January 2027 2027
+            - heading "Be-gumpura Dialogue at the European Parliament" [level=3] [ref=f4e96]
+            - paragraph [ref=f4e97]: यूरोपियन परlement में बेगमपुरा बातचीत
+            - generic [ref=f4e98]: European Parliament, Brussels, Belgium
+          - generic [ref=f4e103]:
+            - paragraph [ref=f4e104]: A high-level policy dialogue on the Begampura vision and its relevance for contemporary European and global governance, hosted at the European Parliament.
+            - button "Learn More" [ref=f4e105]
+        - generic [ref=f4e109]:
+          - generic [ref=f4e110]:
+            - generic [ref=f4e111]: 🕉️
+            - generic [ref=f4e112]: February 2027 2027
+            - heading "650th Janam Jayanti Mahotsav" [level=3] [ref=f4e116]
+            - paragraph [ref=f4e117]: 650वीं जन्म जयंती महोत्सव
+            - generic [ref=f4e118]: Varanasi (and globally simultaneous celebrations)
+          - generic [ref=f4e123]:
+            - paragraph [ref=f4e124]: The pinnacle commemoration — spiritual gatherings, exhibitions, kirtan sewa, and global prayers honouring 650 years of the Begampura message.
+            - button "Learn More" [ref=f4e125]
+      - generic [ref=f4e129]:
+        - generic [ref=f4e130]:
+          - heading "8 Global Yatras · Exhibition Series" [level=3] [ref=f4e131]
+          - paragraph [ref=f4e132]: A journey through the life and philosophy of Sant Ravidas Ji — 8 curated exhibitions spanning the globe.
+        - generic [ref=f4e133]:
+          - generic [ref=f4e134]:
+            - generic [ref=f4e135]: "1"
+            - paragraph [ref=f4e136]: "Yatra 1: Early Life & Spiritual Awakening (Varanasi)"
+          - generic [ref=f4e137]:
+            - generic [ref=f4e138]: "2"
+            - paragraph [ref=f4e139]: "Yatra 2: Philosophical Teachings — Begampura & Equality"
+          - generic [ref=f4e140]:
+            - generic [ref=f4e141]: "3"
+            - paragraph [ref=f4e142]: "Yatra 3: Anti-Caste Movement & Social Revolution"
+          - generic [ref=f4e143]:
+            - generic [ref=f4e144]: "4"
+            - paragraph [ref=f4e145]: "Yatra 4: The 40,000 km Journey — Travels & Contemporaries"
+          - generic [ref=f4e146]:
+            - generic [ref=f4e147]: "5"
+            - paragraph [ref=f4e148]: "Yatra 5: Miracles, Legends & Popular Devotion"
+          - generic [ref=f4e149]:
+            - generic [ref=f4e150]: "6"
+            - paragraph [ref=f4e151]: "Yatra 6: Bani in Guru Granth Sahib — 16 Raags, 126 Shabads"
+          - generic [ref=f4e152]:
+            - generic [ref=f4e153]: "7"
+            - paragraph [ref=f4e154]: "Yatra 7: Global Diaspora — Ravidassia Communities in UK, USA, Canada, Brazil"
+          - generic [ref=f4e155]:
+            - generic [ref=f4e156]: "8"
+            - paragraph [ref=f4e157]: "Yatra 8: Begampura Vision for the 21st Century"
+      - generic [ref=f4e158]:
+        - heading "Mark Your Calendar" [level=3] [ref=f4e159]
+        - generic [ref=f4e160]:
+          - generic [ref=f4e161]:
+            - generic [ref=f4e162]: 10 Aug 2026
+            - paragraph [ref=f4e167]: Be-gumpura Dialogue — National Dialogue & Community Leadership Conclave, New Delhi
+          - generic [ref=f4e168]:
+            - generic [ref=f4e169]: 1 Nov 2026
+            - paragraph [ref=f4e174]: 650th Janam Jayanti Global Commemorative Series Begins (Bhashan Shivir, Delhi)
+          - generic [ref=f4e175]:
+            - generic [ref=f4e176]: 15 Nov 2026
+            - paragraph [ref=f4e181]: UK House of Lords Exhibition — Opening
+          - generic [ref=f4e182]:
+            - generic [ref=f4e183]: 20 Jan 2027
+            - paragraph [ref=f4e188]: European Parliament Be-gumpura Dialogue, Brussels
+          - generic [ref=f4e189]:
+            - generic [ref=f4e190]: 16 Feb 2027
+            - paragraph [ref=f4e195]: 650th Janam Jayanti Mahotsav — Magh Purnima, Varanasi
+  - contentinfo [ref=f4e196]:
+    - generic [ref=f4e198]:
+      - generic [ref=f4e199]:
+        - generic [ref=f4e200]:
+          - generic [ref=f4e201]:
+            - generic [ref=f4e202]: BR
+            - generic [ref=f4e205]:
+              - heading "British Ravidassia Heritage Foundation" [level=3] [ref=f4e206]
+              - paragraph [ref=f4e207]: Charity Reg. 1199953 (UK)
+          - paragraph [ref=f4e208]: Dedicated to preserving and propagating the timeless teachings of Sant Ravidas Ji — the light of Begampura for a world free from sorrow, fear, and inequality.
+          - paragraph [ref=f4e209]: 1 Chaucer Drive, Biggleswade, Bedfordshire SG18 8QG, UK
+        - generic [ref=f4e210]:
+          - heading "Quick Links" [level=4] [ref=f4e211]
+          - list [ref=f4e212]:
+            - listitem [ref=f4e213]:
+              - link "About BRHF" [ref=f4e214] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f4e215]:
+              - link "Teachings" [ref=f4e216] [cursor=pointer]:
+                - /url: /teachings
+            - listitem [ref=f4e217]:
+              - link "Begampura Vision" [ref=f4e218] [cursor=pointer]:
+                - /url: /begampura
+            - listitem [ref=f4e219]:
+              - link "16 Raags" [ref=f4e220] [cursor=pointer]:
+                - /url: /shabads
+            - listitem [ref=f4e221]:
+              - link "Events 2026-27" [ref=f4e222] [cursor=pointer]:
+                - /url: /events
+            - listitem [ref=f4e223]:
+              - link "E-Library" [ref=f4e224] [cursor=pointer]:
+                - /url: /library
+            - listitem [ref=f4e225]:
+              - link "Gallery" [ref=f4e226] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=f4e227]:
+              - link "Contact" [ref=f4e228] [cursor=pointer]:
+                - /url: /connect
+        - generic [ref=f4e229]:
+          - heading "Stay Connected" [level=4] [ref=f4e230]
+          - paragraph [ref=f4e231]: Daily Shabad from Sri Guru Granth Sahib Ji in your inbox.
+          - generic [ref=f4e232]:
+            - textbox "your@email.com" [ref=f4e233]
+            - button "Join" [ref=f4e234]
+          - separator [ref=f4e235]
+          - generic [ref=f4e236]:
+            - button "FB" [ref=f4e237]
+            - button "TW" [ref=f4e238]
+            - button "IG" [ref=f4e239]
+            - button "YT" [ref=f4e240]
+      - separator [ref=f4e241]
+      - generic [ref=f4e242]:
+        - paragraph [ref=f4e243]: © 2026 British Ravidassia Heritage Foundation. All rights reserved. | BRHF Charity No. 1199953
+        - generic [ref=f4e244]:
+          - link "Privacy Policy" [ref=f4e245] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Use" [ref=f4e246] [cursor=pointer]:
+            - /url: "#"
+          - link "Sitemap" [ref=f4e247] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=f4e253] [cursor=pointer]

@@ -86,5 +86,9 @@ export const t = {
     subscribe: { en: "Daily Shabad in your inbox", hi: "रोज़ का शबाद आपके इनबॉक्स में", pa: "ਰੋਜ਼ ਦਾ ਸ਼ਬਦ ਤੁਹਾਡੇ ਇਨਬਾਕਸ ਵਿੱਚ" },
     emailPlaceholder: { en: "Your email", hi: "आपका ईमेल", pa: "ਤੁਹਾਡਾ ਈਮੇਲ" },
     rights: { en: "All rights reserved.", hi: "सर्वाधिकार सुरक्षित।", pa: "ਸਾਰੇ ਅਧਿਕਾਰ ਰਾਖਵੇਂ।" },
+    privacy: { en: "Privacy Policy", hi: "गोपनीयता नीति", pa: "ਗੋਪਨੀਯਤਾ ਨੀਤੀ" },
+    terms: { en: "Terms of Use", hi: "उपयोग की शर्तें", pa: "ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ" },
+    sitemap: { en: "Sitemap", hi: "ਸਾਇਟਮੈਪ", pa: "ਸਾਈਟਮੈਪ" },
   },
+  raag: { en: "Raag", hi: "राग", pa: "ਰਾਗ" },
 };

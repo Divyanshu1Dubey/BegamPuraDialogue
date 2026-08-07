@@ -3,11 +3,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
-import Link from "next/link";
 import { SacredGeometry } from "./SacredGeometry";
 import { Countdown } from "./Countdown";
 import { LanguageAware } from "./LanguageAware";
 import { DailyQuoteWidget } from "./DailyQuoteWidget";
+import { RavidassImage } from "./RavidassPortrait";
+import { SignatureMark } from "./SignatureMark";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -16,30 +17,39 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <section
       ref={ref}
       id="home"
-      className="relative min-h-screen flex items-start justify-center overflow-x-hidden overflow-y-visible bg-mandala"
+      className="relative min-h-screen flex items-start justify-center overflow-x-hidden bg-mandala"
     >
-      {/* Sacred Geometry */}
-      <SacredGeometry />
+      {/* Sacred Geometry — behind everything */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <SacredGeometry />
+      </div>
 
       {/* Floating particles */}
       <FloatingParticles />
 
-      {/* Content */}
       <motion.div
         style={{ y, opacity }}
         className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8 text-center pt-24 lg:pt-32 pb-20 lg:pb-28"
       >
-        {/* Top tag */}
+        {/* Top tag with animated signature mark */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-saffron/30 bg-saffron/5 backdrop-blur-md"
+          className="inline-flex items-center gap-3 px-4 py-1.5 mb-6 rounded-full border border-saffron/30 bg-saffron/5 backdrop-blur-md"
         >
+          <SignatureMark size={56} />
           <Sparkles className="h-3.5 w-3.5 text-saffron" />
           <span className="text-xs font-medium tracking-widest uppercase text-saffron-bright">
             <LanguageAware
@@ -50,15 +60,39 @@ export function Hero() {
           </span>
         </motion.div>
 
+        {/* Saint portrait — drawn-on-load */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
+          className="mb-6 flex justify-center relative z-10"
+        >
+          <div className="relative">
+            {/* Solid backdrop so portrait is always readable */}
+            <div className="absolute inset-0 -z-10 rounded-full bg-bg/60 backdrop-blur-sm scale-110" />
+            {/* Soft glow behind */}
+            <div className="absolute inset-0 -z-20 blur-3xl opacity-50">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/30 via-gold/20 to-royal/30" />
+            </div>
+            <RavidassImage
+              src="/assets/OIP.webp"
+              alt="Sant Ravidas Ji — drawn-on-load portrait"
+              size={260}
+              revealDuration={2.6}
+              className="relative animate-float"
+            />
+          </div>
+        </motion.div>
+
         {/* Main title */}
         <motion.div style={{ scale }}>
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight glow-saffron"
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight text-ink drop-shadow-[0_2px_12px_rgba(11,7,16,0.55)]"
           >
-            <span className="block text-gradient-mandala">Begampura</span>
+            <span className="block text-gradient-saffron">Begampura</span>
             <span className="block text-3xl md:text-5xl lg:text-6xl mt-3 text-ink/95">
               <LanguageAware
                 en="The Light of Equality"
@@ -90,8 +124,8 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <Link
-            href="/begampura"
+          <button
+            onClick={() => scrollToSection("begampura")}
             className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-2xl shadow-saffron/30 animate-pulse-saffron"
           >
             <span className="relative z-10">
@@ -101,9 +135,9 @@ export function Hero() {
                 pa="ਮਿਸ਼ਨ ਵੇਖੋ"
               />
             </span>
-          </Link>
-          <Link
-            href="/events"
+          </button>
+          <button
+            onClick={() => scrollToSection("events")}
             className="px-8 py-4 rounded-2xl border-2 border-saffron/30 bg-saffron/5 backdrop-blur-md text-saffron-bright font-semibold tracking-wide hover:bg-saffron/10 hover:border-saffron/60 transition-all"
           >
             <LanguageAware
@@ -111,7 +145,7 @@ export function Hero() {
               hi="650वीं के लिए पंजीकरण"
               pa="650ਵੀਂ ਲਈ ਰਜਿਸਟਰੇਸ਼ਨ"
             />
-          </Link>
+          </button>
         </motion.div>
 
         {/* Countdown */}
@@ -133,14 +167,20 @@ export function Hero() {
         transition={{ duration: 1, delay: 2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
       >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-ink-soft/60"
+        <button
+          onClick={() => scrollToSection("about")}
+          className="group flex flex-col items-center gap-2 text-ink-soft/70 hover:text-saffron transition-colors"
+          aria-label="Scroll down"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-          <ChevronDown className="h-4 w-4" />
-        </motion.div>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+            <ChevronDown className="h-4 w-4" />
+          </motion.div>
+        </button>
       </motion.div>
     </section>
   );
