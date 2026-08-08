@@ -3,6 +3,8 @@
 import { useMemo } from "react";
 import { useAdmin } from "@/hooks/useAdmin";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
+import { exportAnalyticsCSV, downloadCSV } from "@/lib/admin-data";
+import { Download } from "lucide-react";
 
 const PIE_COLORS = ["#ff8a1e", "#ffb24d", "#f5c34a", "#6c3aa6", "#3d1c66", "#5b1d8b"];
 
@@ -42,11 +44,27 @@ export default function AnalyticsPage() {
   const totalRaised = donations.reduce((s, d) => s + d.amount, 0);
   const avgDonation = donations.length ? Math.round(totalRaised / donations.length) : 0;
 
+  const handleExport = () => {
+    const csv = exportAnalyticsCSV(monthly, byMethod, byCampaign, donations);
+    downloadCSV(csv, `brhf-analytics-${new Date().toISOString().split("T")[0]}.csv`);
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Analytics</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Donation insights and contribution trends.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Analytics</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Donation insights and contribution trends.</p>
+        </div>
+        {donations.length > 0 && (
+          <button
+            onClick={handleExport}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-saffron to-saffron-deep text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </button>
+        )}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

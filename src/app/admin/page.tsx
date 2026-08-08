@@ -40,60 +40,108 @@ function StatCard({ title, value, icon: Icon, change, href }: { title: string; v
 export default function AdminDashboard() {
   const { state } = useAdmin();
 
-  const trafficData = [
-    { day: "Mon", visitors: 120 },
-    { day: "Tue", visitors: 180 },
-    { day: "Wed", visitors: 150 },
-    { day: "Thu", visitors: 220 },
-    { day: "Fri", visitors: 280 },
-    { day: "Sat", visitors: 350 },
-    { day: "Sun", visitors: 300 },
-  ];
-
+  // Real computed donation data — no fabricated numbers
   const totalDonations = state.donations.reduce((sum, d) => sum + d.amount, 0);
+  const totalDonors = state.donations.length;
+  const avgDonation = totalDonors > 0 ? Math.round(totalDonations / totalDonors) : 0;
+
+  // Real computed content counts
+  const totalEvents = state.events.length;
+  const totalGalleryItems = state.gallery.length;
+  const totalTeachings = state.teachings.length;
+  const totalShabads = state.begampura.pillars.length;
+
+  // Real monthly donation trend computed from actual donation dates
+  const monthlyData = (() => {
+    const map = new Map<string, { month: string; label: string; total: number; count: number }>();
+    state.donations.forEach((d) => {
+      const m = d.date.slice(0, 7);
+      const existing = map.get(m);
+      if (existing) {
+        existing.total += d.amount;
+        existing.count += 1;
+      } else {
+        map.set(m, { month: m, total: d.amount, count: 1, label: "" });
+      }
+    });
+    return Array.from(map.values())
+      .sort((a, b) => a.month.localeCompare(b.month))
+      .map((m) => ({
+        ...m,
+        label: new Date(m.month + "-01").toLocaleDateString("en-GB", { month: "short", year: "numeric" }),
+      }));
+  })();
+
+  const hasDonationData = state.donations.length > 0;
 
   return (
     <div className="space-y-6">
       {/* Welcome */}
-      <div className="bg-gradient-to-r from-saffron/10 via-saffron/5 to-transparent rounded-2xl p-6 border border-saffron/20">
+      <div className="bg-linear-to-r from-saffron/10 via-saffron/5 to-transparent rounded-2xl p-6 border border-saffron/20">
         <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Welcome back</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your Begampura Dialogue website content, donations, and analytics.</p>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid — all values computed from real data */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Donations" value={`£${totalDonations.toLocaleString()}`} icon={DollarSign} change="+12%" href="/admin/donations" />
-        <StatCard title="Total Visitors" value="1,840" icon={Eye} change="+8%" href="/admin/analytics" />
-        <StatCard title="Events Listed" value={`${state.events.length} events`} icon={Calendar} href="/admin/content/events" />
-        <StatCard title="Gallery Items" value={`${state.gallery.length} images`} icon={Image} href="/admin/content/gallery" />
+        <StatCard title="Total Donations" value={`£${totalDonations.toLocaleString()}`} icon={DollarSign} href="/admin/donations" />
+        <StatCard title="Total Donors" value={totalDonors.toString()} icon={Heart} href="/admin/donations" />
+        <StatCard title="Avg. Donation" value={`£${avgDonation.toLocaleString()}`} icon={TrendingUp} href="/admin/analytics" />
+        <StatCard title="Content Items" value={`${totalEvents + totalGalleryItems + totalTeachings}`} icon={FileText} href="/admin/content/about" />
       </div>
 
-      {/* Charts Row */}
+      {/* Secondary stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-xs text-gray-400 uppercase tracking-wider">Events</p>
+          <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalEvents}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-xs text-gray-400 uppercase tracking-wider">Gallery Items</p>
+          <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalGalleryItems}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-xs text-gray-400 uppercase tracking-wider">Teachings</p>
+          <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalTeachings}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-xs text-gray-400 uppercase tracking-wider">Begampura Pillars</p>
+          <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalShabads}</p>
+        </div>
+      </div>
+
+      {/* Charts Row — uses real donation data, no fabricated visitors */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Traffic Chart */}
+        {/* Real monthly donation trend */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-semibold text-ink dark:text-white mb-4">Weekly Traffic</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <AreaChart data={trafficData}>
-              <defs>
-                <linearGradient id="trafficGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ff8a1e" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#ff8a1e" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-700" />
-              <XAxis dataKey="day" tick={{ fontSize: 12, fill: "#9ca3af" }} />
-              <YAxis tick={{ fontSize: 12, fill: "#9ca3af" }} />
-              <Tooltip
-                contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 13 }}
-                labelStyle={{ color: "#6b7280", fontWeight: 600 }}
-              />
-              <Area type="monotone" dataKey="visitors" stroke="#ff8a1e" fill="url(#trafficGrad)" strokeWidth={2} />
-            </AreaChart>
-          </ResponsiveContainer>
+          <h3 className="text-lg font-semibold text-ink dark:text-white mb-4">Monthly Donation Trend</h3>
+          {hasDonationData ? (
+            <ResponsiveContainer width="100%" height={250}>
+              <AreaChart data={monthlyData}>
+                <defs>
+                  <linearGradient id="donGradDash" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#ff8a1e" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#ff8a1e" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-700" />
+                <XAxis dataKey="label" tick={{ fontSize: 12, fill: "#9ca3af" }} />
+                <YAxis tick={{ fontSize: 12, fill: "#9ca3af" }} />
+                <Tooltip
+                  contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 13 }}
+                  formatter={(value: unknown) => [`£${Number(value).toLocaleString()}`, "Donations"]}
+                />
+                <Area type="monotone" dataKey="total" stroke="#ff8a1e" fill="url(#donGradDash)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-64 text-gray-400 text-sm">
+              <p>No donation data yet. <Link href="/admin/donations" className="text-saffron hover:underline">Add your first donation</Link> to see trends.</p>
+            </div>
+          )}
         </div>
 
-        {/* Donation Breakdown */}
+        {/* Recent donations — real data */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
           <h3 className="text-lg font-semibold text-ink dark:text-white mb-4">Recent Donations</h3>
           <div className="space-y-3">
@@ -101,7 +149,7 @@ export default function AdminDashboard() {
               <div key={donation.id} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
                 <div>
                   <p className="text-sm font-medium text-ink dark:text-white">
-                    {donation.anonymous ? "Anonymous" : donation.donorName}
+                    {donation.anonymous ? "🙈 Anonymous" : donation.donorName}
                   </p>
                   <p className="text-xs text-gray-400">{donation.date} · {donation.method}</p>
                 </div>
@@ -109,7 +157,7 @@ export default function AdminDashboard() {
               </div>
             ))}
             {state.donations.length === 0 && (
-              <p className="text-sm text-gray-400 text-center py-4">No donations yet</p>
+              <p className="text-sm text-gray-400 text-center py-4">No donations yet — use the Donations page to add entries.</p>
             )}
           </div>
           <Link href="/admin/donations" className="block mt-4 text-center text-sm text-saffron hover:text-saffron-deep font-medium">

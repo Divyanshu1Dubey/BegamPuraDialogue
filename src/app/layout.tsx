@@ -132,7 +132,17 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    setIsAdmin(pathname.startsWith("/admin"));
+  }, [pathname]);
+
   return (
     <html
       lang="en"
@@ -144,55 +154,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         suppressHydrationWarning
         className="min-h-screen flex flex-col bg-bg text-ink font-unicode overflow-x-hidden"
       >
-        {/* JSON-LD Organization Schema */}
-        <Script
-          id="json-ld-organization"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "NGO",
-              name: "British Ravidassia Heritage Foundation",
-              alternateName: "BRHF",
-              url: siteUrl,
-              logo: `${siteUrl}/logo.svg`,
-              description:
-                "Celebrating the 650th Janam Jayanti of Sant Ravidas Ji and the Begampura vision.",
-              foundingDate: "2022",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "1 Chaucer Drive",
-                addressLocality: "Biggleswade",
-                addressRegion: "Bedfordshire",
-                postalCode: "SG18 8QG",
-                addressCountry: "GB",
-              },
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "+44-7951007320",
-                contactType: "General",
-                email: "brhresearch@yahoo.com",
-                areaServed: "Worldwide",
-              },
-              event: {
-                "@type": "Event",
-                name: "650th Janam Jayanti of Sant Ravidas Ji",
-                startDate: "2027-02-16",
-                endDate: "2027-02-22",
-                eventAttendanceMode:
-                  "https://schema.org/OfflineEventAttendanceMode",
-                eventStatus: "https://schema.org/EventScheduled",
-                location: [
-                  {
-                    "@type": "Place",
-                    name: "Varanasi, India",
-                    address: { "@type": "PostalAddress", addressCountry: "IN" },
-                  },
-                ],
-              },
-            }),
-          }}
-        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -204,10 +165,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <TooltipProvider delay={150}>
               <SkipToContent />
               <SEOManager />
-              <Navbar />
+              {!isAdmin && <Navbar />}
               <main id="main-content" className="flex-1 min-h-0">{children}</main>
-              <Footer />
-              <ScrollToTop />
+              {!isAdmin && <Footer />}
+              {isAdmin && <ScrollToTop />}
             </TooltipProvider>
           </LanguageProvider>
         </ThemeProvider>

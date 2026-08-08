@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAdmin } from "@/hooks/useAdmin";
 import type { AdminDonation } from "@/lib/admin-data";
+import { exportDonationsCSV, downloadCSV } from "@/lib/admin-data";
+import { Download, Upload, Trash2 } from "lucide-react";
 
 export default function DonationsEditor() {
   const { state, update } = useAdmin();
@@ -42,6 +44,57 @@ export default function DonationsEditor() {
     update("donations", donations.filter((d) => d.id !== id));
   };
 
+  const handleExportCSV = () => {
+    const csv = exportDonationsCSV(donations);
+    downloadCSV(csv, `brhf-donations-${new Date().toISOString().split("T")[0]}.csv`);
+  };
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImportCSV = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const text = ev.target?.result as string;
+        const lines = text.split("\n").filter((l) => l.trim());
+        // Skip header rows (look for first data line that starts with "don-" or any ID)
+        const dataLines = lines.filter((l) => {
+          const trimmed = l.replace(/^["﻿]+/, "").trim();
+          return trimmed.length > 0 && !trimmed.startsWith("===") && !trimmed.includes("Donor Name") && !trimmed.includes("ID,");
+        });
+        const imported: AdminDonation[] = [];
+        dataLines.forEach((line) => {
+          const cells = line.match(/"([^"]*)"|([^,]+)/g) || [line];
+          const values = cells.map((c) => c.replace(/^"|"$/g, "").trim());
+          if (values.length >= 4) {
+            const amount = parseFloat(values[2]);
+            if (isNaN(amount)) return;
+            imported.push({
+              id: values[0] || `don-import-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+              donorName: values[1] || "Imported Donor",
+              amount,
+              currency: values[3] || "GBP",
+              date: values[4] || new Date().toISOString().split("T")[0],
+              method: values[5] || "Imported",
+              campaign: values[6] || "General",
+              anonymous: values[7] === "Yes",
+              message: values[8] || undefined,
+            });
+          }
+        });
+        if (imported.length > 0) {
+          update("donations", [...imported, ...donations]);
+        }
+      } catch {
+        alert("Failed to parse CSV file. Please check the format.");
+      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
@@ -67,6 +120,41 @@ export default function DonationsEditor() {
             £{donations.length ? Math.round(total / donations.length).toLocaleString() : 0}
           </p>
         </div>
+      </div>
+
+      {/* CSV actions */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={handleExportCSV}
+          disabled={donations.length === 0}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-saffron to-saffron-deep text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <Download className="h-4 w-4" />
+          Export CSV
+        </button>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-royal to-royal-deep text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
+        >
+          <Upload className="h-4 w-4" />
+          Import CSV
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".csv,text/csv"
+          onChange={handleImportCSV}
+          className="hidden"
+        />
+        {donations.length > 0 && (
+          <button
+            onClick={() => { if (confirm("Delete ALL donations? This cannot be undone.")) update("donations", []); }}
+            className="inline-flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 rounded-xl text-sm font-medium hover:bg-red-50 transition-colors"
+          >
+            <Trash2 className="h-4 w-4" />
+            Clear All
+          </button>
+        )}
       </div>
 
       {/* Add donation */}

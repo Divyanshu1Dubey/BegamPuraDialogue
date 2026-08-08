@@ -1,5 +1,6 @@
 // Admin data store — single source of truth for all editable content
 // Syncs to localStorage so changes persist across sessions without a backend.
+// All defaults are EMPTY — no fabricated data. Real data comes from admin entry.
 
 export interface AdminHero {
   title: string;
@@ -154,85 +155,37 @@ function getDefaults(): AdminState {
       portraitSrc: "/assets/OIP.webp",
     },
     about: {
-      intro: "Sant Ravidas Ji (1414–1540 AD) — the saint-poet who gave the world the vision of Begampura, a city without sorrow, without fear, without tax on labour.",
-      stats: [
-        { label: "Years Lived", labelHindi: "वर्ष जीवित", value: "126", icon: "Calendar" },
-        { label: "Satsangs Held", labelHindi: "सत्संग", value: "94,000+", icon: "Users" },
-        { label: "Km Travelled", labelHindi: "किमी यात्रा", value: "40,000+", icon: "MapPin" },
-        { label: "Shabads Penned", labelHindi: "शabad", value: "126", icon: "BookOpen" },
-        { label: "Raags", labelHindi: "राग", value: "16", icon: "Music" },
-        { label: "Shlokas", labelHindi: "श्लोक", value: "216", icon: "FileText" },
-      ],
-      timeline: [
-        { period: "1414 AD", title: "Birth at Varanasi", titleHindi: "काशी में जन्म", description: "Born to Shri Raghunanda and Shrimati Karma Devi in Manduadih, Seergovardhanpur on the banks of the Ganges." },
-        { period: "1420 AD", title: "Spiritual Awakening", titleHindi: "आध्यात्मिक जागृति", description: "Under the guidance of Guru Ramanand, began the journey of Bhakti and selfless service." },
-        { period: "1440 AD", title: "First Public Discourse", titleHindi: "पहला सार्वजनिक भाषण", description: "First to give public discourse from a temple, breaking the caste barrier at Varanasi's Vishwanath Gali." },
-        { period: "1490 AD", title: "8 Great Yatras", titleHindi: "8 महान यात्राएं", description: "Travelled 40,000 km across the Indian subcontinent — Punjab, Rajasthan, Gujarat, Bengal, Karnataka, Delhi, Mithila, Gorakhpur." },
-        { period: "1528 AD", title: "Miracles & Teachings", titleHindi: "चमत्कार और शिक्षाएं", description: "Cured Prince Humayun; convinced Sultan Sikandar Lodhi to walk beside him as an equal; performed many acts of divine justice." },
-        { period: "1540 AD", title: "Departure from Begampura", titleHindi: "बेगमपुरा से प्रस्थान", description: "Left this world at the age of 126, leaving behind a legacy of equality, dignity, and the song of Begampura." },
-      ],
+      intro: "",
+      stats: [],
+      timeline: [],
     },
-    teachings: [
-      { title: "Begampura", titleHindi: "बेगमपुरा", description: "The first vision of a society without caste, without tax on labour, without sorrow — the guiding star of any modern welfare state.", icon: "Castle", color: "from-saffron to-saffron-deep" },
-      { title: "Dignity of Labour", titleHindi: "श्रम की गरिमा", description: "Honest labour is true devotion — work over pedigree, Kirat as the highest form of worship.", icon: "Hammer", color: "from-amber-400 to-orange-500" },
-      { title: "Anti-Caste", titleHindi: "जाति-विहीन समाज", description: "Rejected the varna order — 'The Lord made all from one clay; how then is one better?'", icon: "Scale", color: "from-royal to-indigo" },
-      { title: "Universal Brotherhood", titleHindi: "एक नूर", description: "All light comes from the One — the chhotas and brahmins stand equal in God's court.", icon: "Globe", color: "from-emerald-400 to-teal-600" },
-      { title: "Woman as Sacred", titleHindi: "नारी की पवित्रता", description: "'From a woman is the seed of all — why is she considered evil?' First to publicly revere the divine feminine.", icon: "Heart", color: "from-rose-400 to-pink-600" },
-      { title: "Sabhal Sobha", titleHindi: "सभल विच सोभा", description: "The Divine resides in every gathering — where the people are, there is God. Sabka Saath, Sabka Vikas.", icon: "Users", color: "from-violet-500 to-purple-700" },
-    ],
+    teachings: [],
     begampura: {
-      heading: "The Vision of Begampura",
-      subheading: "A City Without Sorrow",
-      vision: "Begampura is not a physical city — it is a state of being, a social order, a declaration. It is the first articulation in world literature of a casteless, classless, fearless society where every human being lives with dignity, free from exploitation and sorrow.",
-      pillars: [
-        { title: "No Caste", description: "Equality of all human beings — the divine spark resides in every heart equally." },
-        { title: "No Tax on Labour", description: "Honest work is sacred — no exploitation of the worker, no unjust extraction." },
-        { title: "No Sorrow", description: "A society where fear, want, and injustice have no address — Begampura, the city without sorrow." },
-        { title: "No Fear", description: "Freedom from oppression, violence, and discrimination — the fearless citizen is the foundation of a just society." },
-      ],
+      heading: "",
+      subheading: "",
+      vision: "",
+      pillars: [],
     },
-    events: [
-      { id: "evt-1", title: "Be-gumpura Dialogue", titleHindi: "बेगमपुरा बातचीत", date: "2026-08-10", location: "New Delhi, India", description: "National Dialogue & Community Leadership Conclave bringing together leaders from across India.", icon: "🇮🇳", featured: true },
-      { id: "evt-2", title: "Bhashan Shivir", titleHindi: "भाषण शिविर", date: "2026-11-01", location: "New Delhi, India", description: "Week-long programme of discourses, exhibitions, and cultural performances.", icon: "🎤", featured: true },
-      { id: "evt-3", title: "UK House of Lords Exhibition", titleHindi: "UK सांसद भवन प्रदर्शनी", date: "2026-11-15", location: "London, United Kingdom", description: "Exhibition on the life and teachings of Sant Ravidas Ji at the historic House of Lords.", icon: "🇬🇧", featured: true },
-      { id: "evt-4", title: "Be-gumpura Dialogue at European Parliament", titleHindi: "यूरोपियan Sansad बातचीत", date: "2027-01-20", location: "Brussels, Belgium", description: "High-level policy dialogue on the Begampura vision for contemporary governance.", icon: "🇪🇺", featured: true },
-      { id: "evt-5", title: "650th Janam Jayanti Mahotsav", titleHindi: "650वीं जन्म जयंती महोत्सव", date: "2027-02-16", location: "Varanasi, India", description: "The pinnacle commemoration — spiritual gatherings, exhibitions, kirtan sewa, and global prayers.", icon: "🕉️", featured: true },
-    ],
-    gallery: [
-      { id: "gal-1", src: "/assets/OIP.webp", alt: "Sant Ravidas Ji Portrait", caption: "Sant Ravidas Ji — the visionary saint", category: "Portrait", featured: true },
-      { id: "gal-2", src: "/assets/650th-anniversary-begampura-dialogue-brhf-celebration-sant-ravidas.png", alt: "BRHF 650th Celebration", caption: "BRHF celebrating the 650th Janam Jayanti", category: "Events", featured: true },
-      { id: "gal-3", src: "/assets/brhf.png", alt: "BRHF Logo", caption: "British Ravidassia Heritage Foundation", category: "Logo", featured: true },
-      { id: "gal-4", src: "/assets/begampura_dialogue_logo.png", alt: "Begampura Dialogue Logo", caption: "Begampura Dialogue — BRHF initiative", category: "Logo", featured: true },
-    ],
-    library: [
-      { id: "lib-1", title: "Begampura Dialogue — Official Publication", titleHindi: "बेगमपुरा बातचीत — आधिकारिक प्रकाशन", type: "pdf", src: "/assets/begampura-dialogue-1.pdf", description: "Complete publication of the Begampura Dialogue initiative." },
-      { id: "lib-2", title: "650th Janam Jayanti — Exhibition Catalogue", titleHindi: "650वीं जन्म जयंती — प्रदर्शनी कैटलॉग", type: "pdf", src: "/assets/janamjayanti2027.pdf", description: "Catalogue of the 650th Janam Jayanti exhibitions across 8 yatras." },
-    ],
-    donations: [
-      { id: "don-1", donorName: "Anonymous", amount: 500, currency: "GBP", date: "2026-08-07", method: "Online", anonymous: true, campaign: "General" },
-      { id: "don-2", donorName: "Sat Paul", amount: 1000, currency: "GBP", date: "2026-08-06", method: "Bank Transfer", anonymous: false, campaign: "General" },
-      { id: "don-3", donorName: "Rajesh Bagha", amount: 750, currency: "GBP", date: "2026-08-05", method: "Online", anonymous: false, campaign: "Exhibition" },
-    ],
+    events: [],
+    gallery: [],
+    library: [],
+    donations: [],
     settings: {
       siteName: "BRHF · Begampura Dialogue",
       siteUrl: "https://begampuradialogue.org",
       countdownTarget: "2027-02-16T06:00:00+05:30",
-      // Global SEO
-      seoTitle: "BRHF · Begampura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji",
-      seoDescription: "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Begampura, the city without sorrow, fear, or tax on labour. Initiated by the British Ravidassia Heritage Foundation.",
-      seoKeywords: "Sant Ravidas,Ravidas Ji,Begampura,650th Janam Jayanti,Guru Ravidas,British Ravidassia Heritage Foundation,BRHF,Guru Granth Sahib,Ravidassia,Be-gumpura,National Dialogue,Delhi 2026,interfaith,equality,anti-caste,Sangat,Punjab,Varanasi",
-      // Open Graph
-      ogTitle: "BRHF · Begampura Dialogue — 650th Janam Jayanti",
-      ogDescription: "The light of Begampura — celebrating 650 years of Sant Ravidas Ji's vision of equality, dignity, and a city without sorrow.",
+      seoTitle: "",
+      seoDescription: "",
+      seoKeywords: "",
+      ogTitle: "",
+      ogDescription: "",
       ogImage: "/og-image.svg",
       ogUrl: "https://begampuradialogue.org",
-      // Twitter
       twitterHandle: "@BRHFofficial",
       twitterCardType: "summary_large_image",
-      // JSON-LD
       orgName: "British Ravidassia Heritage Foundation",
       orgLogo: "/logo.svg",
-      orgDescription: "Celebrating the 650th Janam Jayanti of Sant Ravidas Ji and the Begampura vision. Registered Charity 1199953.",
+      orgDescription: "",
       orgEmail: "brhresearch@yahoo.com",
       orgPhone: "+44-7951007320",
       orgAddress: "1 Chaucer Drive, Biggleswade, Bedfordshire, SG18 8QG, GB",
@@ -240,39 +193,39 @@ function getDefaults(): AdminState {
       eventStartDate: "2027-02-16",
       eventEndDate: "2027-02-22",
       eventLocation: "Varanasi, India",
-      // Per-page overrides
-      pageOverrides: [
-        { path: "/", title: "BRHF · Begampura Dialogue", description: "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Begampura, the city without sorrow.", keywords: "Sant Ravidas, Begampura, 650th Janam Jayanti, BRHF" },
-        { path: "/about", title: "About Sant Ravidas Ji — Life, Teachings & Legacy", description: "Learn about Sant Ravidas Ji (1414-1540) — the saint-poet who envisioned Begampura. His life, 8 great yatras, and the Begampura vision.", keywords: "Sant Ravidas biography, Begampura vision, Ravidas life, 1414-1540" },
-        { path: "/teachings", title: "Teachings — 16 Raags of Sant Ravidas Ji", description: "Explore the 6 core teachings of Sant Ravidas across 16 Raags in Sri Guru Granth Sahib Ji. Dignity of labour, equality, Begampura.", keywords: "Ravidas teachings, Begampura, equality, anti-caste, Sri Guru Granth Sahib" },
-        { path: "/shabads", title: "40 Shabads of Bhagat Ravidas Ji — Gurbani Archive", description: "Read 40 divine shabads of Bhagat Ravidas Ji in Gurmukhi, Devanagari, and English translation from Sri Guru Granth Sahib Ji.", keywords: "Ravidas shabads, Gurbani, Sri Guru Granth Sahib, Gurmukhi, Bani" },
-        { path: "/begampura", title: "Begampura — The Vision of a Just Society", description: "Begampura is not a physical city — it is a state of being. Sant Ravidas Ji's vision of a casteless, classless, fearless society.", keywords: "Begampura, Ravidas vision, just society, caste-less society, Begampura pillars" },
-        { path: "/events", title: "650th Janam Jayanti Global Events 2026-2027", description: "Global events commemorating 650 years of Sant Ravidas Ji — from Delhi to London House of Lords to Brussels Parliament.", keywords: "650th Janam Jayanti, Ravidas events, BRHF, Delhi, London, Brussels" },
-        { path: "/library", title: "Publications Library — Begampura Dialogue Resources", description: "Browse publications, exhibition catalogues, and digital resources from the Begampura Dialogue initiative.", keywords: "Begampura publications, Ravidas books, exhibition catalogue, BRHF publications" },
-        { path: "/gallery", title: "Photo Gallery — 650th Janam Jayanti Commemoration", description: "Photo gallery from the 650th Janam Jayanti events, portraits, and commemorations across the world.", keywords: "Ravidas gallery, photos, 650th anniversary, BRHF events" },
-        { path: "/connect", title: "Connect with BRHF — Contact & Get Involved", description: "Get in touch with the British Ravidassia Heritage Foundation. Join the global Begampura movement.", keywords: "BRHF contact, Begampura, get involved, Ravidassia Heritage Foundation" },
-      ],
-      // Contact
+      pageOverrides: [],
       contactEmail: "brhresearch@yahoo.com",
       contactPhone: "+44-7951007320",
-      socialLinks: [
-        { platform: "Facebook", url: "https://facebook.com/BRHFofficial" },
-        { platform: "Twitter", url: "https://twitter.com/BRHFofficial" },
-        { platform: "Instagram", url: "https://instagram.com/BRHFofficial" },
-      ],
+      socialLinks: [],
       maintenanceMode: false,
     },
   };
 }
 
-// Load from localStorage or return defaults
+// Load from localStorage or return empty defaults
 export function loadAdminState(): AdminState {
   if (typeof window === "undefined") return getDefaults();
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      return { ...getDefaults(), ...parsed };
+      // Merge with defaults to handle new fields added after initial save
+      return {
+        hero: { ...getDefaults().hero, ...(parsed.hero || {}) },
+        about: {
+          ...getDefaults().about,
+          ...(parsed.about || {}),
+          stats: Array.isArray(parsed.about?.stats) ? parsed.about.stats : [],
+          timeline: Array.isArray(parsed.about?.timeline) ? parsed.about.timeline : [],
+        },
+        teachings: Array.isArray(parsed.teachings) ? parsed.teachings : [],
+        begampura: { ...getDefaults().begampura, ...(parsed.begampura || {}), pillars: Array.isArray(parsed.begampura?.pillars) ? parsed.begampura.pillars : [] },
+        events: Array.isArray(parsed.events) ? parsed.events : [],
+        gallery: Array.isArray(parsed.gallery) ? parsed.gallery : [],
+        library: Array.isArray(parsed.library) ? parsed.library : [],
+        donations: Array.isArray(parsed.donations) ? parsed.donations : [],
+        settings: { ...getDefaults().settings, ...(parsed.settings || {}), socialLinks: Array.isArray(parsed.settings?.socialLinks) ? parsed.settings.socialLinks : [], pageOverrides: Array.isArray(parsed.settings?.pageOverrides) ? parsed.settings.pageOverrides : [] },
+      };
     }
   } catch {
     // corrupted data — return defaults
@@ -301,9 +254,94 @@ export function updateAdminSection<K extends keyof AdminState>(
   return updated;
 }
 
-// Reset to defaults
+// Reset to defaults (empty state)
 export function resetAdminState(): AdminState {
   const defaults = getDefaults();
   saveAdminState(defaults);
   return defaults;
+}
+
+// ── CSV Export Utility ───────────────────────────────────────────────────────
+
+export function exportDonationsCSV(donations: AdminDonation[]): string {
+  const headers = ["ID", "Donor Name", "Amount", "Currency", "Date", "Method", "Campaign", "Anonymous", "Message"];
+  const rows = donations.map((d) => [
+    d.id,
+    d.anonymous ? "Anonymous" : d.donorName,
+    d.amount.toFixed(2),
+    d.currency,
+    d.date,
+    d.method,
+    d.campaign || "General",
+    d.anonymous ? "Yes" : "No",
+    (d.message || "").replace(/"/g, '""'),
+  ]);
+  const csv = [headers, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    .join("\n");
+  return "﻿" + csv; // BOM for Excel UTF-8
+}
+
+export function exportAnalyticsCSV(
+  monthlyData: { month: string; label: string; total: number; count: number }[],
+  byMethod: { name: string; value: number }[],
+  byCampaign: { name: string; value: number }[],
+  donations: AdminDonation[]
+): string {
+  const sections: string[] = [];
+
+  // Section 1: Monthly trend
+  sections.push("=== MONTHLY DONATION TREND ===");
+  sections.push(["Month", "Label", "Total (£)", "Count"].join(","));
+  monthlyData.forEach((m) => {
+    sections.push([m.month, m.label, m.total.toFixed(2), m.count].join(","));
+  });
+  sections.push("");
+
+  // Section 2: By method
+  sections.push("=== BY PAYMENT METHOD ===");
+  sections.push(["Method", "Total (£)"].join(","));
+  byMethod.forEach((m) => {
+    sections.push([m.name, m.value.toFixed(2)].join(","));
+  });
+  sections.push("");
+
+  // Section 3: By campaign
+  sections.push("=== BY CAMPAIGN ===");
+  sections.push(["Campaign", "Total (£)"].join(","));
+  byCampaign.forEach((c) => {
+    sections.push([c.name, c.value.toFixed(2)].join(","));
+  });
+  sections.push("");
+
+  // Section 4: Raw donations
+  sections.push("=== ALL DONATIONS ===");
+  const headers = ["ID", "Donor Name", "Amount", "Currency", "Date", "Method", "Campaign", "Anonymous", "Message"];
+  const rows = donations.map((d) => [
+    d.id,
+    d.anonymous ? "Anonymous" : d.donorName,
+    d.amount.toFixed(2),
+    d.currency,
+    d.date,
+    d.method,
+    d.campaign || "General",
+    d.anonymous ? "Yes" : "No",
+    (d.message || "").replace(/"/g, '""'),
+  ]);
+  sections.push(headers.join(","));
+  rows.forEach((row) => sections.push(row.map((cell) => `"${cell}"`).join(",")));
+
+  return "﻿" + sections.join("\n");
+}
+
+export function downloadCSV(csvContent: string, filename: string): void {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
