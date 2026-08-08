@@ -1,24 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { LanguageAware } from "./LanguageAware";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { t } from "@/i18n/translations";
 
+const subscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function Countdown({ target }: { target?: Date }) {
-  const deadline = target ?? new Date("2026-08-10T00:00:00+05:30");
-  const [mounted, setMounted] = useState(false);
-  const [diff, setDiff] = useState(() => Math.max(0, deadline.getTime() - Date.now()));
+  const targetTime = target ? target.getTime() : new Date("2026-08-10T00:00:00+05:30").getTime();
+  const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const [diff, setDiff] = useState(() => Math.max(0, targetTime - Date.now()));
   const { language } = useLanguage();
 
   useEffect(() => {
-    setMounted(true);
     const tick = setInterval(() => {
-      setDiff(Math.max(0, deadline.getTime() - Date.now()));
+      setDiff(Math.max(0, targetTime - Date.now()));
     }, 1000);
     return () => clearInterval(tick);
-  }, [deadline]);
+  }, [targetTime]);
 
   const cd = t.countdown;
   const labels = [cd.days, cd.hours, cd.minutes, cd.seconds].map(

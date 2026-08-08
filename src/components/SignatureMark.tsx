@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 export function SignatureMark({ size = 140 }: { size?: number }) {
   return (
     <div
-      className="pointer-events-none inline-block"
+      className="pointer-events-none inline-block select-none will-change-transform"
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
@@ -25,118 +25,35 @@ export function SignatureMark({ size = 140 }: { size?: number }) {
       >
         <defs>
           <radialGradient id="sm-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#f5c34a" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#f5c34a" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#3d1c66" stopOpacity="0" />
           </radialGradient>
-          <filter id="sm-blur">
-            <feGaussianBlur stdDeviation="1.5" />
-          </filter>
         </defs>
 
         {/* Center glow */}
         <circle cx={size / 2} cy={size / 2} r={size * 0.38} fill="url(#sm-glow)" />
 
-        {/* Outer circle ring */}
-        <DrawCircle
+        {/* Outer ring */}
+        <circle
           cx={size / 2}
           cy={size / 2}
           r={size * 0.38}
-          duration={2.2}
-          delay={0.1}
+          fill="none"
           stroke="#f5c34a"
           strokeWidth={1.2}
+          opacity={0.8}
         />
 
-        {/* Inner lotus petals — 8 */}
-        {Array.from({ length: 8 }).map((_, i) => {
-          const angle = (360 / 8) * i;
-          const petalCx = size / 2;
-          const petalCy = size / 2 - size * 0.22;
-          return (
-            <motion.ellipse
-              key={`petal-${i}`}
-              cx={petalCx}
-              cy={petalCy}
-              rx={size * 0.06}
-              ry={size * 0.14}
-              fill="none"
-              stroke="#ffb24d"
-              strokeWidth={0.9}
-              opacity={0.5}
-              initial={{ scale: 0, opacity: 0, rotate: -angle }}
-              animate={{ scale: 1, opacity: 0.5, rotate: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 1.0 + i * 0.08,
-                ease: "backOut",
-              }}
-              style={{ transformOrigin: `${petalCx}px ${petalCx}px` }}
-              transform={`rotate(${angle} ${petalCx} ${petalCx})`}
-            />
-          );
-        })}
-
-        {/* Central stylised "R" monogram — drawn stroke-by-stroke */}
-        <motion.g
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-        >
-          {/* Vertical stem */}
-          <DrawPath
-            d={`M ${size * 0.42} ${size * 0.28} L ${size * 0.42} ${size * 0.72}`}
-            stroke="url(#portrait-stroke)"
-            duration={0.9}
-            delay={0.7}
-            strokeWidth={2.2}
-            strokeLinecap="round"
-          />
-          {/* Top right curve */}
-          <DrawPath
+        {/* Central "R" monogram */}
+        <g stroke="#ffb24d" strokeWidth={2.2} strokeLinecap="round" fill="none">
+          <path d={`M ${size * 0.42} ${size * 0.28} L ${size * 0.42} ${size * 0.72}`} />
+          <path
             d={`M ${size * 0.42} ${size * 0.28}
                 Q ${size * 0.62} ${size * 0.26} ${size * 0.60} ${size * 0.40}
                 Q ${size * 0.58} ${size * 0.52} ${size * 0.42} ${size * 0.52}`}
-            stroke="url(#portrait-stroke)"
-            duration={0.9}
-            delay={1.0}
-            strokeWidth={2.2}
-            strokeLinecap="round"
           />
-          {/* Diagonal leg */}
-          <DrawPath
-            d={`M ${size * 0.52} ${size * 0.52} L ${size * 0.62} ${size * 0.72}`}
-            stroke="url(#portrait-stroke)"
-            duration={0.6}
-            delay={1.5}
-            strokeWidth={2.2}
-            strokeLinecap="round"
-          />
-        </motion.g>
-
-        {/* Radial dots between lotus and outer ring */}
-        {Array.from({ length: 16 }).map((_, i) => {
-          const angle = (360 / 16) * i;
-          const rad = (angle * Math.PI) / 180;
-          const r = size * 0.30;
-          const x = size / 2 + r * Math.sin(rad);
-          const y = size / 2 - r * Math.cos(rad);
-          return (
-            <motion.circle
-              key={`dot-${i}`}
-              cx={x}
-              cy={y}
-              r={size * 0.008}
-              fill="#f5c34a"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.7 }}
-              transition={{
-                duration: 0.4,
-                delay: 1.2 + i * 0.05,
-                ease: "easeOut",
-              }}
-            />
-          );
-        })}
+          <path d={`M ${size * 0.52} ${size * 0.52} L ${size * 0.62} ${size * 0.72}`} />
+        </g>
       </svg>
     </div>
   );

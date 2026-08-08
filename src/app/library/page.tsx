@@ -16,7 +16,7 @@ const mockBooks = [
     pages: 148,
     fileSize: "4.2 MB",
     description: "An in-depth scholarly treatise examining Sant Ravidas Ji's 14th-century blueprint of Begampura alongside the UN Universal Declaration of Human Rights.",
-    pdfUrl: "/assets/sample.pdf",
+    pdfUrl: "/assets/HCoI 650th Exhibitions.pdf",
   },
   {
     id: "40-shabads-interfaith-commentary",
@@ -27,7 +27,7 @@ const mockBooks = [
     pages: 260,
     fileSize: "8.5 MB",
     description: "Complete transliteration, commentary, and musical notation for all 40 Shabads enshrined across 16 Raags in Sri Guru Granth Sahib Ji.",
-    pdfUrl: "/assets/sample.pdf",
+    pdfUrl: "/assets/Guru Ravidas Pragas Di Khoj.pdf",
   },
   {
     id: "historical-chronicles-varanasi-to-uk",
@@ -38,7 +38,7 @@ const mockBooks = [
     pages: 192,
     fileSize: "12.1 MB",
     description: "Historical documentation tracking the preservation of sacred relics, temples, and global diaspora migrations over the past century.",
-    pdfUrl: "/assets/sample.pdf",
+    pdfUrl: "/assets/ORGANISING TEAM BE-GUMPURA .pdf",
   },
   {
     id: "anti-caste-governance-manual",
@@ -49,14 +49,14 @@ const mockBooks = [
     pages: 94,
     fileSize: "3.1 MB",
     description: "Policy recommendations for civic leaders on integrating dignity of labour, tax fairness, and non-discrimination into municipal governance.",
-    pdfUrl: "/assets/sample.pdf",
+    pdfUrl: "/assets/HCoI 650th Exhibitions.pdf",
   }
 ];
 
 export default function LibraryPage() {
   const [search, setSearch] = useState("");
   const [selectedCat, setSelectedCat] = useState("all");
-  const [previewPdf, setPreviewPdf] = useState<any>(null);
+  const [previewPdf, setPreviewPdf] = useState<(typeof mockBooks)[number] | null>(null);
 
   const filtered = mockBooks.filter((b) => {
     const matchesSearch =

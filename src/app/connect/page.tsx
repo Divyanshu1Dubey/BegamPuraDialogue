@@ -119,8 +119,9 @@ export default function ConnectPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-bold text-ink-soft mb-1">Your Full Name</label>
+                    <label htmlFor="fullname" className="block text-xs font-bold text-ink-soft mb-1">Your Full Name</label>
                     <input
+                      id="fullname"
                       type="text"
                       required
                       value={formData.name}
@@ -131,8 +132,9 @@ export default function ConnectPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
+                    <label htmlFor="email" className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
                     <input
+                      id="email"
                       type="email"
                       required
                       value={formData.email}
@@ -144,8 +146,9 @@ export default function ConnectPage() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-ink-soft mb-1">Country</label>
+                      <label htmlFor="country" className="block text-xs font-bold text-ink-soft mb-1">Country</label>
                       <select
+                        id="country"
                         value={formData.country}
                         onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                         className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
@@ -160,8 +163,9 @@ export default function ConnectPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-ink-soft mb-1">Desired Role</label>
+                      <label htmlFor="role" className="block text-xs font-bold text-ink-soft mb-1">Desired Role</label>
                       <select
+                        id="role"
                         value={formData.role}
                         onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                         className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
@@ -175,8 +179,9 @@ export default function ConnectPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-ink-soft mb-1">Message / Note of Interest</label>
+                    <label htmlFor="message" className="block text-xs font-bold text-ink-soft mb-1">Message / Note of Interest</label>
                     <textarea
+                      id="message"
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}

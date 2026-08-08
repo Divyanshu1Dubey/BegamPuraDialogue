@@ -171,7 +171,7 @@ function RaagDetail({ raag, onClose }: { raag: RaagEntry; onClose: () => void })
                 Shabad Opening
               </p>
               <p className="font-display text-lg text-saffron italic">
-                "{raag.shabadOpening}"
+                &ldquo;{raag.shabadOpening}&rdquo;
               </p>
             </div>
           )}

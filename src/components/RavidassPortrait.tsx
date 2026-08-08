@@ -271,12 +271,15 @@ export function RavidassPortrait({
  * drawn-on-load SVG overlay so the image "materialises" through a
  * light-line reveal effect rather than just fading in.
  */
+/**
+ * RavidassImage — Smooth hardware-accelerated portrait image presentation
+ * with a golden devotional halo glow ring.
+ */
 export function RavidassImage({
   src,
   alt,
   size = 360,
   className = "",
-  revealDuration = 2.5,
 }: {
   src: string;
   alt: string;
@@ -284,124 +287,29 @@ export function RavidassImage({
   className?: string;
   revealDuration?: number;
 }) {
-  const [mounted, setMounted] = useState(false);
-  const [svgReady, setSvgReady] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const t = setTimeout(() => setSvgReady(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div
-        className={`relative ${className}`}
-        style={{ width: size, height: size }}
-        aria-hidden="true"
-      >
-        <img
-          src={src}
-          alt={alt}
-          width={size}
-          height={size}
-          draggable={false}
-          className="absolute inset-0 h-full w-full object-cover rounded-full"
-          style={{ aspectRatio: "1/1", objectPosition: "center top" }}
-        />
-      </div>
-    );
-  }
-
   return (
     <div
-      className={`relative ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative select-none pointer-events-none ${className}`}
+      style={{ width: size, height: size, willChange: "transform" }}
     >
-      {/* The actual image */}
+      {/* Outer Halo Glow */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/30 via-gold/20 to-royal/30 blur-xl opacity-70 animate-pulse-saffron" />
+
+      {/* Golden Ring Accent */}
+      <div className="absolute -inset-1 rounded-full p-[2px] bg-gradient-to-tr from-saffron via-gold to-saffron-bright shadow-lg shadow-saffron/20">
+        <div className="w-full h-full rounded-full bg-bg" />
+      </div>
+
+      {/* The Portrait Image */}
       <img
         src={src}
         alt={alt}
         width={size}
         height={size}
         draggable={false}
-        className="absolute inset-0 h-full w-full object-cover rounded-full"
+        className="relative z-10 h-full w-full object-cover rounded-full shadow-2xl transition-transform duration-700 hover:scale-105"
         style={{ aspectRatio: "1/1", objectPosition: "center top" }}
       />
-
-      {/* Darkened ring overlay that fades away */}
-      {svgReady && (
-        <motion.div
-          initial={{ opacity: 0.55 }}
-          animate={{ opacity: 0 }}
-          transition={{ duration: revealDuration, delay: 0.2, ease: "easeOut" }}
-          className="absolute inset-0 rounded-full bg-bg"
-        />
-      )}
-
-      {/* SVG stroke-reveal overlay — only rendered after mount+delay so Framer Motion animates */}
-      {svgReady && (
-        <svg
-          viewBox={`0 0 ${size} ${size}`}
-          className="absolute inset-0 h-full w-full"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <clipPath id={`mask-${size}`}>
-              <circle cx={size / 2} cy={size / 2} r={size / 2 - 2} />
-            </clipPath>
-            <radialGradient id="img-halo-glow" cx="50%" cy="45%" r="50%">
-              <stop offset="0%" stopColor="#ffb24d" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#ff8a1e" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
-          {/* Revealing circle */}
-          <DrawCircle
-            cx={size / 2}
-            cy={size / 2}
-            r={size / 2 - 2}
-            duration={revealDuration}
-            delay={0.1}
-            stroke="rgba(245,195,74,0.8)"
-            strokeWidth={2}
-          />
-
-          {/* Ambient halo behind */}
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={size * 0.48}
-            fill="url(#img-halo-glow)"
-            opacity="0"
-          >
-            <animate attributeName="opacity" values="0;1" dur={`${revealDuration}s`} begin="0.2s" fill="freeze" />
-          </circle>
-
-          {/* Decorative rays */}
-          {Array.from({ length: 24 }).map((_, i) => {
-            const angle = (360 / 24) * i;
-            const rad = (angle * Math.PI) / 180;
-            const innerR = size * 0.26;
-            const outerR = size * 0.30;
-            const x1 = r(size / 2 + innerR * Math.sin(rad));
-            const y1 = r(size / 2 - innerR * Math.cos(rad));
-            const x2 = r(size / 2 + outerR * Math.sin(rad));
-            const y2 = r(size / 2 - outerR * Math.cos(rad));
-            return (
-              <DrawPath
-                key={`ray-${i}`}
-                d={`M ${x1} ${y1} L ${x2} ${y2}`}
-                stroke="#f5c34a"
-                duration={revealDuration * 0.15}
-                delay={0.3 + i * 0.03}
-                strokeWidth={0.7}
-                strokeLinecap="round"
-              />
-            );
-          })}
-        </svg>
-      )}
     </div>
   );
 }

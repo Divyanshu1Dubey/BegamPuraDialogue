@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { Playfair_Display, Inter, Noto_Serif_Devanagari, Noto_Sans_Gurmukhi } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/i18n/LanguageContext";
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${playfair.variable} ${inter.variable} ${notoDevanagari.variable} ${notoGurmukhi.variable} h-full antialiased`}
     >
@@ -139,7 +141,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className="min-h-screen flex flex-col bg-bg text-ink font-unicode overflow-x-hidden"
       >
         {/* JSON-LD Organization Schema */}
-        <script
+        <Script
           id="json-ld-organization"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
