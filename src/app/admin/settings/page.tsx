@@ -2,12 +2,15 @@
 
 import { useAdmin } from "@/hooks/useAdmin";
 import type { AdminSettings, AdminSeoPageOverride } from "@/lib/admin-data";
-import { useState } from "react";
+import { useDataBackup } from "@/hooks/useDataBackup";
+import { useState, useRef } from "react";
+import { Download, Upload, Trash2, HardDrive } from "lucide-react";
 
-type Field = "seo" | "og" | "twitter" | "jsonld" | "pages";
+type Field = "seo" | "og" | "twitter" | "jsonld" | "pages" | "backup";
 
 export default function SettingsPage() {
   const { state, update } = useAdmin();
+  const { exportData, importData, resetAllData } = useDataBackup();
   const s = state.settings;
 
   const set = (partial: Partial<AdminSettings>) => update("settings", partial);
@@ -18,10 +21,50 @@ export default function SettingsPage() {
     twitter: false,
     jsonld: false,
     pages: true,
+    backup: false,
   });
 
   const toggle = (key: Field) =>
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const [importText, setImportText] = useState("");
+  const [backupStatus, setBackupStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const result = exportData();
+    setBackupStatus({ type: "success", message: result.message });
+    setTimeout(() => setBackupStatus(null), 4000);
+  };
+
+  const handleImport = () => {
+    if (!importText.trim()) {
+      setBackupStatus({ type: "error", message: "Please paste backup JSON data first." });
+      return;
+    }
+    const result = importData(importText);
+    setBackupStatus({ type: result.success ? "success" : "error", message: result.message });
+    if (result.success) setImportText("");
+    setTimeout(() => setBackupStatus(null), 4000);
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = typeof reader.result === "string" ? reader.result : "";
+      setImportText(text);
+    };
+    reader.readAsText(file);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleReset = () => {
+    if (window.confirm("This will permanently delete all admin data (content, settings, donations, analytics). This action cannot be undone. Are you sure?")) {
+      resetAllData();
+    }
+  };
 
   const socials = s.socialLinks;
   const updateSocial = (i: number, field: "platform" | "url", value: string) => {
@@ -398,6 +441,102 @@ export default function SettingsPage() {
           </label>
         </Field>
       </div>
+
+      {/* ===================== DATA BACKUP ===================== */}
+      <Section title="Data Backup & Restore" field="backup" open={openSections.backup} onToggle={() => toggle("backup")}>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
+          Export all your content, settings, and analytics data as a JSON file. You can restore it later on the same or a different browser. Always keep a backup before making large changes.
+        </p>
+        <div className="space-y-5">
+          {/* Export */}
+          <div className="p-5 rounded-2xl bg-surface-2/60 border border-border">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron/15 to-saffron/5 flex items-center justify-center">
+                <Download className="h-5 w-5 text-saffron" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-ink dark:text-white">Export Data</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Download all data as a JSON file</p>
+              </div>
+            </div>
+            <button
+              onClick={handleExport}
+              className="mt-3 px-5 py-2.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+            >
+              <Download className="h-4 w-4" />
+              Download Backup
+            </button>
+          </div>
+
+          {/* Import */}
+          <div className="p-5 rounded-2xl bg-surface-2/60 border border-border">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal/15 to-royal/5 flex items-center justify-center">
+                <Upload className="h-5 w-5 text-royal" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-ink dark:text-white">Import Data</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">Restore from a previously exported backup file</p>
+              </div>
+            </div>
+            <div className="flex gap-2 mb-3">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                onChange={handleFileUpload}
+                className="text-xs text-gray-500 dark:text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-saffron/10 file:text-saffron hover:file:bg-saffron/20"
+              />
+            </div>
+            <textarea
+              value={importText}
+              onChange={(e) => setImportText(e.target.value)}
+              rows={4}
+              placeholder="Or paste backup JSON here..."
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-ink dark:text-white text-sm font-mono placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-royal/40 resize-y"
+            />
+            <button
+              onClick={handleImport}
+              className="mt-3 px-5 py-2.5 rounded-xl bg-gradient-to-r from-royal to-violet text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+            >
+              <HardDrive className="h-4 w-4" />
+              Restore Data
+            </button>
+          </div>
+
+          {/* Reset */}
+          <div className="p-5 rounded-2xl bg-red-50/50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/50">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <Trash2 className="h-5 w-5 text-red-500" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-red-700 dark:text-red-400">Reset All Data</h4>
+                <p className="text-xs text-red-500/80 dark:text-red-400/80">Permanently delete all admin data and restore defaults</p>
+              </div>
+            </div>
+            <button
+              onClick={handleReset}
+              className="mt-3 px-5 py-2.5 rounded-xl border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 text-sm font-semibold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            >
+              Reset Everything
+            </button>
+          </div>
+        </div>
+      </Section>
+
+      {/* Status toast */}
+      {backupStatus && (
+        <div
+          className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl shadow-2xl text-sm font-semibold flex items-center gap-2 ${
+            backupStatus.type === "success"
+              ? "bg-green-600 text-white"
+              : "bg-red-600 text-white"
+          }`}
+        >
+          {backupStatus.type === "success" ? "✓" : "✗"} {backupStatus.message}
+        </div>
+      )}
     </div>
   );
 }

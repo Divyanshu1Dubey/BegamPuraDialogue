@@ -4,6 +4,7 @@ import { use } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, CheckCircle2 } from "lucide-react";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 interface LibraryBook {
   id: string;
@@ -98,13 +99,13 @@ export default function LibraryDetailPage({ params }: { params: Promise<{ id: st
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-4xl mx-auto px-4 lg:px-8">
-        <Link
-          href="/library"
-          className="inline-flex items-center gap-2 text-sm text-saffron hover:underline mb-8 font-semibold"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <LanguageAware en="Back to E-Library Archive" hi="डिजिटल लाइब्रेरी पर वापस जाएं" pa="ਡਿਜੀਟਲ ਲਾਇਬ੍ਰੇਰੀ 'ਤੇ ਵਾਪਸ ਜਾਓ" />
-        </Link>
+        <Breadcrumb
+          currentLabel={{
+            en: "Publication Details",
+            hi: "प्रकाशन विवरण",
+            pa: "ਪ੍ਰਕਾਸ਼ਨ ਵੇਰਵਾ",
+          }}
+        />
 
         <div className="rounded-3xl card-glass card-saffron-glow p-6 md:p-10">
           <div className="flex items-center gap-2 mb-4">

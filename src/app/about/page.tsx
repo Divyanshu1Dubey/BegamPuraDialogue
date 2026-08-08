@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import { About } from "@/components/About";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-bg text-ink">
+      <Breadcrumb currentLabel={{ en: "About BRHF", hi: "बीआरएचएफ के बारे में", pa: "ਬੀਆਰਐਚਐਫ ਬਾਰੇ" }} />
+
       <About />
 
       {/* Leadership & Global Patronage Section */}

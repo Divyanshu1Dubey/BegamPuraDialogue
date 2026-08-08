@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Begampura } from "@/components/Begampura";
 import { ShieldCheck, HeartHandshake, Scale, Sun, Sparkles } from "lucide-react";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const pillars = [
   {
@@ -46,6 +47,8 @@ const pillars = [
 export default function BegampuraPage() {
   return (
     <div className="min-h-screen bg-bg text-ink">
+      <Breadcrumb currentLabel={{ en: "Begampura Vision", hi: "बेगमपुरा दृष्टिकोण", pa: "ਬੇਗਮਪੁਰਾ ਦ੍ਰਿਸ਼ਟੀਕੋਣ" }} />
+
       <Begampura />
 
       {/* Deep-Dive 5 Pillars Section */}

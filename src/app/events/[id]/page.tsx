@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin, Users, Globe, Clock, CheckCircle2 } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -16,13 +17,13 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-4xl mx-auto px-4 lg:px-8">
-        <Link
-          href="/events"
-          className="inline-flex items-center gap-2 text-sm text-saffron hover:underline mb-8 font-semibold"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <LanguageAware en="Back to Global Events" hi="सभी कार्यक्रमों पर वापस जाएं" pa="ਸਾਰੇ ਕਾਰਯਕ੍ਰਮਾਂ 'ਤੇ ਵਾਪਸ ਜਾਓ" />
-        </Link>
+        <Breadcrumb
+          currentLabel={{
+            en: matched.title,
+            hi: matched.title,
+            pa: matched.title,
+          }}
+        />
 
         <div className="rounded-3xl card-glass card-saffron-glow p-6 md:p-10">
           <div className="text-5xl mb-4">{matched.icon || "🏛️"}</div>

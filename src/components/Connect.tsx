@@ -1,9 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, MessageCircle, UserPlus, HandHeart } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Phone, MapPin, Send, MessageCircle, UserPlus, HandHeart, CheckCircle2, AlertCircle } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "./LanguageAware";
+import { Breadcrumb } from "./Breadcrumb";
 
 const connectOptions = [
   {
@@ -36,13 +38,48 @@ const connectOptions = [
   },
 ];
 
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
 export function Connect() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validate = () => {
+    const errs: Record<string, string> = {};
+    if (!form.name.trim()) errs.name = "Name is required";
+    if (!form.email.trim()) errs.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Please enter a valid email";
+    if (!form.message.trim()) errs.message = "Message is required";
+    else if (form.message.trim().length < 10) errs.message = "Message must be at least 10 characters";
+    return errs;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
+    setErrors({});
+    setStatus("submitting");
+
+    // Simulate submission — replace with real API endpoint
+    await new Promise((r) => setTimeout(r, 1500));
+    setStatus("success");
+    setForm({ name: "", email: "", message: "" });
+    setTimeout(() => setStatus("idle"), 5000);
+  };
+
   return (
     <section id="connect" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-royal/50 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "Connect", hi: "जुड़ें", pa: "ਜੁੜੋ" }} />
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -105,45 +142,123 @@ export function Connect() {
             <h3 className="font-display text-2xl font-bold text-gradient-saffron mb-6">
               <LanguageAware en="Get In Touch" hi="संपर्क करें" pa="ਸੰਪਰਕ ਕਰੋ" />
             </h3>
-            <form className="space-y-4">
-              <div>
-                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
-                  <LanguageAware en="Full Name" hi="पूरा नाम" pa="ਪੂਰਾ ਨਾਮ" />
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
-                  <LanguageAware en="Email" hi="ईमेल" pa="ਈਮੇਲ" />
-                </label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div>
-                <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
-                  <LanguageAware en="Message" hi="संदेश" pa="ਸੁਨੇਹਾ" />
-                </label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl bg-bg/60 border border-border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 focus:ring-saffron/40 focus:border-saffron/30 transition-all resize-none"
-                  placeholder="Your message..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-              >
-                <Send className="h-4 w-4" />
-                <LanguageAware en="Send Message" hi="संदेश भेजें" pa="ਸੁਨੇਹਾ ਭੇਜੋ" />
-              </button>
-            </form>
+
+            <AnimatePresence mode="wait">
+              {status === "success" ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-12 text-center"
+                >
+                  <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
+                    <CheckCircle2 className="h-8 w-8 text-green-500" />
+                  </div>
+                  <h4 className="font-display font-bold text-ink dark:text-white text-lg mb-1">
+                    <LanguageAware en="Message Sent!" hi="संदेश भेजा गया!" pa="ਸੁਨੇਹਾ ਭੇਜਿਆ ਗਿਆ!" />
+                  </h4>
+                  <p className="text-sm text-gray-500">
+                    <LanguageAware en="We'll get back to you within 48 hours." hi="हम 48 घंटे के भीतर जवाब देंगे।" pa="ਅਸੀਂ 48 ਘੰਟੇ ਦੇ ਅੰਦਰ ਜਵਾਬ ਦੇਵਾਂਗੇ।" />
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                  noValidate
+                >
+                  <div>
+                    <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                      <LanguageAware en="Full Name" hi="पूरा नाम" pa="ਪੂਰਾ ਨਾਮ" />
+                    </label>
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => { setForm({ ...form, name: e.target.value }); setErrors({ ...errors, name: "" }); }}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      className={cn(
+                        "w-full px-4 py-3 rounded-xl bg-bg/60 border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 transition-all",
+                        errors.name ? "border-red-400 focus:ring-red-300" : "border-border focus:ring-saffron/40 focus:border-saffron/30"
+                      )}
+                      placeholder="Your name"
+                    />
+                    <AnimatePresence>
+                      {errors.name && (
+                        <motion.p id="name-error" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" /> {errors.name}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  <div>
+                    <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                      <LanguageAware en="Email" hi="ईमेल" pa="ਈਮੇਲ" />
+                    </label>
+                    <input
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors({ ...errors, email: "" }); }}
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? "email-error" : undefined}
+                      className={cn(
+                        "w-full px-4 py-3 rounded-xl bg-bg/60 border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 transition-all",
+                        errors.email ? "border-red-400 focus:ring-red-300" : "border-border focus:ring-saffron/40 focus:border-saffron/30"
+                      )}
+                      placeholder="you@example.com"
+                    />
+                    <AnimatePresence>
+                      {errors.email && (
+                        <motion.p id="email-error" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" /> {errors.email}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  <div>
+                    <label className="text-xs uppercase tracking-widest text-ink-soft mb-1.5 block">
+                      <LanguageAware en="Message" hi="संदेश" pa="ਸੁਨੇਹਾ" />
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={form.message}
+                      onChange={(e) => { setForm({ ...form, message: e.target.value }); setErrors({ ...errors, message: "" }); }}
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? "msg-error" : undefined}
+                      className={cn(
+                        "w-full px-4 py-3 rounded-xl bg-bg/60 border text-ink text-sm placeholder:text-ink-soft/40 focus:outline-none focus:ring-2 transition-all resize-none",
+                        errors.message ? "border-red-400 focus:ring-red-300" : "border-border focus:ring-saffron/40 focus:border-saffron/30"
+                      )}
+                      placeholder="Your message..."
+                    />
+                    <AnimatePresence>
+                      {errors.message && (
+                        <motion.p id="msg-error" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" /> {errors.message}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {status === "submitting" ? (
+                      <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        <LanguageAware en="Send Message" hi="संदेश भेजें" pa="ਸੁਨੇਹਾ ਭੇਜੋ" />
+                      </>
+                    )}
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
@@ -205,4 +320,8 @@ export function Connect() {
       </div>
     </section>
   );
+}
+
+function cn(...classes: (string | false | undefined | null)[]) {
+  return classes.filter(Boolean).join(" ");
 }

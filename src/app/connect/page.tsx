@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Heart, Users, Sparkles, Send, CheckCircle2, Globe } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function ConnectPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -23,6 +24,7 @@ export default function ConnectPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
+      <Breadcrumb currentLabel={{ en: "Connect", hi: "जुड़ें", pa: "ਜੁੜੋ" }} />
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
         {/* Header */}
         <motion.div
@@ -192,7 +194,7 @@ export default function ConnectPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2"
                   >
                     <Send className="h-4 w-4" /> Submit Registration Interest
                   </button>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, CheckCircle2 } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function EventsPage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -29,6 +30,8 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "Global Events", hi: "वैश्विक कार्यक्रम", pa: "ਵਿਸ਼ਵਵਿਆਪੀ ਕਾਰਯਕ੍ਰਮ" }} />
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

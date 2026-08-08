@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles, Scale, BookOpen, Heart } from "lucide-react";
 import { raags } from "@/data/raags";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function TeachingDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -14,13 +15,13 @@ export default function TeachingDetailPage({ params }: { params: Promise<{ id: s
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-4xl mx-auto px-4 lg:px-8">
-        <Link
-          href="/teachings"
-          className="inline-flex items-center gap-2 text-sm text-saffron hover:underline mb-8 font-semibold"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <LanguageAware en="Back to All Teachings" hi="सभी उपदेशों पर वापस जाएं" pa="ਸਾਰੇ ਉਪਦੇਸ਼ਾਂ 'ਤੇ ਵਾਪਸ ਜਾਓ" />
-        </Link>
+        <Breadcrumb
+          currentLabel={{
+            en: `Raag ${item.name}`,
+            hi: `ਰਾਗ ${item.name}`,
+            pa: `ਰਾਗ ${item.name}`,
+          }}
+        />
 
         <div className="rounded-3xl card-glass card-saffron-glow p-6 md:p-10">
           <div className="text-5xl mb-4">{item.emoji}</div>

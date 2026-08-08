@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Search, Download, Eye, Sparkles, Filter, X, FileText } from "lucide-react";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const mockBooks = [
   {
@@ -70,6 +71,8 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "E-Library", hi: "ई-लाइब्रेरी", pa: "ਈ-ਲਾਇਬ੍ਰੇਰੀ" }} />
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

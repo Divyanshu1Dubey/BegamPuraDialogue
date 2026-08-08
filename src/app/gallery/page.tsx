@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image as ImageIcon, Sparkles, Filter, X, Maximize2 } from "lucide-react";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const galleryItems = [
   {
@@ -51,6 +52,8 @@ export default function GalleryPage() {
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "Gallery", hi: "गैलरी", pa: "ਗੈਲਰੀ" }} />
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

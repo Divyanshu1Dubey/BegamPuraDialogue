@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, BookOpen, Volume2, Share2, Sparkles, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const mockShabadsMap: Record<string, {
   id: string;
@@ -89,13 +90,13 @@ export default function ShabadDetailPage({ params }: { params: Promise<{ id: str
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-4xl mx-auto px-4 lg:px-8">
-        <Link
-          href="/shabads"
-          className="inline-flex items-center gap-2 text-sm text-saffron hover:underline mb-8 font-semibold"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <LanguageAware en="Back to 40 Shabads" hi="सभी 40 शब्दों पर वापस जाएं" pa="ਸਾਰੇ 40 ਸ਼ਬਦਾਂ 'ਤੇ ਵਾਪਸ ਜਾਓ" />
-        </Link>
+        <Breadcrumb
+          currentLabel={{
+            en: shabad.titleEnglish,
+            hi: shabad.titleEnglish,
+            pa: shabad.titleEnglish,
+          }}
+        />
 
         {/* Card Container */}
         <div className="rounded-3xl card-glass card-saffron-glow p-6 md:p-10">

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Search, Sparkles, ArrowRight, BookOpen, Scale, Heart, Shield } from "lucide-react";
 import { raags } from "@/data/raags";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function TeachingsPage() {
   const [search, setSearch] = useState("");
@@ -21,6 +22,8 @@ export default function TeachingsPage() {
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "Teachings", hi: "उपदेश", pa: "ਉਪਦੇਸ਼" }} />
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -97,7 +100,7 @@ export default function TeachingsPage() {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-saffron/10 border border-saffron/30 mb-4">
-                  <span className="text-[10px] uppercase font-bold text-saffron-deep dark:text-saffron tracking-wider block mb-1 flex items-center gap-1">
+                  <span className="text-[10px] uppercase font-bold text-saffron-deep dark:text-saffron tracking-wider flex items-center gap-1">
                     <Scale className="h-3 w-3" /> Civic Governance Principle
                   </span>
                   <p className="text-xs text-ink font-medium leading-relaxed">

@@ -8,6 +8,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEOManager } from "@/components/SEOManager";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { SkipToContent } from "@/components/SkipToContent";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -198,10 +200,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           <LanguageProvider>
             <TooltipProvider delay={150}>
+              <SkipToContent />
               <SEOManager />
               <Navbar />
-              <main className="flex-1 min-h-0">{children}</main>
+              <main id="main-content" className="flex-1 min-h-0">{children}</main>
               <Footer />
+              <ScrollToTop />
             </TooltipProvider>
           </LanguageProvider>
         </ThemeProvider>

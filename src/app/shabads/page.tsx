@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Search, Volume2, ArrowRight, Sparkles, Filter } from "lucide-react";
 import { raags } from "@/data/raags";
 import { LanguageAware } from "@/components/LanguageAware";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const mockShabads = [
   {
@@ -128,6 +129,8 @@ export default function ShabadsPage() {
   return (
     <div className="min-h-screen bg-bg text-ink pt-28 pb-24">
       <div className="max-w-7xl mx-auto px-4 lg:px-8">
+        <Breadcrumb currentLabel={{ en: "40 Shabads", hi: "40 शब्द", pa: "40 ਸ਼ਬਦ" }} />
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
