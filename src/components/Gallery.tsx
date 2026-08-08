@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ImageIcon, Play } from "lucide-react";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ImageIcon, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { LanguageAware } from "./LanguageAware";
 import { RavidassImage } from "./RavidassPortrait";
 
@@ -10,7 +11,7 @@ type GalleryItem = {
   subtitle?: string;
   count: number;
   icon?: string;
-  image: string; // path under /assets/
+  image: string;
   alt: string;
   category: "devotional" | "event" | "leader" | "illustration";
 };
@@ -126,13 +127,47 @@ const galleries: GalleryItem[] = [
   },
 ];
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "60%" : "-60%",
+    opacity: 0,
+    scale: 0.95,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-60%" : "60%",
+    opacity: 0,
+    scale: 0.95,
+  }),
+};
+
 export function Gallery() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const goNext = useCallback(() => {
+    setDirection(1);
+    setIndex((i) => (i + 1) % galleries.length);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setDirection(-1);
+    setIndex((i) => (i - 1 + galleries.length) % galleries.length);
+  }, []);
+
+  const current = galleries[index];
+
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +189,7 @@ export function Gallery() {
             <LanguageAware
               en="From yatras and exhibitions to global ceremonies — moments that captured the Begampura light."
               hi="यात्राओं से लेकर प्रदर्शनियों तक और विश्व समारोहों तक — वे क्षण जिन्होंने बेगमपुरा के प्रकाश को कैद किया।"
-              pa="ਯਾਤਰਾਵਾਂ ਅਤੇ ਪ੍ਰਦਰਸ਼ਨੀਆਂ ਤੋਂ ਲੈ ਕੇ ਵਿਸ਼ਵ ਸਮਾਰੋਹਾਂ ਤੱਕ — ਉਹ ਪਲ ਜਿਨ੍ਹਾਂ ਨੇ ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਕੈਦ ਕੀਤਾ।"
+              pa="ਯਾਤਰਾਵਾਂ ਅਤੇ ਪ੍ਰਦਰਸ਼ਨੀਆਂ ਤੋਂ ਲੈ ਕੇ ਵਿਸ਼ਵ ਸਮਾਰੋਹਾਂ ਤੱਕ — ਉਹ ਪਲ ਜਿਨ੍ਹਾਂ ਨੇ ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਕੈਦ ਕੀਤੀ।"
             />
           </p>
         </motion.div>
@@ -181,57 +216,101 @@ export function Gallery() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {galleries.map((gallery, i) => (
-            <motion.div
-              key={gallery.title}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group relative aspect-square rounded-2xl overflow-hidden card-glass card-saffron-glow cursor-pointer hover:scale-[1.02] transition-all duration-300"
-            >
-              {/* Background image */}
-              <img
-                src={gallery.image}
-                alt={gallery.alt}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              {/* Color tint to maintain palette */}
-              <div className="absolute inset-0 bg-gradient-to-br from-saffron/30 via-royal/25 to-saffron/30 mix-blend-overlay" />
-              {/* Bottom dark fade for text legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-bg/30 to-transparent pointer-events-none" />
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-end p-4 text-center">
-                {gallery.icon && (
-                  <span className="absolute top-3 left-3 text-2xl">{gallery.icon}</span>
-                )}
-                <h3 className="font-display font-bold text-ink text-sm md:text-base leading-tight drop-shadow-lg">
-                  {gallery.title}
-                </h3>
-                {gallery.subtitle && (
-                  <p className="text-[10px] text-saffron-bright/90 uppercase tracking-wider mt-1 drop-shadow-lg">
-                    {gallery.subtitle}
+        {/* Carousel */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Slide */}
+          <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-3xl overflow-hidden card-glass card-saffron-glow shadow-2xl">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <motion.div
+                key={index}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                className="absolute inset-0"
+              >
+                {/* Background image */}
+                <img
+                  src={current.image}
+                  alt={current.alt}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  className="h-full w-full object-cover"
+                />
+                {/* Color tint */}
+                <div className="absolute inset-0 bg-gradient-to-br from-saffron/30 via-royal/25 to-saffron/30 mix-blend-overlay" />
+                {/* Bottom fade */}
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-bg/30 to-transparent pointer-events-none" />
+                {/* Content overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-end p-6 md:p-10 text-center">
+                  {current.icon && (
+                    <span className="absolute top-4 left-4 text-3xl md:text-4xl drop-shadow-lg">
+                      {current.icon}
+                    </span>
+                  )}
+                  <h3 className="font-display font-bold text-ink text-lg md:text-2xl leading-tight drop-shadow-lg">
+                    {current.title}
+                  </h3>
+                  {current.subtitle && (
+                    <p className="text-xs text-saffron-bright uppercase tracking-wider mt-1 drop-shadow-lg">
+                      {current.subtitle}
+                    </p>
+                  )}
+                  <p className="text-sm text-ink-soft mt-2 drop-shadow-lg">
+                    {current.count}{" "}
+                    <LanguageAware en="photos" hi="तस्वीरें" pa="ਤਸਵੀਰਾਂ" />
                   </p>
-                )}
-                <p className="text-xs text-ink-soft mt-1.5 drop-shadow-lg">
-                  {gallery.count}{" "}
-                  <LanguageAware en="photos" hi="तस्वीरें" pa="ਤਸਵੀਰਾਂ" />
-                </p>
-                <div className="absolute top-3 right-3 flex gap-1.5">
-                  <span className="w-7 h-7 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
-                    <ImageIcon className="h-3.5 w-3.5 text-white" />
-                  </span>
-                  <span className="w-7 h-7 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
-                    <Play className="h-3 w-3 text-white" />
-                  </span>
+                  <div className="absolute top-4 right-4 flex gap-2">
+                    <span className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
+                      <ImageIcon className="h-4 w-4 text-white" />
+                    </span>
+                    <span className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center">
+                      <Play className="h-3.5 w-3.5 text-white" />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={goPrev}
+            aria-label="Previous photo"
+            className="absolute top-1/2 -translate-y-1/2 -left-2 md:-left-4 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-bg/70 backdrop-blur-lg border border-border text-saffron hover:bg-saffron hover:text-white transition-all shadow-lg flex items-center justify-center"
+          >
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+          <button
+            onClick={goNext}
+            aria-label="Next photo"
+            className="absolute top-1/2 -translate-y-1/2 -right-2 md:-right-4 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-bg/70 backdrop-blur-lg border border-border text-saffron hover:bg-saffron hover:text-white transition-all shadow-lg flex items-center justify-center"
+          >
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-2 mt-6">
+            {galleries.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > index ? 1 : -1);
+                  setIndex(i);
+                }}
+                aria-label={`Go to photo ${i + 1}`}
+                className={`transition-all duration-300 rounded-full ${
+                  i === index
+                    ? "w-8 h-2.5 bg-saffron shadow-md shadow-saffron/30"
+                    : "w-2.5 h-2.5 bg-ink-soft/30 hover:bg-ink-soft/60"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
+        {/* CTA */}
         <div className="mt-12 text-center">
           <a
             href="/gallery"

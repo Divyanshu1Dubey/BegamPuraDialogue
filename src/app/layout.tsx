@@ -10,6 +10,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEOManager } from "@/components/SEOManager";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -198,6 +199,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange={false}
         >
+          <LoadingOverlay />
           <LanguageProvider>
             <TooltipProvider delay={150}>
               <SkipToContent />
