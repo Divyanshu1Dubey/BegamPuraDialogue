@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Lightbulb, Hammer, UsersRound, Scale, HeartHandshake, Baby } from "lucide-react";
 import { guru } from "@/data/guru";
@@ -77,7 +78,7 @@ export function Teachings() {
                 </div>
 
                 <blockquote className="text-sm font-medium text-saffron/90 italic mb-3 border-l-2 border-saffron/40 pl-3">
-                  "{teaching.shabadOpening}"
+                  &ldquo;{teaching.shabadOpening}&rdquo;
                 </blockquote>
 
                 <p className="text-sm text-ink-soft leading-relaxed flex-1 mb-3">
@@ -133,12 +134,12 @@ export function Teachings() {
           </div>
 
           <div className="mt-12 text-center">
-            <a
+            <Link
               href="/teachings"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
             >
               <LanguageAware en="Explore All 16 Raags & Philosophy" hi="सभी 16 राग और दर्शन देखें" pa="ਸਾਰੇ 16 ਰਾਗ ਅਤੇ ਦਰਸ਼ਨ ਵੇਖੋ" />
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

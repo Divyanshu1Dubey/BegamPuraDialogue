@@ -12,14 +12,8 @@ import { RavidassImage } from "./RavidassPortrait";
 import { SignatureMark } from "./SignatureMark";
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
     <section
-      ref={ref}
       id="home"
       className="relative min-h-screen flex items-start justify-center overflow-x-hidden bg-mandala"
     >
@@ -31,8 +25,7 @@ export function Hero() {
       {/* Floating particles */}
       <FloatingParticles />
 
-      <motion.div
-        style={{ y, opacity }}
+      <div
         className="relative z-10 mx-auto max-w-6xl px-4 lg:px-8 text-center pt-24 lg:pt-32 pb-20 lg:pb-28"
       >
         {/* Top tag with animated signature mark */}
@@ -149,7 +142,7 @@ export function Hero() {
           <Countdown />
           <DailyQuoteWidget />
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div

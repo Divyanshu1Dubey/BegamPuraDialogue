@@ -42,7 +42,7 @@ const galleryItems = [
 
 export default function GalleryPage() {
   const [selectedCat, setSelectedCat] = useState("all");
-  const [lightboxItem, setLightboxItem] = useState<any>(null);
+  const [lightboxItem, setLightboxItem] = useState<(typeof galleryItems)[number] | null>(null);
 
   const filtered = galleryItems.filter(
     (item) => selectedCat === "all" || item.category === selectedCat

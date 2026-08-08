@@ -4,13 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, CheckCircle2 } from "lucide-react";
-import { brhf, deadlines } from "@/data/brhf";
+import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
 
 export default function EventsPage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [search, setSearch] = useState("");
-  const [selectedEventModal, setSelectedEventModal] = useState<any>(null);
+  const [selectedEventModal, setSelectedEventModal] = useState<(typeof brhf.globalEvents)[number] | null>(null);
   const [registered, setRegistered] = useState(false);
 
   const filteredEvents = brhf.globalEvents.filter((ev) => {

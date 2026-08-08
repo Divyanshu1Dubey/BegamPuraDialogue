@@ -19,23 +19,27 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en");
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("brhf-language") as Language | null;
+      if (stored && ["en", "hi", "pa"].includes(stored)) {
+        return stored;
+      }
+    }
+    return "en";
+  });
 
   useEffect(() => {
-    const stored = localStorage.getItem("brhf-language") as Language | null;
-    if (stored && ["en", "hi", "pa"].includes(stored)) {
-      setLanguageState(stored);
-    }
-  }, []);
+    document.documentElement.lang = language;
+  }, [language]);
 
   const setLanguage = useCallback((l: Language) => {
     setLanguageState(l);
     localStorage.setItem("brhf-language", l);
-    document.documentElement.lang = l;
   }, []);
 
   const t = useCallback(
-    (key: string) => languageMeta[language].native,
+    () => languageMeta[language].native,
     [language]
   );
 

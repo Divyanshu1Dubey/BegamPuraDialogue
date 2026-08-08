@@ -59,7 +59,7 @@ export default function BegampuraPage() {
               The 5 Pillars of Begampura
             </h2>
             <p className="text-base text-ink-soft mt-4 font-medium">
-              Sant Ravidas Ji's original 14th-century verses from Sri Guru Granth Sahib Ji (Ang 345) translated into core modern democratic principles.
+              Sant Ravidas Ji&apos;s original 14th-century verses from Sri Guru Granth Sahib Ji (Ang 345) translated into core modern democratic principles.
             </p>
           </div>
 
