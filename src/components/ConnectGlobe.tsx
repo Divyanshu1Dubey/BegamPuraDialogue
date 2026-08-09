@@ -170,6 +170,7 @@ function createEarthTexture(): THREE.CanvasTexture {
 
   const tex = new THREE.CanvasTexture(c);
   tex.anisotropy = 8;
+  tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
 }
 

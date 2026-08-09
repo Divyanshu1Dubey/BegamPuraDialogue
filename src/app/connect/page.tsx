@@ -2,52 +2,28 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Heart, Users, Sparkles, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Heart, Users, Sparkles, Send } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ConnectGlobe } from "@/components/ConnectGlobe";
 
 export default function ConnectPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     country: "United Kingdom",
-    role: "Volunteer",
+    role: "Volunteer Event Coordinator",
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSending(true);
-
-    try {
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "connect",
-          name: formData.name,
-          email: formData.email,
-          country: formData.country,
-          role: formData.role,
-          message: formData.message,
-        }),
-      });
-
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        const err = await res.json();
-        alert(err.error || "Something went wrong. Please try again.");
-      }
-    } catch {
-      alert("Network error. Please check your connection and try again.");
-    } finally {
-      setSending(false);
-    }
+    const subject = encodeURIComponent(`Volunteer Registration — ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nCountry: ${formData.country}\nRole: ${formData.role}\nMessage: ${formData.message || "N/A"}`
+    );
+    window.location.href = `mailto:begumpura.tech@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -120,119 +96,55 @@ export default function ConnectPage() {
 
           </div>
 
-          {/* Interactive Volunteer Form */}
+          {/* Volunteer Form */}
           <div className="p-8 rounded-3xl card-glass card-saffron-glow">
-            {!submitted ? (
+            <h2 className="font-display text-2xl font-bold text-ink mb-2">Volunteer & Ambassador Registration</h2>
+            <p className="text-xs text-ink-soft mb-6 font-medium">Register to contribute toward research, event hosting, or community outreach.</p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <h2 className="font-display text-2xl font-bold text-ink mb-2">Volunteer & Ambassador Registration</h2>
-                <p className="text-xs text-ink-soft mb-6 font-medium">Register to contribute toward research, event hosting, or community outreach.</p>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label htmlFor="fullname" className="block text-xs font-bold text-ink-soft mb-1">Your Full Name</label>
-                    <input
-                      id="fullname"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Smt. Gurpreet Kaur"
-                      className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="you@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="country" className="block text-xs font-bold text-ink-soft mb-1">Country</label>
-                      <select
-                        id="country"
-                        value={formData.country}
-                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                      >
-                        <option>United Kingdom</option>
-                        <option>India</option>
-                        <option>Canada</option>
-                        <option>USA</option>
-                        <option>Germany</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label htmlFor="role" className="block text-xs font-bold text-ink-soft mb-1">Desired Role</label>
-                      <select
-                        id="role"
-                        value={formData.role}
-                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                      >
-                        <option>Volunteer Event Coordinator</option>
-                        <option>Gurbani Research Fellow</option>
-                        <option>Youth Delegate</option>
-                        <option>Media & Communications</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-xs font-bold text-ink-soft mb-1">Message / Note of Interest</label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Tell us how you would like to participate..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60"
-                  >
-                    {sending ? (
-                      <>
-                        <span className="animate-spin inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" /> Submit Registration Interest
-                      </>
-                    )}
-                  </button>
-                </form>
+                <label htmlFor="fullname" className="block text-xs font-bold text-ink-soft mb-1">Your Full Name</label>
+                <input id="fullname" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Smt. Gurpreet Kaur" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4 animate-bounce" />
-                <h3 className="font-display text-3xl font-bold text-ink mb-2">Welcome to the Movement!</h3>
-                <p className="text-sm text-ink-soft max-w-sm mx-auto mb-6">
-                  Thank you, {formData.name}. The BRHF Secretariat has received your application and will get in touch shortly.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="px-6 py-2.5 rounded-xl bg-saffron text-white text-xs font-bold"
-                >
-                  Submit Another Form
-                </button>
+
+              <div>
+                <label htmlFor="email" className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
+                <input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="you@example.com" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
               </div>
-            )}
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="country" className="block text-xs font-bold text-ink-soft mb-1">Country</label>
+                  <select id="country" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
+                    <option>United Kingdom</option>
+                    <option>India</option>
+                    <option>Canada</option>
+                    <option>USA</option>
+                    <option>Germany</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="role" className="block text-xs font-bold text-ink-soft mb-1">Desired Role</label>
+                  <select id="role" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
+                    <option>Volunteer Event Coordinator</option>
+                    <option>Gurbani Research Fellow</option>
+                    <option>Youth Delegate</option>
+                    <option>Media & Communications</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-xs font-bold text-ink-soft mb-1">Message / Note of Interest</label>
+                <textarea id="message" rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us how you would like to participate..." className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
+              </div>
+
+              <button type="submit" className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2">
+                <Send className="h-4 w-4" /> Submit Registration Interest
+              </button>
+            </form>
           </div>
         </div>
       </div>

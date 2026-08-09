@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, Mail, CheckCircle2 } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -13,7 +13,6 @@ export default function EventsPage() {
   const [search, setSearch] = useState("");
   const [selectedEventModal, setSelectedEventModal] = useState<(typeof brhf.globalEvents)[number] | null>(null);
   const [registered, setRegistered] = useState(false);
-  const [sendingEvent, setSendingEvent] = useState(false);
   const [eventForm, setEventForm] = useState({ name: "", email: "", organization: "" });
 
   const filteredEvents = brhf.globalEvents.filter((ev) => {
@@ -174,35 +173,14 @@ export default function EventsPage() {
                   <p className="text-xs text-ink-soft mb-6">{selectedEventModal.location} · {selectedEventModal.month} {selectedEventModal.year}</p>
 
                   <form
-                    onSubmit={async (e) => {
+                    onSubmit={(e) => {
                       e.preventDefault();
-                      setSendingEvent(true);
-
-                      try {
-                        const res = await fetch("/api/send-email", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            type: "event-registration",
-                            name: eventForm.name,
-                            email: eventForm.email,
-                            organization: eventForm.organization,
-                            eventTitle: selectedEventModal?.title,
-                            eventLocation: selectedEventModal?.location,
-                          }),
-                        });
-
-                        if (res.ok) {
-                          setRegistered(true);
-                        } else {
-                          const err = await res.json();
-                          alert(err.error || "Registration failed. Please try again.");
-                        }
-                      } catch {
-                        alert("Network error. Please try again.");
-                      } finally {
-                        setSendingEvent(false);
-                      }
+                      const subject = encodeURIComponent(`Event Registration — ${eventForm.name}`);
+                      const body = encodeURIComponent(
+                        `Name: ${eventForm.name}\nEmail: ${eventForm.email}\nOrganization: ${eventForm.organization || "N/A"}\nEvent: ${selectedEventModal.title}\nLocation: ${selectedEventModal.location}`
+                      );
+                      window.location.href = `mailto:begumpura.tech@gmail.com?subject=${subject}&body=${body}`;
+                      setRegistered(true);
                     }}
                     className="space-y-4"
                   >
@@ -241,10 +219,10 @@ export default function EventsPage() {
 
                     <button
                       type="submit"
-                      disabled={sendingEvent}
-                      className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4 disabled:opacity-60"
+                      className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4"
                     >
-                      {sendingEvent ? "Confirming..." : "Confirm Registration Pass"}
+                      <Mail className="h-4 w-4 inline mr-1.5 -mt-0.5" />
+                      <LanguageAware en="Confirm Registration" hi="पंजीकरण की पुष्टि" pa="ਰਜਿਸਟਰੇਸ਼ਨ ਪੁਸ਼ਟੀ" />
                     </button>
                   </form>
                 </div>
