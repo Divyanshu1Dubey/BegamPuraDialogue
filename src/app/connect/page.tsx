@@ -10,6 +10,7 @@ import { ConnectGlobe } from "@/components/ConnectGlobe";
 
 export default function ConnectPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,9 +19,35 @@ export default function ConnectPage() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "connect",
+          name: formData.name,
+          email: formData.email,
+          country: formData.country,
+          role: formData.role,
+          message: formData.message,
+        }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const err = await res.json();
+        alert(err.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      alert("Network error. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -175,9 +202,19 @@ export default function ConnectPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2"
+                    disabled={sending}
+                    className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    <Send className="h-4 w-4" /> Submit Registration Interest
+                    {sending ? (
+                      <>
+                        <span className="animate-spin inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" /> Submit Registration Interest
+                      </>
+                    )}
                   </button>
                 </form>
               </div>

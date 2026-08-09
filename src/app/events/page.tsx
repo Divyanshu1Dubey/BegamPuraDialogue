@@ -13,6 +13,8 @@ export default function EventsPage() {
   const [search, setSearch] = useState("");
   const [selectedEventModal, setSelectedEventModal] = useState<(typeof brhf.globalEvents)[number] | null>(null);
   const [registered, setRegistered] = useState(false);
+  const [sendingEvent, setSendingEvent] = useState(false);
+  const [eventForm, setEventForm] = useState({ name: "", email: "", organization: "" });
 
   const filteredEvents = brhf.globalEvents.filter((ev) => {
     const matchesSearch =
@@ -172,9 +174,35 @@ export default function EventsPage() {
                   <p className="text-xs text-ink-soft mb-6">{selectedEventModal.location} · {selectedEventModal.month} {selectedEventModal.year}</p>
 
                   <form
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                       e.preventDefault();
-                      setRegistered(true);
+                      setSendingEvent(true);
+
+                      try {
+                        const res = await fetch("/api/send-email", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            type: "event-registration",
+                            name: eventForm.name,
+                            email: eventForm.email,
+                            organization: eventForm.organization,
+                            eventTitle: selectedEventModal?.title,
+                            eventLocation: selectedEventModal?.location,
+                          }),
+                        });
+
+                        if (res.ok) {
+                          setRegistered(true);
+                        } else {
+                          const err = await res.json();
+                          alert(err.error || "Registration failed. Please try again.");
+                        }
+                      } catch {
+                        alert("Network error. Please try again.");
+                      } finally {
+                        setSendingEvent(false);
+                      }
                     }}
                     className="space-y-4"
                   >
@@ -184,6 +212,8 @@ export default function EventsPage() {
                         type="text"
                         required
                         placeholder="Shri / Smt / Dr. Your Name"
+                        value={eventForm.name}
+                        onChange={(e) => setEventForm({ ...eventForm, name: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
                       />
                     </div>
@@ -193,6 +223,8 @@ export default function EventsPage() {
                         type="email"
                         required
                         placeholder="you@example.com"
+                        value={eventForm.email}
+                        onChange={(e) => setEventForm({ ...eventForm, email: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
                       />
                     </div>
@@ -201,15 +233,18 @@ export default function EventsPage() {
                       <input
                         type="text"
                         placeholder="BRHF Delegate / Sangat Member"
+                        value={eventForm.organization}
+                        onChange={(e) => setEventForm({ ...eventForm, organization: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4"
+                      disabled={sendingEvent}
+                      className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4 disabled:opacity-60"
                     >
-                      Confirm Registration Pass
+                      {sendingEvent ? "Confirming..." : "Confirm Registration Pass"}
                     </button>
                   </form>
                 </div>
