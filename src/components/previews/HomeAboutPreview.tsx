@@ -7,10 +7,10 @@ import { Calendar, Users, Globe, BookOpen, Sparkles, Heart } from "lucide-react"
 import { LanguageAware } from "../LanguageAware";
 
 const stats = [
-  { value: "126", label: "Years Lived", icon: Calendar },
+  { value: "151", label: "Years Lived", icon: Calendar },
   { value: "94,000", label: "Satsangs Given", icon: Users },
   { value: "40,000", label: "Km Travelled", icon: Globe },
-  { value: "126", label: "Shabads", icon: BookOpen },
+  { value: "40", label: "Shabads", icon: BookOpen },
   { value: "16", label: "Raags", icon: Sparkles },
   { value: "216", label: "Shlokas", icon: Heart },
 ];

@@ -7,10 +7,10 @@ import { LanguageAware } from "./LanguageAware";
 import { RavidassImage } from "./RavidassPortrait";
 
 const stats = [
-  { value: "126", label: "Years Lived", icon: Calendar },
+  { value: "151", label: "Years Lived", icon: Calendar },
   { value: "94,000", label: "Satsangs Given", icon: Users },
   { value: "40,000", label: "Km Travelled", icon: Globe },
-  { value: "126", label: "Shabads in Guru Granth Sahib", icon: BookOpen },
+  { value: "40", label: "Shabads in Guru Granth Sahib", icon: BookOpen },
   { value: "16", label: "Raags", icon: Sparkles },
   { value: "216", label: "Shlokas", icon: Heart },
 ];
@@ -71,7 +71,7 @@ export function About() {
             />
           </div>
           <p className="mt-4 text-xs uppercase tracking-[0.3em] text-saffron/70">
-            Sant Ravidas Ji · 1377–1540
+            Sant Ravidas Ji · 1377–1528
           </p>
         </motion.div>
 
