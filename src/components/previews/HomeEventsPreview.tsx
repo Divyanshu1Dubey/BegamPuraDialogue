@@ -27,7 +27,7 @@ export function HomeEventsPreview() {
         </h2>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="From Varanasi to the House of Lords in London and the European Parliament in Brussels — the message of Begampura travels the world."
+            en="From Varanasi to the House of Lords in London and the European Parliament in Brussels — the message of Be-gumpura travels the world."
             hi="वाराणसी से लंदन के हाउस ऑफ लॉर्ड्स तक — बेगमपुरा का संदेश संसार भर में यात्रा करता है।"
             pa="ਵਾਰਾਣਸੀ ਤੋਂ ਲੰਡਨ ਦੇ ਹਾਊਸ ਆਫ ਲਾਰਡਸ ਤੱਕ — ਬੇਗਮਪੁਰਾ ਦਾ ਸੁਨੇਹਾ ਦੁਨੀਆਂ ਭਰ ਵਿੱਚ ਘੁੰਮਦਾ।"
           />

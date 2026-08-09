@@ -1,13 +1,14 @@
 "use client";
 
+import React, { ComponentType } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Lightbulb, Hammer, UsersRound, Scale, HeartHandshake, Baby } from "lucide-react";
 import { guru } from "@/data/guru";
 import { LanguageAware } from "./LanguageAware";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Begampura: Lightbulb,
+const iconMap: Record<string, ComponentType<{ className?: string }>> = {
+  "Be-gumpura": Lightbulb,
   Kirat: Hammer,
   AntiCaste: UsersRound,
   EkNoor: Scale,
@@ -19,8 +20,8 @@ export function Teachings() {
   return (
     <section id="teachings" className="relative py-32 overflow-hidden">
       {/* Background effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-saffron/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         {/* Header */}
@@ -43,7 +44,7 @@ export function Teachings() {
           </h2>
           <p className="mt-6 text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="Six pillars of the Begampura vision — teachings so powerful that centuries later they form the bedrock of modern democratic constitutions, social justice movements, and inclusive nation-building."
+              en="Six pillars of the Be-gumpura vision — teachings so powerful that centuries later they form the bedrock of modern democratic constitutions, social justice movements, and inclusive nation-building."
               hi="बेगमपुरा दृष्टिकोण के छह स्तंभ — इतनी शक्तिशाली शिक्षाएँ कि सदियों बाद वे आधुनिक लोकतांत्रिक संविधानों, सामाजिक न्याय आंदोलनों और समावेशी राष्ट्र-निर्माण की आधारशिला बन गईं।"
               pa="ਬੇਗਮਪੁਰਾ ਦਰਸ਼ਨ ਦੇ ਛਹ ਥੰਮ੍ਹਾਂ — ਇਤਨੇ ਸ਼ਕਤੀਸ਼ਾਲੀ ਸਿੱਖਿਆਵਾਂ ਕਿ ਸਦੀਆਂ ਬਾਅਦ ਉਹ ਆਧੁਨਿਕ ਲੋਕਤੰਤਰੀ ਸੰਵਿਧਾਨਾਂ ਦੀ ਨੀਂਹ ਬਣਦੇ।"
             />
@@ -64,7 +65,7 @@ export function Teachings() {
                 className="group rounded-3xl p-7 card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-500 flex flex-col h-full"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-saffron/20 to-royal/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-saffron/20 to-royal/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Icon className="h-5 w-5 text-saffron" />
                   </div>
                   <div>
@@ -136,7 +137,7 @@ export function Teachings() {
           <div className="mt-12 text-center">
             <Link
               href="/teachings"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
             >
               <LanguageAware en="Explore All 16 Raags & Philosophy" hi="सभी 16 राग और दर्शन देखें" pa="ਸਾਰੇ 16 ਰਾਗ ਅਤੇ ਦਰਸ਼ਨ ਵੇਖੋ" />
             </Link>

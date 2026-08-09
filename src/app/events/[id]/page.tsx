@@ -58,7 +58,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             <h3 className="font-display text-lg font-bold text-saffron mb-4">Key Event Highlights & Agenda</h3>
             <ul className="space-y-3">
               {[
-                "Keynote lectures by international scholars on Begampura & Human Rights",
+                "Keynote lectures by international scholars on Be-gumpura & Human Rights",
                 "Unveiling of the 650th Commemorative Souvenir & Exhibition Panels",
                 "Recital of 40 Shabads in traditional classical Raags",
                 "Interfaith Dialogue on anti-caste egalitarian civic principles",
@@ -78,7 +78,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             </div>
             <Link
               href="/events"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-xs font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity"
+              className="px-6 py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-xs font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity"
             >
               Register Delegate Pass
             </Link>

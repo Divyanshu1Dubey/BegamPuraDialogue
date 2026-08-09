@@ -6,19 +6,20 @@ import { BookOpen, Download, FileText, Headphones, Video, BookMarked, ArrowRight
 import { LanguageAware } from "./LanguageAware";
 
 const libraryItems = [
-  { icon: BookOpen, title: "Guru Granth Sahib Ji", titleHi: "ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ", desc: "Full Bani of Bhagat Ravidas Ji · 41 Shabads · 16 Raags", type: "text" },
+  { icon: BookOpen, title: "Guru Granth Sahib Ji", titleHi: "ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ", desc: "Full Bani of Satguru Ravidas Ji · 40 Shabads · 27 Raags (Amritvani tradition)", type: "text" },
+  { icon: BookMarked, title: "Amritvani — 240 Shlokas", titleHi: "ਅਮ੍ਰਿਤਵਾਣੀ — 240 ਸ਼ਲੋਕ", desc: "Complete anthology of Satguru Ravidas Ji — 240 shlokas of timeless spiritual wisdom", type: "book" },
   { icon: FileText, title: "Guru Ravidas Pragas Di Khoj", titleHi: "ਗੁਰੂ ਰਵਿਦਾਸ ਪ੍ਰਗਟਸ ਦੀ ਖੋਜ", desc: "By Roop Lal Roop, translated by Ambassador Ramesh Chander IFS", type: "book" },
   { icon: Headphones, title: "Audio Kirtan Collection", titleHi: "ਆਡੀਓ ਕੀਰਤਨ ਸੰਗ੍ਰਹਿ", desc: "Shabads sung in classical raags — immersive audio experience", type: "audio" },
-  { icon: Video, title: "Documentary: Begampura", titleHi: "ਡਾਕੂਮੈਂਟਰੀ: ਬੇਗਮਪੁਰਾ", desc: "Full documentary on the life and teachings of Sant Ravidas Ji", type: "video" },
-  { icon: BookMarked, title: "Research Papers & Articles", titleHi: "ਖੋਜ ਪੇਪਰਾਂ ਅਤੇ ਲੇਖ", desc: "Academic papers on Begampura, anti-caste movements, and governance", type: "pdf" },
-  { icon: Download, title: "Download Centre", titleHi: "ਡਾਊਨਲੋਡ ਕੇਂਦਰ", desc: "Posters, logos, banners, pamphlets — downloadable assets for the 650th", type: "download" },
+  { icon: Video, title: "Documentary: Be-gumpura", titleHi: "ਡਾਕੂਮੈਂਟਰੀ: ਬੇਗਮਪੁਰਾ", desc: "Full documentary on the life and teachings of Sant Ravidas Ji", type: "video" },
+  { icon: Download, title: "Research Papers & Articles", titleHi: "ਖੋਜ ਪੇਪਰਾਂ ਅਤੇ ਲੇਖ", desc: "Academic papers on Be-gumpura, anti-caste movements, and governance", type: "pdf" },
+  { icon: FileText, title: "Download Centre", titleHi: "ਡਾਊਨਲੋਡ ਕੇਂਦਰ", desc: "Posters, logos, banners, pamphlets — downloadable assets for the 650th", type: "download" },
 ];
 
 export function ELibrary() {
   return (
     <section id="library" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-violet-deep/5 to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-violet-deep/5 to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-violet/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         {/* Header */}
@@ -41,7 +42,7 @@ export function ELibrary() {
           </h2>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="A digital sanctuary of the Begampura message — texts, audio, video, and research that carry the light of Sant Ravidas Ji across every digital threshold."
+              en="A digital sanctuary of the Be-gumpura message — texts, audio, video, and research that carry the light of Sant Ravidas Ji across every digital threshold."
               hi="बेगमपुरा संदेश का डिजिटल पवित्र स्थान — ग्रंथ, आवाज़, वीडियो और शोध जो संत रविदास जी के प्रकाश को हर डिजिटल सीमा तक ले जाते हैं।"
               pa="ਬੇਗਮਪੁਰਾ ਸੁਨੇਹੇ ਦਾ ਡਿਜ਼ੀਟਲ ਪਵਿੱਤਰ ਥਾਂ — ਗਰੰਥ, ਆਵਾਜ਼, ਵਿਡੀਓ ਅਤੇ ਖੋਜ ਜੋ ਸੰਤ ਰਵਿਦਾਸ ਜੀ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਹਰ ਡਿਜ਼ੀਟਲ ਸੀਮਾ ਤੱਕ ਲੈਂਦੇ।"
             />
@@ -61,7 +62,7 @@ export function ELibrary() {
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 className="group rounded-3xl p-7 card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-300 cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-saffron/15 to-royal/15 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-saffron/15 to-royal/15 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                   <Icon className="h-6 w-6 text-saffron" />
                 </div>
                 <h3 className="font-display text-lg font-bold text-ink mb-0.5">
@@ -104,7 +105,7 @@ export function ELibrary() {
                 />
               </p>
               <div className="flex flex-wrap gap-3">
-                <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                <button className="px-5 py-2.5 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
                   <Download className="h-4 w-4" />
                   <LanguageAware en="Download PDF" hi="पीडीएफ डाउनलोड" pa="PDF ਡਾਊਨਲੋਡ" />
                 </button>
@@ -113,7 +114,7 @@ export function ELibrary() {
                 </button>
               </div>
             </div>
-            <div className="lg:col-span-2 bg-gradient-to-br from-saffron/10 to-royal/10 p-8 flex items-center justify-center">
+            <div className="lg:col-span-2 bg-linear-to-br from-saffron/10 to-royal/10 p-8 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-7xl mb-4">📖</div>
                 <p className="font-display text-lg text-saffron font-bold">Guru Ravidas</p>
@@ -127,7 +128,7 @@ export function ELibrary() {
         <div className="mt-12 text-center">
           <Link
             href="/library"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
           >
             <LanguageAware en="Browse Full E-Library Archive" hi="पूरा ई-लाइब्रेरी आर्काइव देखें" pa="ਪੂਰੀ ਈ-ਲਾਇਬ੍ਰੇਰੀ ਵੇਖੋ" />
           </Link>

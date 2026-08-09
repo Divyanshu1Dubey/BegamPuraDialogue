@@ -23,16 +23,16 @@ export function HomeRaagsPreview() {
           <LanguageAware en="Chapter IV" hi="अध्याय IV" pa="ਅਧਿਆਇ IV" />
         </span>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron leading-tight">
-          <LanguageAware en="16 Raags · 41 Shabads" hi="16 राग · 41 शबद" pa="16 ਰਾਗ · 41 ਸ਼ਬਦ" />
+          <LanguageAware en="27 Raags · 40 Shabads" hi="27 राग · 40 शब्द" pa="27 ਰਾਗ · 40 ਸ਼ਬਦ" />
         </h2>
         <p className="text-sm text-saffron/80 font-display italic mt-1">
-          <LanguageAware en="The Musical Architecture of Equality" hi="समता का संगीतमय स्वरूप" pa="ਸਮਤਾ ਦਾ ਸੰਗੀਤਮਈ ਰੂਪ" />
+          <LanguageAware en="The Musical Architecture of Equality" hi="समतावाद का संगीतमयी रूप" pa="ਸਮਤਾ ਦਾ ਸੰਗੀਤਮਈ ਰੂਪ" />
         </p>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="Bhagat Ravidas Ji's bani is enshrined in 16 different raags of Sri Guru Granth Sahib Ji — each carrying a unique emotional hue."
-            hi="भगत रविदास जी की बाणी श्री गुरु ग्रंथ साहिब जी के 16 रागों में अंकित है।"
-            pa="ਭਗਤ ਰਵਿਦਾਸ ਜੀ ਦੀ ਬਾਣੀ ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਦੇ 16 ਰਾਗਾਂ ਵਿੱਚ ਅੰਕਿਤ ਹੈ।"
+            en="Satguru Ravidas Ji's bani is enshrined in 27 different raags of Sri Guru Granth Sahib Ji — each carrying a unique emotional hue."
+            hi="सतगुरू रविदास जी की बाणी श्री गुरू ग्रंथ साहिब जी के 27 रागों में अंकित है — एक-एक राग अद्वितीय भावना रंग लिए हुए है।"
+            pa="ਸਤਗੁਰੂ ਰਵਿਦਾਸ ਜੀ ਦੀ ਬਾਣੀ ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਦੇ 27 ਰਾਗਾਂ ਵਿੱਚ ਅੰਕਿਤ ਹੈ।"
           />
         </p>
       </div>
@@ -46,7 +46,7 @@ export function HomeRaagsPreview() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
-            className={`rounded-2xl p-4 bg-gradient-to-br ${raag.color} bg-opacity-5 border border-white/10`}
+            className={`rounded-2xl p-4 bg-linear-to-br ${raag.color} bg-opacity-5 border border-white/10`}
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-2xl">{raag.emoji}</span>
@@ -68,7 +68,7 @@ export function HomeRaagsPreview() {
           <Sparkles className="h-3.5 w-3.5 text-saffron" />
           <span className="text-xs text-ink">
             <strong className="text-saffron">{totalShabads}</strong>{" "}
-            <LanguageAware en="shabads across" hi="शबद फैले हुए" pa="ਸ਼ਬਦ ਫੈਲੇ ਹੋਏ" />{" "}
+            <LanguageAware en="shabads across" hi="शब्द फैले हुए" pa="ਸ਼ਬਦ ਫੈਲੇ ਹੋਏ" />{" "}
             <strong className="text-saffron">{raags.length}</strong>{" "}
             <LanguageAware en="raags" hi="रागों में" pa="ਰਾਗਾਂ ਵਿੱਚ" />
           </span>

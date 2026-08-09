@@ -23,7 +23,7 @@ const navItems = [
   { href: "/admin/content/events", label: "Events", icon: FileText },
   { href: "/admin/content/gallery", label: "Gallery", icon: Image },
   { href: "/admin/content/library", label: "Library", icon: FileText },
-  { href: "/admin/content/begampura", label: "Begampura", icon: FileText },
+  { href: "/admin/content/begampura", label: "Be-gumpura", icon: FileText },
   { href: "/admin/donations", label: "Donations", icon: Heart },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/settings", label: "Settings", icon: Settings },

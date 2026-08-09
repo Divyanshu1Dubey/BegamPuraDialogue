@@ -36,7 +36,7 @@ export function About() {
           </span>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-saffron leading-tight">
             <LanguageAware
-              en="The Saint of Begampura"
+              en="The Saint of Be-gumpura"
               hi="बेगमपुरा के संत"
               pa="ਬੇਗਮਪੁਰਾ ਦੇ ਸੰਤ"
             />
@@ -60,7 +60,7 @@ export function About() {
         >
           <div className="relative">
             <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/30 to-royal/40" />
+              <div className="absolute inset-0 rounded-full bg-linear-to-br from-saffron/40 via-gold/30 to-royal/40" />
             </div>
             <RavidassImage
               src="/assets/OIP.webp"
@@ -110,7 +110,7 @@ export function About() {
         >
           <div className="rounded-3xl p-8 card-glass card-saffron-glow">
             <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-saffron to-saffron-deep flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-saffron to-saffron-deep flex items-center justify-center shrink-0">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -136,7 +136,7 @@ export function About() {
 
           <div className="rounded-3xl p-8 card-glass card-saffron-glow">
             <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-royal to-violet flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-royal to-violet flex items-center justify-center shrink-0">
                 <Award className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -210,7 +210,7 @@ export function About() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg/85 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-bg/85 via-transparent to-transparent pointer-events-none" />
                 <figcaption className="absolute bottom-2 inset-x-2 text-center text-[10px] uppercase tracking-wider text-saffron-bright/90 drop-shadow-lg">
                   {img.alt}
                 </figcaption>

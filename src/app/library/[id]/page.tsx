@@ -22,16 +22,16 @@ interface LibraryBook {
 const libraryBooksMap: Record<string, LibraryBook> = {
   "begampura-vision-and-human-rights": {
     id: "begampura-vision-and-human-rights",
-    title: "Begampura: The Vision of Human Rights & Social Equality",
+    title: "Be-gumpura: The Vision of Human Rights & Social Equality",
     author: "BRHF Academic Research Council",
     category: "Research Papers",
     year: "2024",
     pages: 148,
     fileSize: "4.2 MB",
-    description: "An in-depth scholarly treatise examining Sant Ravidas Ji's 14th-century blueprint of Begampura alongside the UN Universal Declaration of Human Rights.",
+    description: "An in-depth scholarly treatise examining Sant Ravidas Ji's 14th-century blueprint of Be-gumpura alongside the UN Universal Declaration of Human Rights.",
     chapters: [
       "Chapter I: The Historical Context of 14th Century Kashi (Varanasi)",
-      "Chapter II: Exegesis of the 5 Civic Pillars of Begampura",
+      "Chapter II: Exegesis of the 5 Civic Pillars of Be-gumpura",
       "Chapter III: Anti-Caste Thought and Dignity of Physical Labour",
       "Chapter IV: Comparative Analysis with UN Human Rights Declarations",
       "Chapter V: Global Yatras & The 650th Janam Jayanti Roadmap",
@@ -48,7 +48,7 @@ const libraryBooksMap: Record<string, LibraryBook> = {
     fileSize: "8.5 MB",
     description: "Complete transliteration, commentary, and musical notation for all 40 Shabads enshrined across 16 Raags in Sri Guru Granth Sahib Ji.",
     chapters: [
-      "Volume I: Introduction to the 16 Raags of Bhagat Ravidas Ji",
+      "Volume I: Introduction to the 27 Raags of Satguru Ravidas Ji",
       "Volume II: Transliteration in Gurmukhi, Devanagari & English",
       "Volume III: Musical Notation (Swaras & Taal)",
       "Volume IV: Philosophical Commentary & Inter-Faith Lessons",
@@ -74,7 +74,7 @@ const libraryBooksMap: Record<string, LibraryBook> = {
   },
   "anti-caste-governance-manual": {
     id: "anti-caste-governance-manual",
-    title: "Egalitarian Governance: Lessons from Begampura for Modern Policy",
+    title: "Egalitarian Governance: Lessons from Be-gumpura for Modern Policy",
     author: "Global Dialogue Committee",
     category: "Policy & Civic",
     year: "2025",
@@ -82,7 +82,7 @@ const libraryBooksMap: Record<string, LibraryBook> = {
     fileSize: "3.1 MB",
     description: "Policy recommendations for civic leaders on integrating dignity of labour, tax fairness, and non-discrimination into municipal governance.",
     chapters: [
-      "Section 1: The Civic Principles of Begampura",
+      "Section 1: The Civic Principles of Be-gumpura",
       "Section 2: Dignity of Physical Labour in Modern Economies",
       "Section 3: Eliminating Unfair Taxes on Working Families",
       "Section 4: Freedom of Speech and Non-Discrimination Frameworks",
@@ -144,7 +144,7 @@ export default function LibraryDetailPage({ params }: { params: Promise<{ id: st
             <a
               href={book.pdfUrl}
               download
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-lg shadow-saffron/20 flex items-center gap-2 hover:opacity-90 transition-opacity"
+              className="px-6 py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-lg shadow-saffron/20 flex items-center gap-2 hover:opacity-90 transition-opacity"
             >
               <Download className="h-4 w-4" /> Download PDF ({book.fileSize})
             </a>

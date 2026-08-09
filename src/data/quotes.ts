@@ -12,7 +12,7 @@ export interface DailyQuote {
 export const dailyQuotes: DailyQuote[] = [
   {
     text:
-      "Begampura, the city to which I bow — without worry, without fear, without tax. There, the Name of the Lord resounds.",
+      "Be-gumpura, the city to which I bow — without worry, without fear, without tax. There, the Name of the Lord resounds.",
     textHindi:
       "बेगमपुरा, वह नगर जिसे मैं नমन करता हूँ — चिंता नहीं, भय नहीं, कर नहीं। वहाँ केवल प्रभु का नाम गूँजता है।",
     textPunjabi:
@@ -37,7 +37,7 @@ export const dailyQuotes: DailyQuote[] = [
       "सच्ची मेहनत ही सच्ची पूजा। ईश्वर उन्हें प्रसन्न होते हैं जो अपने हाथों की कमाई खाते हैं।",
     textPunjabi:
       "ਸੱਚੀ ਮਿਹਨਤ ਹੀ ਸੱਚੀ ਪੂਜਾ। ਪ੍ਰਭੂ ਉਨ੍ਹਾਂ ਨੂੰ ਪ੍ਰਸੰਨ ਹੁੰਦਾ ਜੋ ਆਪਣੇ ਹੱਥਾਂ ਦੀ ਕਮਾਈ ਖਾਂਦੇ।",
-    source: "Teachings of Bhagat Ravidas Ji",
+    source: "Teachings of Satguru Ravidas Ji",
   },
   {
     text:
@@ -64,7 +64,7 @@ export const dailyQuotes: DailyQuote[] = [
       "प्रभु तो हर हृदय में वास करते हैं। दूर के मंदिरों में क्यों ढूँढें?",
     textPunjabi:
       "ਪ੍ਰਭੂ ਤਾਂ ਹਰ ਦਿਲ ਵਿੱਚ ਵੱਸਦੇ। ਦੂਰ ਦੇ ਮੰਦਰਾਂ ਵਿੱਚ ਕਿਉਂ ਲੱਭਣ?",
-    source: "Teachings of Bhagat Ravidas Ji",
+    source: "Teachings of Satguru Ravidas Ji",
   },
   {
     text:

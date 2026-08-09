@@ -236,7 +236,7 @@ export function LoadingOverlay() {
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}>
-                Begampura Dialogue
+                Be-gumpura Dialogue
               </h1>
               <p className="text-xs text-ink-soft mt-2 font-medium tracking-[0.25em] uppercase">
                 650th Janam Jayanti &middot; BRHF

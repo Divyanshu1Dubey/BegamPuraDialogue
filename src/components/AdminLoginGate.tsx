@@ -36,10 +36,10 @@ export function AdminLoginGate({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-bg via-bg-soft to-bg p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-bg via-bg-soft to-bg p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-saffron to-saffron-deep flex items-center justify-center mx-auto mb-4 shadow-lg shadow-saffron/20">
+          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-saffron to-saffron-deep flex items-center justify-center mx-auto mb-4 shadow-lg shadow-saffron/20">
             <span className="text-white font-bold text-2xl font-display">A</span>
           </div>
           <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Admin Panel</h1>
@@ -74,7 +74,7 @@ export function AdminLoginGate({ children }: { children: React.ReactNode }) {
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity"
+            className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white font-semibold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity"
           >
             Sign In
           </button>

@@ -147,7 +147,7 @@ const STORAGE_KEY = "brhf-admin-data";
 function getDefaults(): AdminState {
   return {
     hero: {
-      title: "Begampura",
+      title: "Be-gumpura",
       subtitle: "The Light of Equality",
       tagline: "650th Birth Anniversary · 2027",
       ctaPrimary: "Explore the Mission",
@@ -171,7 +171,7 @@ function getDefaults(): AdminState {
     library: [],
     donations: [],
     settings: {
-      siteName: "BRHF · Begampura Dialogue",
+      siteName: "BRHF · Be-gumpura Dialogue",
       siteUrl: "https://begampuradialogue.org",
       countdownTarget: "2027-02-16T06:00:00+05:30",
       seoTitle: "",

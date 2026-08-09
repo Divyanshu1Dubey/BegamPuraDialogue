@@ -8,8 +8,8 @@ import { LanguageAware } from "./LanguageAware";
 export function GlobalPresence() {
   return (
     <section className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg-soft via-bg to-bg-soft pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg-soft via-bg to-bg-soft pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-saffron/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <motion.div
@@ -31,7 +31,7 @@ export function GlobalPresence() {
           </h2>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="BRHF chapters across continents — each carrying the Begampura message in local communities, engaging policy-makers, youth, and interfaith partners."
+              en="BRHF chapters across continents — each carrying the Be-gumpura message in local communities, engaging policy-makers, youth, and interfaith partners."
               hi="BRHF प्रभाग महाद्वीपों में — बेगमपुरा का संदेश स्थानीय समुदायों में, नीति-निर्माताओं, युवकों और अंतर-धार्मिक भागीदारों को।"
               pa="BRHF ਖੰਡ ਮਹਾਂਦੀਪਾਂ ਵਿੱਚ — ਬੇਗਮਪੁਰਾ ਦਾ ਸੁਨੇਹਾ ਸਥਾਨਕ ਸਮੁਦਾਇਾਂ ਵਿੱਚ, ਨੀਤੀ-ਨਿਰਮਾਤਾਵਾਂ ਅਤੇ ਯੁਵਕਾਂ ਨੂੰ।"
             />
@@ -82,12 +82,12 @@ export function GlobalPresence() {
         >
           <p className="text-lg text-ink-soft mb-6">
             <LanguageAware
-              en="Part of a global community carrying the light of Begampura?"
+              en="Part of a global community carrying the light of Be-gumpura?"
               hi="बेगमपुरा के प्रकाश को ले जाने वाले विश्व समुदाय का हिस्सा? "
               pa="ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਲੈਂਦੇ ਵਿਸ਼ਵ ਸਮੂਹ ਦਾ ਹਿੱਸਾ?"
             />
           </p>
-          <button className="px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:scale-[1.03] transition-transform shadow-2xl shadow-saffron/30">
+          <button className="px-8 py-4 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:scale-[1.03] transition-transform shadow-2xl shadow-saffron/30">
             <LanguageAware
               en="Start a Chapter in Your City"
               hi="अपने शहर में एक प्रभाग शुरू करें"

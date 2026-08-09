@@ -10,13 +10,13 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 const mockBooks = [
   {
     id: "begampura-vision-and-human-rights",
-    title: "Begampura: The Vision of Human Rights & Social Equality",
+    title: "Be-gumpura: The Vision of Human Rights & Social Equality",
     author: "BRHF Academic Research Council",
     category: "Research Papers",
     year: "2024",
     pages: 148,
     fileSize: "4.2 MB",
-    description: "An in-depth scholarly treatise examining Sant Ravidas Ji's 14th-century blueprint of Begampura alongside the UN Universal Declaration of Human Rights.",
+    description: "An in-depth scholarly treatise examining Sant Ravidas Ji's 14th-century blueprint of Be-gumpura alongside the UN Universal Declaration of Human Rights.",
     pdfUrl: "/assets/HCoI 650th Exhibitions.pdf",
   },
   {
@@ -43,7 +43,7 @@ const mockBooks = [
   },
   {
     id: "anti-caste-governance-manual",
-    title: "Egalitarian Governance: Lessons from Begampura for Modern Policy",
+    title: "Egalitarian Governance: Lessons from Be-gumpura for Modern Policy",
     author: "Global Dialogue Committee",
     category: "Policy & Civic",
     year: "2025",
@@ -142,7 +142,7 @@ export default function LibraryPage() {
               className="group relative flex flex-col sm:flex-row gap-6 p-6 rounded-3xl card-glass card-saffron-glow hover:scale-[1.01] transition-all duration-300"
             >
               {/* Book Spine Icon Box */}
-              <div className="w-full sm:w-36 h-48 shrink-0 rounded-2xl bg-gradient-to-br from-saffron-deep to-violet-deep flex flex-col justify-between p-4 text-white shadow-xl relative overflow-hidden">
+              <div className="w-full sm:w-36 h-48 shrink-0 rounded-2xl bg-linear-to-br from-saffron-deep to-violet-deep flex flex-col justify-between p-4 text-white shadow-xl relative overflow-hidden">
                 <FileText className="h-8 w-8 text-saffron-bright opacity-80" />
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-saffron-bright font-bold block mb-1">
@@ -224,7 +224,7 @@ export default function LibraryPage() {
                 <a
                   href={previewPdf.pdfUrl}
                   download
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-lg shadow-saffron/20 flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-lg shadow-saffron/20 flex items-center gap-2"
                 >
                   <Download className="h-4 w-4" /> Download Complete Volume ({previewPdf.fileSize})
                 </a>

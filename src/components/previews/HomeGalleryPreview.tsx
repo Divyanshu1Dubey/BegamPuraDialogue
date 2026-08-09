@@ -10,7 +10,7 @@ const galleryItems = [
   { icon: "🕌", title: "Varanasi Pilgrimage 2026", count: 248 },
   { icon: "🇬🇧", title: "House of Lords Exhibition", count: 156 },
   { icon: "🇪🇺", title: "Brussels European Parliament", count: 198 },
-  { icon: "🪔", title: "Diwali at Gali Begampura", count: 312 },
+  { icon: "🪔", title: "Diwali at Gali Be-gumpura", count: 312 },
   { icon: "🕉️", title: "Guru Ravidas Birthday Mahotsav", count: 421 },
   { icon: "🙏", title: "Bowing at the Shrine", count: 187 },
 ];
@@ -33,7 +33,7 @@ export function HomeGalleryPreview() {
         </h2>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="From yatras and exhibitions to global ceremonies — moments that captured the Begampura light."
+            en="From yatras and exhibitions to global ceremonies — moments that captured the Be-gumpura light."
             hi="यात्राओं से लेकर प्रदर्शनियों तक — वे क्षण जिन्होंने बेगमपुरा के प्रकाश को कैद किया।"
             pa="ਯਾਤਰਾਵਾਂ ਅਤੇ ਪ੍ਰਦਰਸ਼ਨੀਆਂ ਤੋਂ ਲੈ ਕੇ ਵਿਸ਼ਵ ਸਮਾਰੋਹਾਂ ਤੱਕ — ਉਹ ਪਲ ਜਿਨ੍ਹਾਂ ਨੇ ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਕੈਦ ਕੀਤਾ।"
           />

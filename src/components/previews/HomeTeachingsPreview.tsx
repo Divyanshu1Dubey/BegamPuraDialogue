@@ -35,7 +35,7 @@ export function HomeTeachingsPreview() {
         </p>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="Six pillars of the Begampura vision — teachings so powerful that centuries later they form the bedrock of modern democratic constitutions."
+            en="Six pillars of the Be-gumpura vision — teachings so powerful that centuries later they form the bedrock of modern democratic constitutions."
             hi="बेगमपुरा दृष्टिकोण के छह स्तंभ — इतनी शक्तिशाली शिक्षाएँ कि सदियों बाद वे लोकतांत्रिक संविधानों की आधारशिला बन गईं।"
             pa="ਬੇਗਮਪੁਰਾ ਦਰਸ਼ਨ ਦੇ ਛਹ ਥੰਮ੍ਹਾਂ — ਇਤਨੇ ਸ਼ਕਤੀਸ਼ਾਲੀ ਸਿੱਖਿਆਵਾਂ ਕਿ ਸਦੀਆਂ ਬਾਅਦ ਉਹ ਲੋਕਤੰਤਰੀ ਸੰਵਿਧਾਨਾਂ ਦੀ ਨੀਂਹ ਬਣਦੇ।"
           />

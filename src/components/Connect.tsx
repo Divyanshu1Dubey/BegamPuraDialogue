@@ -13,7 +13,7 @@ const connectOptions = [
     title: "Membership",
     titleHi: "सदस्यता",
     titlePa: "ਮੈਂਬਰਸ਼ਿਪ",
-    desc: "Join the BRHF global family. Receive the Begampura message in your inbox.",
+    desc: "Join the BRHF global family. Receive the Be-gumpura message in your inbox.",
   },
   {
     icon: HandHeart,
@@ -74,8 +74,8 @@ export function Connect() {
 
   return (
     <section id="connect" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-royal/50 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-royal/50 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         <Breadcrumb currentLabel={{ en: "Connect", hi: "जुड़ें", pa: "ਜੁੜੋ" }} />
@@ -92,14 +92,14 @@ export function Connect() {
           </span>
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-saffron leading-tight">
             <LanguageAware
-              en="Join the Begampura Family"
+              en="Join the Be-gumpura Family"
               hi="बेगमपुरा परिवार में शामिल हों"
               pa="ਬੇਗਮਪੁਰਾ ਪਰਿਵਾਰ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ"
             />
           </h2>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="Become a member, volunteer, or partner — the Begampura light grows stronger with every hand that holds it."
+              en="Become a member, volunteer, or partner — the Be-gumpura light grows stronger with every hand that holds it."
               hi="सदस्य बनें, स्वयंसेवक बनें, या भागीदार बनें — बेगमपुरा का प्रकाश हर हाथ से जोड़ने पर अधिक मजबूत होता है।"
               pa="ਮੈਂਬਰ ਬਣੋ, ਵਲੰਟੀਅਰ ਬਣੋ, ਜਾਂ ਭਾਗੀਦਾਰ — ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਹਰ ਹੱਥ ਨਾਲ ਮਜਬੂਤ ਹੁੰਦੀ।"
             />
@@ -119,7 +119,7 @@ export function Connect() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="group rounded-3xl p-7 card-glass card-saffron-glow hover:scale-[1.03] transition-all duration-300 cursor-pointer text-center"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-saffron/15 to-royal/15 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-saffron/15 to-royal/15 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
                   <Icon className="h-6 w-6 text-saffron" />
                 </div>
                 <h3 className="font-display text-lg font-bold text-ink mb-0.5">{opt.title}</h3>
@@ -138,7 +138,7 @@ export function Connect() {
           transition={{ duration: 0.8 }}
           className="grid lg:grid-cols-5 gap-8"
         >
-          <div className="lg:col-span-2 rounded-3xl p-8 bg-gradient-to-br from-saffron/8 via-surface to-royal/8 border border-border/50">
+          <div className="lg:col-span-2 rounded-3xl p-8 bg-linear-to-br from-saffron/8 via-surface to-royal/8 border border-border/50">
             <h3 className="font-display text-2xl font-bold text-gradient-saffron mb-6">
               <LanguageAware en="Get In Touch" hi="संपर्क करें" pa="ਸੰਪਰਕ ਕਰੋ" />
             </h3>
@@ -245,7 +245,7 @@ export function Connect() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white font-semibold tracking-wide hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === "submitting" ? (
                       <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -264,7 +264,7 @@ export function Connect() {
           <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
             <div className="rounded-3xl p-7 card-glass card-saffron-glow">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron to-saffron-deep flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-saffron to-saffron-deep flex items-center justify-center">
                   <Mail className="h-4 w-4 text-white" />
                 </div>
                 <div>
@@ -277,7 +277,7 @@ export function Connect() {
             </div>
             <div className="rounded-3xl p-7 card-glass card-saffron-glow">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal to-violet flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-royal to-violet flex items-center justify-center">
                   <Phone className="h-4 w-4 text-white" />
                 </div>
                 <div>
@@ -291,7 +291,7 @@ export function Connect() {
             </div>
             <div className="sm:col-span-2 rounded-3xl p-7 card-glass card-saffron-glow">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron/20 to-royal/20 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-saffron/20 to-royal/20 flex items-center justify-center shrink-0">
                   <MapPin className="h-4 w-4 text-saffron" />
                 </div>
                 <div>
@@ -304,12 +304,12 @@ export function Connect() {
             </div>
 
             {/* Daily Quote */}
-            <div className="sm:col-span-2 rounded-3xl p-7 bg-gradient-to-br from-saffron/5 via-surface to-royal/5 border border-saffron/25">
+            <div className="sm:col-span-2 rounded-3xl p-7 bg-linear-to-br from-saffron/5 via-surface to-royal/5 border border-saffron/25">
               <p className="text-xs uppercase tracking-widest text-saffron mb-3">
                 <LanguageAware en="Today's Shabad" hi="आज का शबद" pa="ਅੱਜ ਦਾ ਸ਼ਬਦ" />
               </p>
               <p className="font-display text-lg italic text-saffron/90 leading-relaxed">
-                &ldquo;Begampura, the city to which I bow — without worry, without fear, without tax.&rdquo;
+                &ldquo;Be-gumpura, the city to which I bow — without worry, without fear, without tax.&rdquo;
               </p>
               <p className="text-xs text-ink-soft mt-2">
                 Sri Guru Granth Sahib Ji · Ang 345 · Raag Gaur

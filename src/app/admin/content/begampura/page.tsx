@@ -12,9 +12,9 @@ export default function BegampuraEditor() {
   return (
     <div className="space-y-6 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Begampura Vision</h1>
+        <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Be-gumpura Vision</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Edit the Begampura section heading, subheading, vision text, and pillars.
+          Edit the Be-gumpura section heading, subheading, vision text, and pillars.
         </p>
       </div>
 

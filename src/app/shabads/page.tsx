@@ -13,7 +13,7 @@ const mockShabads = [
     id: "begampura-shahar-ko-naao",
     titleGurmukhi: "ਬੇਗਮ ਪੁਰਾ ਸਹਰ ਕੋ ਨਾਉ ॥",
     titleDevanagari: "बेगम पुरा सहर को नाव ॥",
-    titleEnglish: "Begampura — The City Without Sorrow",
+    titleEnglish: "Be-gumpura — The City Without Sorrow",
     raag: "Gauri",
     ang: 345,
     essence: "The blueprint of an ideal, fear-free, egalitarian city without tax on labour or sorrow.",
@@ -23,7 +23,7 @@ const mockShabads = [
     fullDevanagari: `बेगम पुरा सहर को नाव ॥ दूखु अंदोहु नही तिहि ठाउ ॥
 ना तसवीस कोलु न मालु ॥ खउफु न खता न तरसु जवालु ॥१॥
 अब मोहि खूब वतन गह पाई ॥ ऊहा खैर सदा मेरे भाई ॥१॥ रहाउ ॥`,
-    fullTranslation: `Begampura, 'the city without sorrow', is the name of that town.
+    fullTranslation: `Be-gumpura, 'the city without sorrow', is the name of that town.
 There is no suffering or anxiety there.
 There is no desire or tax on commodities, nor fear of default or downfall.
 Now, I have found this marvelous homeland. Oh my brother, there is everlasting wellness there.`,
@@ -144,7 +144,7 @@ export default function ShabadsPage() {
           </span>
           <h1 className="font-display text-4xl md:text-6xl font-bold text-gradient-saffron leading-tight">
             <LanguageAware
-              en="40 Shabads of Bhagat Ravidas Ji"
+              en="40 Shabads of Satguru Ravidas Ji"
               hi="भगत रविदास जी के 40 शब्द"
               pa="ਭਗਤ ਰਵਿਦਾਸ ਜੀ ਦੇ 40 ਸ਼ਬਦ"
             />

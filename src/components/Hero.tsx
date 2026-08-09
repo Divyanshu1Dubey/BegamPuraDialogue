@@ -56,7 +56,7 @@ export function Hero() {
           <div className="relative">
             <div className="absolute inset-0 -z-10 rounded-full bg-bg/70 backdrop-blur-sm scale-110" />
             <div className="absolute inset-0 -z-20 blur-2xl opacity-40">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/20 to-royal/30" />
+              <div className="absolute inset-0 rounded-full bg-linear-to-br from-saffron/40 via-gold/20 to-royal/30" />
             </div>
             <RavidassImage
               src="/assets/OIP.webp"
@@ -76,7 +76,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight text-ink"
           >
-            <span className="block text-gradient-saffron">Begampura</span>
+            <span className="block text-gradient-saffron">Be-gumpura</span>
             <span className="block text-3xl md:text-5xl lg:text-6xl mt-3 text-ink">
               <LanguageAware
                 en="The Light of Equality"
@@ -110,7 +110,7 @@ export function Hero() {
         >
           <Link
             href="/begampura"
-            className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-xl shadow-saffron/20 animate-pulse-saffron inline-flex items-center justify-center"
+            className="group relative px-8 py-4 rounded-2xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white font-semibold tracking-wide hover:scale-[1.02] transition-transform shadow-xl shadow-saffron/20 animate-pulse-saffron inline-flex items-center justify-center"
           >
             <span className="relative z-10">
               <LanguageAware

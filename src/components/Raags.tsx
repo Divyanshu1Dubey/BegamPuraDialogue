@@ -10,8 +10,8 @@ export function Raags() {
   const [active, setActive] = useState<RaagEntry | null>(null);
   return (
     <section id="shabads" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet/50 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-violet/50 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         {/* Header */}
@@ -41,14 +41,14 @@ export function Raags() {
           </p>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="Bhagat Ravidas Ji's bani is enshrined in 16 different raags of Sri Guru Granth Sahib Ji — from Ang 345 to Ang 1196. Each raag carries a unique emotional hue and a timeless teaching on how a society should be organised. Here are those 16 raags, the dhyapan (essence) of each, and what governance should look like in its spirit."
+              en="Satguru Ravidas Ji's bani is enshrined in 27 different raags of Sri Guru Granth Sahib Ji — from Ang 345 to Ang 1196. Each raag carries a unique emotional hue and a timeless teaching on how a society should be organised. Here are those 27 raags, the dhyapan (essence) of each, and what governance should look like in its spirit."
               hi="भगत रविदास जी की बाणी श्री गुरु ग्रंथ साहिब जी के 16 रागों में अंकित है — अंग 345 से अंग 1196 तक। प्रत्येक राग एक अनूठी भावनात्मक छटा और समाज-व्यवस्था पर एक शाश्वत शिक्षा वहन करता है।"
               pa="ਭਗਤ ਰਵਿਦਾਸ ਜੀ ਦੀ ਬਾਣੀ ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਦੇ 16 ਰਾਗਾਂ ਵਿੱਚ ਅੰਕਿਤ ਹੈ — ਅੰਗ 345 ਤੋਂ 1196 ਤੱਕ।"
             />
           </p>
 
           {/* Total badge */}
-          <div className="inline-flex items-center gap-3 mt-8 px-5 py-2.5 rounded-full bg-gradient-to-r from-saffron/10 to-royal/10 border border-saffron/30">
+          <div className="inline-flex items-center gap-3 mt-8 px-5 py-2.5 rounded-full bg-linear-to-r from-saffron/10 to-royal/10 border border-saffron/30">
             <Sparkles className="h-4 w-4 text-saffron" />
             <span className="text-sm text-ink">
               <strong className="text-saffron">{totalShabads}</strong>{" "}
@@ -69,10 +69,10 @@ export function Raags() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
               onClick={() => setActive(raag)}
-              className={`group relative text-left rounded-2xl p-5 bg-gradient-to-br ${raag.color} bg-opacity-5 hover:scale-[1.05] transition-all duration-300 border border-white/10 overflow-hidden`}
+              className={`group relative text-left rounded-2xl p-5 bg-linear-to-br ${raag.color} bg-opacity-5 hover:scale-[1.05] transition-all duration-300 border border-white/10 overflow-hidden`}
             >
               {/* Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-saffron/0 via-saffron/5 to-saffron/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-linear-to-br from-saffron/0 via-saffron/5 to-saffron/0 opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div className="relative flex items-start justify-between mb-3">
                 <span className="text-3xl">{raag.emoji}</span>
@@ -127,7 +127,7 @@ function RaagDetail({ raag, onClose }: { raag: RaagEntry; onClose: () => void })
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className={`relative bg-gradient-to-br ${raag.color} p-8 overflow-hidden`}>
+        <div className={`relative bg-linear-to-br ${raag.color} p-8 overflow-hidden`}>
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative flex items-center gap-4">
             <span className="text-6xl">{raag.emoji}</span>
@@ -177,7 +177,7 @@ function RaagDetail({ raag, onClose }: { raag: RaagEntry; onClose: () => void })
           )}
 
           {/* Governance principle */}
-          <div className="rounded-2xl p-6 bg-gradient-to-br from-royal/10 to-violet/5 border border-violet/30">
+          <div className="rounded-2xl p-6 bg-linear-to-br from-royal/10 to-violet/5 border border-violet/30">
             <div className="flex items-center gap-2 mb-3">
               <Landmark className="h-4 w-4 text-violet" />
               <span className="text-xs uppercase tracking-widest text-violet font-medium">

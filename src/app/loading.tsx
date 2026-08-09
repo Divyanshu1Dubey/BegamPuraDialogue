@@ -8,7 +8,7 @@ export default function Loading() {
         <Sparkles className="absolute h-6 w-6 text-saffron animate-pulse" />
       </div>
       <h2 className="font-display text-xl font-bold text-gradient-saffron">
-        Loading Begampura Dialogue...
+        Loading Be-gumpura Dialogue...
       </h2>
       <p className="text-xs text-ink-soft mt-1">650th Janam Jayanti Commemoration</p>
     </div>

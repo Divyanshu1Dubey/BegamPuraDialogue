@@ -47,7 +47,7 @@ const pillars = [
 export default function BegampuraPage() {
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <Breadcrumb currentLabel={{ en: "Begampura Vision", hi: "बेगमपुरा दृष्टिकोण", pa: "ਬੇਗਮਪੁਰਾ ਦ੍ਰਿਸ਼ਟੀਕੋਣ" }} />
+      <Breadcrumb currentLabel={{ en: "Be-gumpura Vision", hi: "बेगमपुरा दृष्टिकोण", pa: "ਬੇਗਮਪੁਰਾ ਦ੍ਰਿਸ਼ਟੀਕੋਣ" }} />
 
       <Begampura />
 
@@ -59,7 +59,7 @@ export default function BegampuraPage() {
               Civic Architecture
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-gradient-saffron mt-3">
-              The 5 Pillars of Begampura
+              The 5 Pillars of Be-gumpura
             </h2>
             <p className="text-base text-ink-soft mt-4 font-medium">
               Sant Ravidas Ji&apos;s original 14th-century verses from Sri Guru Granth Sahib Ji (Ang 345) translated into core modern democratic principles.

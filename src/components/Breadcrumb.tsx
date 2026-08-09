@@ -10,7 +10,7 @@ const routeLabels: Record<string, { en: string; hi: string; pa: string }> = {
   about: { en: "About", hi: "परिचय", pa: "ਜਾਣ-ਪਛਾਣ" },
   teachings: { en: "Teachings", hi: "शिक्षाएँ", pa: "ਸਿੱਖਿਆਵਾਂ" },
   shabads: { en: "Raags & Shabads", hi: "राग और शबद", pa: "ਰਾਗ ਅਤੇ ਸ਼ਬਦ" },
-  begampura: { en: "Begampura", hi: "बेगमपुरा", pa: "ਬੇਗਮਪੁਰਾ" },
+  begampura: { en: "Be-gumpura", hi: "बेगमपुरा", pa: "ਬੇਗਮਪੁਰਾ" },
   events: { en: "Events", hi: "कार्यक्रम", pa: "ਪ੍ਰੋਗਰਾਮ" },
   library: { en: "E-Library", hi: "पुस्तकालय", pa: "ਪੁਸਤਕਾਲੇ" },
   gallery: { en: "Gallery", hi: "गैलरी", pa: "ਗੈਲਰੀ" },

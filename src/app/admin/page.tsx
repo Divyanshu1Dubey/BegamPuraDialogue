@@ -79,7 +79,7 @@ export default function AdminDashboard() {
       {/* Welcome */}
       <div className="bg-linear-to-r from-saffron/10 via-saffron/5 to-transparent rounded-2xl p-6 border border-saffron/20">
         <h1 className="text-2xl font-display font-bold text-ink dark:text-white">Welcome back</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your Begampura Dialogue website content, donations, and analytics.</p>
+        <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your Be-gumpura Dialogue website content, donations, and analytics.</p>
       </div>
 
       {/* Stats Grid — all values computed from real data */}
@@ -105,7 +105,7 @@ export default function AdminDashboard() {
           <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalTeachings}</p>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-4">
-          <p className="text-xs text-gray-400 uppercase tracking-wider">Begampura Pillars</p>
+          <p className="text-xs text-gray-400 uppercase tracking-wider">Be-gumpura Pillars</p>
           <p className="text-xl font-bold text-ink dark:text-white mt-1">{totalShabads}</p>
         </div>
       </div>

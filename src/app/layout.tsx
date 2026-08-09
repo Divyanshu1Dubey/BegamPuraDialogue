@@ -4,13 +4,11 @@ import Script from "next/script";
 import { Playfair_Display, Inter, Noto_Serif_Devanagari, Noto_Sans_Gurmukhi } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/i18n/LanguageContext";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEOManager } from "@/components/SEOManager";
-import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
+import { LayoutShell } from "@/components/LayoutShell";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -42,22 +40,21 @@ const siteUrl = "https://begampuradialogue.org";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "BRHF · Begampura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji",
-    template: "%s · BRHF Begampura Dialogue",
+    default: "BRHF · Be-gumpura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji",
+    template: "%s · BRHF Be-gumpura Dialogue",
   },
   description:
-    "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Begampura, the city without sorrow, fear, or tax on labour. Initiated by the British Ravidassia Heritage Foundation.",
+    "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Be-gumpura, the city without sorrow, fear, or tax on labour. Initiated by the British Ravidassia Heritage Foundation.",
   keywords: [
     "Sant Ravidas",
     "Ravidas Ji",
-    "Begampura",
+    "Be-gumpura",
     "650th Janam Jayanti",
     "Guru Ravidas",
     "British Ravidassia Heritage Foundation",
     "BRHF",
     "Guru Granth Sahib",
     "Ravidassia",
-    "Be-gumpura",
     "National Dialogue",
     "Delhi 2026",
     "interfaith",
@@ -75,24 +72,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: siteUrl,
-    siteName: "BRHF Begampura Dialogue",
-    title: "BRHF · Begampura Dialogue — 650th Janam Jayanti",
+    siteName: "BRHF Be-gumpura Dialogue",
+    title: "BRHF · Be-gumpura Dialogue — 650th Janam Jayanti",
     description:
-      "The light of Begampura — celebrating 650 years of Sant Ravidas Ji's vision of equality, dignity, and a city without sorrow.",
+      "The light of Be-gumpura — celebrating 650 years of Sant Ravidas Ji's vision of equality, dignity, and a city without sorrow.",
     images: [
       {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "BRHF Begampura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji",
+        alt: "BRHF Be-gumpura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BRHF · Begampura Dialogue — 650th Janam Jayanti",
+    title: "BRHF · Be-gumpura Dialogue — 650th Janam Jayanti",
     description:
-      "Celebrating 650 years of Sant Ravidas Ji's vision of Begampura — the city without sorrow.",
+      "Celebrating 650 years of Sant Ravidas Ji's vision of Be-gumpura — the city without sorrow.",
     images: ["/og-image.svg"],
     creator: "@BRHFofficial",
   },
@@ -132,17 +129,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    setIsAdmin(pathname.startsWith("/admin"));
-  }, [pathname]);
-
   return (
     <html
       lang="en"
@@ -165,10 +152,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <TooltipProvider delay={150}>
               <SkipToContent />
               <SEOManager />
-              {!isAdmin && <Navbar />}
-              <main id="main-content" className="flex-1 min-h-0">{children}</main>
-              {!isAdmin && <Footer />}
-              {isAdmin && <ScrollToTop />}
+              <LayoutShell>{children}</LayoutShell>
             </TooltipProvider>
           </LanguageProvider>
         </ThemeProvider>

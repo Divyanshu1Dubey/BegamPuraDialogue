@@ -28,7 +28,7 @@ export function SEOManager() {
 
       // Document title
       if (title) {
-        document.title = `${title} · BRHF Begampura Dialogue`;
+        document.title = `${title} · BRHF Be-gumpura Dialogue`;
       }
 
       // Helper: set or create a <meta> tag
@@ -68,7 +68,7 @@ export function SEOManager() {
       setMeta("property", "og:url", `${s.ogUrl || "https://begampuradialogue.org"}${pathname}`);
       setMeta("property", "og:image", s.ogImage || "/og-image.svg");
       setMeta("property", "og:type", "website");
-      setMeta("property", "og:site_name", s.siteName || "BRHF Begampura Dialogue");
+      setMeta("property", "og:site_name", s.siteName || "BRHF Be-gumpura Dialogue");
 
       // Twitter Card
       setMeta("name", "twitter:card", s.twitterCardType || "summary_large_image");

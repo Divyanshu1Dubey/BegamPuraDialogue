@@ -25,7 +25,7 @@ const mockShabadsMap: Record<string, {
     id: "begampura-shahar-ko-naao",
     titleGurmukhi: "ਬੇਗਮ ਪੁਰਾ ਸਹਰ ਕੋ ਨਾਉ ॥",
     titleDevanagari: "बेगम पुरा सहर को नाव ॥",
-    titleEnglish: "Begampura — The City Without Sorrow",
+    titleEnglish: "Be-gumpura — The City Without Sorrow",
     raag: "Gauri",
     ang: 345,
     essence: "The original utopian vision of an ideal, fear-free, tax-free, equal socialist state.",
@@ -43,7 +43,7 @@ const mockShabadsMap: Record<string, {
 आबादानु सदा मसहूर ॥ ऊहा गनी बसहि मामूर ॥२॥
 तिउ तिਉ सैल करहि जिउ भावै ॥ महरम महल न को अटकावै ॥
 कहि रविदास खलास चमारा ॥ जो हम शहरी सु मीतु हमारा ॥३॥`,
-    fullTranslation: `Begampura, 'the city without sorrow', is the name of that town.
+    fullTranslation: `Be-gumpura, 'the city without sorrow', is the name of that town.
 There is no suffering or anxiety there.
 There is no property tax or fear of default, nor any decline or tax on physical labour.
 Now, I have found this marvelous homeland. Oh my brother, there is everlasting wellness there.

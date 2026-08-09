@@ -37,7 +37,7 @@ const galleryItems = [
     category: "Global Delegation",
     location: "Parliament of the United Kingdom",
     src: "/shabads-dark-footer.jpeg",
-    desc: "Foundation trustees and patrons presenting the Begampura Civic Charter to UK parliamentarians."
+    desc: "Foundation trustees and patrons presenting the Be-gumpura Civic Charter to UK parliamentarians."
   }
 ];
 
@@ -116,7 +116,7 @@ export default function GalleryPage() {
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-t from-bg via-bg/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
                 <button className="absolute top-4 right-4 p-2.5 rounded-full bg-black/50 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
                   <Maximize2 className="h-4 w-4" />

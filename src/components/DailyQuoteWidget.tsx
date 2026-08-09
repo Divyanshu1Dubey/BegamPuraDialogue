@@ -20,7 +20,7 @@ export function DailyQuoteWidget() {
       className="mt-8 lg:mt-10"
     >
       <div className="relative rounded-[1.75rem] p-7 md:p-10 overflow-hidden
-        bg-gradient-to-br from-saffron/10 via-royal/8 to-saffron/5
+        bg-linear-to-br from-saffron/10 via-royal/8 to-saffron/5
         border border-saffron/25 card-glass card-saffron-glow">
 
         {/* Decorative corner ornament */}
@@ -97,11 +97,11 @@ export function DailyQuoteWidget() {
           transition={{ duration: 0.8, delay: 1 }}
           className="mt-6 flex items-center gap-3 pl-4"
         >
-          <div className="h-px flex-1 bg-gradient-to-r from-saffron/40 to-transparent" />
+          <div className="h-px flex-1 bg-linear-to-r from-saffron/40 to-transparent" />
           <span className="text-[11px] text-ink-soft/60 tracking-wide font-medium">
             {quote.source}
           </span>
-          <div className="h-px flex-1 bg-gradient-to-l from-saffron/40 to-transparent" />
+          <div className="h-px flex-1 bg-linear-to-l from-saffron/40 to-transparent" />
         </motion.div>
       </div>
     </motion.div>

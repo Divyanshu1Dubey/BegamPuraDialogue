@@ -7,7 +7,7 @@ import { Quote, Scale, Heart, Users } from "lucide-react";
 import { LanguageAware } from "../LanguageAware";
 import { guru } from "@/data/guru";
 
-const begampuraEntry = guru.philosophy.find(p => p.title.startsWith("Begampura"));
+const begampuraEntry = guru.philosophy.find(p => p.title.startsWith("Be-gumpura"));
 
 export function HomeBegampuraPreview() {
   return (
@@ -23,7 +23,7 @@ export function HomeBegampuraPreview() {
           <LanguageAware en="Chapter III" hi="अध्याय III" pa="ਅਧਿਆਇ III" />
         </span>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron leading-tight">
-          <LanguageAware en="Begampura" hi="बेगमपुरा" pa="ਬੇਗਮਪੁਰਾ" />{" "}
+          <LanguageAware en="Be-gumpura" hi="बेगमपुरा" pa="ਬੇਗਮਪੁਰਾ" />{" "}
           <span className="text-lg md:text-xl text-saffron/80 italic font-display">
             <LanguageAware en="— The City Without Sorrow" hi="— दुःख रहित नगर" pa="— ਦੁੱਖ-ਰਹਿਤ ਨਗਰ" />
           </span>
@@ -87,7 +87,7 @@ export function HomeBegampuraPreview() {
             href="/begampura"
             className="inline-flex items-center gap-2 px-7 py-3 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
           >
-            <LanguageAware en="Browse Full Begampura" hi="पूरी बेगमपुरा देखें" pa="ਪੂਰੀ ਬੇਗਮਪੁਰਾ ਵੇਖੋ" />
+            <LanguageAware en="Browse Full Be-gumpura" hi="पूरी बेगमपुरा देखें" pa="ਪੂਰੀ ਬੇਗਮਪੁਰਾ ਵੇਖੋ" />
             <ChevronRight className="h-4 w-4" />
           </Link>
         </div>

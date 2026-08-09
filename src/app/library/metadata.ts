@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Publications Library — Begampura Dialogue Resources",
+  title: "Publications Library — Be-gumpura Dialogue Resources",
   description:
-    "Browse publications, exhibition catalogues, and digital resources from the Begampura Dialogue initiative.",
-  keywords: ["Begampura publications", "Ravidas books", "exhibition catalogue", "BRHF publications"],
+    "Browse publications, exhibition catalogues, and digital resources from the Be-gumpura Dialogue initiative.",
+  keywords: ["Be-gumpura publications", "Ravidas books", "exhibition catalogue", "BRHF publications"],
 };

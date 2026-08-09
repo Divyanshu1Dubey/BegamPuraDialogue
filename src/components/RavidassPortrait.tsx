@@ -293,10 +293,10 @@ export function RavidassImage({
       style={{ width: size, height: size, willChange: "transform" }}
     >
       {/* Outer Halo Glow */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/30 via-gold/20 to-royal/30 blur-xl opacity-70 animate-pulse-saffron" />
+      <div className="absolute inset-0 rounded-full bg-linear-to-br from-saffron/30 via-gold/20 to-royal/30 blur-xl opacity-70 animate-pulse-saffron" />
 
       {/* Golden Ring Accent */}
-      <div className="absolute -inset-1 rounded-full p-[2px] bg-gradient-to-tr from-saffron via-gold to-saffron-bright shadow-lg shadow-saffron/20">
+      <div className="absolute -inset-1 rounded-full p-[2px] bg-linear-to-tr from-saffron via-gold to-saffron-bright shadow-lg shadow-saffron/20">
         <div className="w-full h-full rounded-full bg-bg" />
       </div>
 

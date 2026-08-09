@@ -10,9 +10,9 @@ export async function GET(request: Request) {
     // that crawlers can scrape. The admin-editable values are injected client-side
     // by SEOManager for browser users.
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://begampuradialogue.org";
-    const title = "BRHF · Begampura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji";
+    const title = "BRHF · Be-gumpura Dialogue — 650th Janam Jayanti of Sant Ravidas Ji";
     const description =
-      "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Begampura, the city without sorrow, fear, or tax on labour.";
+      "Celebrating 650 years of Sant Ravidas Ji — the saint who first envisioned Be-gumpura, the city without sorrow, fear, or tax on labour.";
 
     const html = `<!DOCTYPE html>
 <html lang="en">

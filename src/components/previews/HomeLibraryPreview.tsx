@@ -10,7 +10,7 @@ const libraryItems = [
   { icon: BookOpen, title: "Guru Granth Sahib Ji", titleHi: "ਸ੍ਰੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ", desc: "Full Bani · 41 Shabads · 16 Raags" },
   { icon: FileText, title: "Guru Ravidas Pragas Di Khoj", titleHi: "ਗੁਰੂ ਰਵਿਦਾਸ ਪ੍ਰਗਟਸ ਦੀ ਖੋਜ", desc: "By Roop Lal Roop, translated by Ambassador Ramesh Chander IFS" },
   { icon: Headphones, title: "Audio Kirtan Collection", titleHi: "ਆਡੀਓ ਕੀਰਤਨ ਸੰਗ੍ਰਹਿ", desc: "Shabads sung in classical raags" },
-  { icon: Video, title: "Documentary: Begampura", titleHi: "ਡਾਕੂਮੈਂਟਰੀ: ਬੇਗਮਪੁਰਾ", desc: "Full documentary on the life and teachings" },
+  { icon: Video, title: "Documentary: Be-gumpura", titleHi: "ਡਾਕੂਮੈਂਟਰੀ: ਬੇਗਮਪੁਰਾ", desc: "Full documentary on the life and teachings" },
 ];
 
 export function HomeLibraryPreview() {
@@ -31,7 +31,7 @@ export function HomeLibraryPreview() {
         </h2>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="A digital sanctuary of the Begampura message — texts, audio, video, and research that carry the light across every digital threshold."
+            en="A digital sanctuary of the Be-gumpura message — texts, audio, video, and research that carry the light across every digital threshold."
             hi="बेगमपुरा संदेश का डिजिटल पवित्र स्थान — ग्रंथ, आवाज़, वीडियो और शोध।"
             pa="ਬੇਗਮਪੁਰਾ ਸੁਨੇਹੇ ਦਾ ਡਿਜ਼ੀਟਲ ਪਵਿੱਤਰ ਥਾਂ — ਗਰੰਥ, ਆਵਾਜ਼, ਵਿਡੀਓ ਅਤੇ ਖੋਜ।"
           />

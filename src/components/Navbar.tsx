@@ -42,7 +42,7 @@ function NavLink({ item, isActive }: { item: typeof navItems[0]; isActive: boole
       {navLabel(item.key)}
       <span
         className={cn(
-          "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gradient-to-r from-saffron to-marigold transition-all duration-300",
+          "absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-linear-to-r from-saffron to-marigold transition-all duration-300",
           isActive ? "w-3/4" : "w-0 group-hover:w-3/4"
         )}
       />
@@ -79,7 +79,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <div className="relative w-9 h-9 flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron to-saffron-deep opacity-80 animate-pulse-saffron" />
+            <div className="absolute inset-0 rounded-full bg-linear-to-br from-saffron to-saffron-deep opacity-80 animate-pulse-saffron" />
             <span className="relative text-white font-display font-bold text-sm">BR</span>
           </div>
           <div className="flex flex-col">

@@ -45,12 +45,12 @@ const galleries: GalleryItem[] = [
     category: "leader",
   },
   {
-    title: "Diwali at Gali Begampura",
+    title: "Diwali at Gali Be-gumpura",
     subtitle: "Festival of lights",
     count: 312,
     icon: "🪔",
     image: "/assets/lotsofsantravi.jpg",
-    alt: "Diwali celebration at Gali Begampura",
+    alt: "Diwali celebration at Gali Be-gumpura",
     category: "event",
   },
   {
@@ -163,8 +163,8 @@ export function Gallery() {
 
   return (
     <section id="gallery" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-saffron/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         {/* Header */}
@@ -187,7 +187,7 @@ export function Gallery() {
           </h2>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="From yatras and exhibitions to global ceremonies — moments that captured the Begampura light."
+              en="From yatras and exhibitions to global ceremonies — moments that captured the Be-gumpura light."
               hi="यात्राओं से लेकर प्रदर्शनियों तक और विश्व समारोहों तक — वे क्षण जिन्होंने बेगमपुरा के प्रकाश को कैद किया।"
               pa="ਯਾਤਰਾਵਾਂ ਅਤੇ ਪ੍ਰਦਰਸ਼ਨੀਆਂ ਤੋਂ ਲੈ ਕੇ ਵਿਸ਼ਵ ਸਮਾਰੋਹਾਂ ਤੱਕ — ਉਹ ਪਲ ਜਿਨ੍ਹਾਂ ਨੇ ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਨੂੰ ਕੈਦ ਕੀਤੀ।"
             />
@@ -204,7 +204,7 @@ export function Gallery() {
         >
           <div className="relative">
             <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-saffron/40 via-gold/30 to-royal/40" />
+              <div className="absolute inset-0 rounded-full bg-linear-to-br from-saffron/40 via-gold/30 to-royal/40" />
             </div>
             <RavidassImage
               src="/assets/OIP.webp"
@@ -239,9 +239,9 @@ export function Gallery() {
                   className="h-full w-full object-cover"
                 />
                 {/* Color tint */}
-                <div className="absolute inset-0 bg-gradient-to-br from-saffron/30 via-royal/25 to-saffron/30 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-linear-to-br from-saffron/30 via-royal/25 to-saffron/30 mix-blend-overlay" />
                 {/* Bottom fade */}
-                <div className="absolute inset-0 bg-gradient-to-t from-bg/90 via-bg/30 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-bg/90 via-bg/30 to-transparent pointer-events-none" />
                 {/* Content overlay */}
                 <div className="absolute inset-0 flex flex-col items-center justify-end p-6 md:p-10 text-center">
                   {current.icon && (
@@ -314,7 +314,7 @@ export function Gallery() {
         <div className="mt-12 text-center">
           <a
             href="/gallery"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
           >
             <LanguageAware en="Explore Full Media & Photographic Archive" hi="पूरा फोटो आर्काइव देखें" pa="ਪੂਰੀ ਫੋਟੋ ਆਰਕਾਈਵ ਵੇਖੋ" />
           </a>

@@ -129,11 +129,11 @@ export default function SettingsPage() {
             <input
               value={s.seoTitle}
               onChange={(e) => set({ seoTitle: e.target.value })}
-              placeholder="BRHF · Begampura Dialogue — 650th Janam Jayanti"
+              placeholder="BRHF · Be-gumpura Dialogue — 650th Janam Jayanti"
               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-ink dark:text-white focus:outline-none focus:ring-2 focus:ring-saffron/40"
             />
             <p className="text-xs text-gray-400 mt-1">
-              Final browser tab title = "{s.seoTitle} · BRHF Begampura Dialogue"
+              Final browser tab title = "{s.seoTitle} · BRHF Be-gumpura Dialogue"
             </p>
           </Field>
           <Field label="Meta Description">
@@ -151,7 +151,7 @@ export default function SettingsPage() {
               value={s.seoKeywords}
               onChange={(e) => set({ seoKeywords: e.target.value })}
               rows={2}
-              placeholder="Sant Ravidas, Begampura, BRHF, equality..."
+              placeholder="Sant Ravidas, Be-gumpura, BRHF, equality..."
               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-ink dark:text-white focus:outline-none focus:ring-2 focus:ring-saffron/40 resize-y font-mono text-xs"
             />
           </Field>
@@ -451,7 +451,7 @@ export default function SettingsPage() {
           {/* Export */}
           <div className="p-5 rounded-2xl bg-surface-2/60 border border-border">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-saffron/15 to-saffron/5 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-linear-to-br from-saffron/15 to-saffron/5 flex items-center justify-center">
                 <Download className="h-5 w-5 text-saffron" />
               </div>
               <div>
@@ -461,7 +461,7 @@ export default function SettingsPage() {
             </div>
             <button
               onClick={handleExport}
-              className="mt-3 px-5 py-2.5 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+              className="mt-3 px-5 py-2.5 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
               Download Backup
@@ -471,7 +471,7 @@ export default function SettingsPage() {
           {/* Import */}
           <div className="p-5 rounded-2xl bg-surface-2/60 border border-border">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal/15 to-royal/5 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-linear-to-br from-royal/15 to-royal/5 flex items-center justify-center">
                 <Upload className="h-5 w-5 text-royal" />
               </div>
               <div>
@@ -497,7 +497,7 @@ export default function SettingsPage() {
             />
             <button
               onClick={handleImport}
-              className="mt-3 px-5 py-2.5 rounded-xl bg-gradient-to-r from-royal to-violet text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+              className="mt-3 px-5 py-2.5 rounded-xl bg-linear-to-r from-royal to-violet text-white text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
             >
               <HardDrive className="h-4 w-4" />
               Restore Data

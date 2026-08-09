@@ -15,9 +15,9 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="px-6 py-3 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity flex items-center gap-2"
+        className="px-6 py-3 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-xs shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity flex items-center gap-2"
       >
-        <ArrowLeft className="h-4 w-4" /> Back to Begampura Dialogue Home
+        <ArrowLeft className="h-4 w-4" /> Back to Be-gumpura Dialogue Home
       </Link>
     </div>
   );

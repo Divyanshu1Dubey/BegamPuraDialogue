@@ -28,11 +28,11 @@ export function HomeConnectPreview() {
           <LanguageAware en="Chapter VIII" hi="अध्याय VIII" pa="ਅਧਿਆਉ VIII" />
         </span>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron leading-tight">
-          <LanguageAware en="Join the Begampura Family" hi="बेगमपुरा परिवार में शामिल हों" pa="ਬੇਗਮਪੁਰਾ ਪਰਿਵਾਰ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ" />
+          <LanguageAware en="Join the Be-gumpura Family" hi="बेगमपुरा परिवार में शामिल हों" pa="ਬੇਗਮਪੁਰਾ ਪਰਿਵਾਰ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ" />
         </h2>
         <p className="mt-3 text-sm text-ink-soft leading-relaxed max-w-2xl mx-auto">
           <LanguageAware
-            en="Become a member, volunteer, or partner — the Begampura light grows stronger with every hand that holds it."
+            en="Become a member, volunteer, or partner — the Be-gumpura light grows stronger with every hand that holds it."
             hi="सदस्य बनें, स्वयंसेवक बनें, या भागीदार — बेगमपुरा का प्रकाश हर हाथ से जोड़ने पर मजबूत होता है।"
             pa="ਮੈਂਬਰ ਬਣੋ, ਵਲੰਟੀਅਰ ਬਣੋ, ਜਾਂ ਭਾਗੀਦਾਰ — ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਹਰ ਹੱਥ ਨਾਲ ਮਜਬੂਤ ਹੁੰਦੀ।"
           />

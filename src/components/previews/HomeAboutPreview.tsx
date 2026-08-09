@@ -30,7 +30,7 @@ export function HomeAboutPreview() {
         </span>
         <h2 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron leading-tight">
           <LanguageAware
-            en="The Saint of Begampura"
+            en="The Saint of Be-gumpura"
             hi="बेगमपुरा के संत"
             pa="ਬੇਗਮਪੁਰਾ ਦੇ ਸੰਤ"
           />

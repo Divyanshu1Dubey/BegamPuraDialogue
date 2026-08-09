@@ -17,7 +17,7 @@ export const t = {
     home: { en: "Home", hi: "मुख्य", pa: "ਮੁੱਖ" },
     about: { en: "About", hi: "परिचय", pa: "ਜਾਣ-ਪਛਾਣ" },
     teachings: { en: "Teachings", hi: "शिक्षाएँ", pa: "ਸਿੱਖਿਆਵਾਂ" },
-    begampura: { en: "Begampura", hi: "बेगमपुरा", pa: "ਬੇਗਮਪੁਰਾ" },
+    begampura: { en: "Be-gumpura", hi: "बेगमपुरा", pa: "ਬੇਗਮਪੁਰਾ" },
     shabads: { en: "16 Raags", hi: "16 राग", pa: "16 ਰਾਗ" },
     events: { en: "Events", hi: "कार्यक्रम", pa: "ਪ੍ਰੋਗਰਾਮ" },
     library: { en: "E-Library", hi: "पुस्तकालय", pa: "ਪੁਸਤਕਾਲੇ" },
@@ -26,7 +26,7 @@ export const t = {
   },
   hero: {
     title: {
-      en: "The Light of Begampura",
+      en: "The Light of Be-gumpura",
       hi: "बेगमपुरा का प्रकाश",
       pa: "ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ",
     },

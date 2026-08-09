@@ -9,8 +9,8 @@ import { LanguageAware } from "./LanguageAware";
 export function Events() {
   return (
     <section id="events" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg-soft to-bg pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-bg via-bg-soft to-bg pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-saffron/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
         {/* Header */}
@@ -33,7 +33,7 @@ export function Events() {
           </h2>
           <p className="mt-6 text-base md:text-lg text-ink-soft leading-relaxed">
             <LanguageAware
-              en="From the heart of Varanasi to the House of Lords in London and the European Parliament in Brussels — the message of Begampura travels the world."
+              en="From the heart of Varanasi to the House of Lords in London and the European Parliament in Brussels — the message of Be-gumpura travels the world."
               hi="वाराणसी के हृदय से लंदन के हाउस ऑफ लॉर्ड्स तक और ब्रसेल्स के यूरोपियन पार्लियामेंट तक — बेगमपुरा का संदेश संसार भर में यात्रा करता है।"
               pa="ਵਾਰਾਣਸੀ ਦੇ ਦਿਲ ਤੋਂ ਲੰਡਨ ਦੇ ਹਾਊਸ ਆਫ ਲਾਰਡਸ ਅਤੇ ਬ੍ਰਾਸੈਲਸ ਦੇ ਯੂਰਪੀਅਨ ਪਾਰਲੀਮੈਂਟ ਤੱਕ — ਬੇਗਮਪੁਰਾ ਦਾ ਸੁਨੇਹਾ ਦੁਨੀਆਂ ਭਰ ਵਿੱਚ ਘੁੰਮਦਾ।"
             />
@@ -83,7 +83,7 @@ export function Events() {
               </div>
 
               {/* Glow on hover */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-saffron/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-saffron/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </motion.div>
           ))}
         </div>
@@ -137,7 +137,7 @@ export function Events() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="rounded-3xl p-8 md:p-12 bg-gradient-to-br from-saffron/5 via-surface to-royal/5 border border-border/50"
+          className="rounded-3xl p-8 md:p-12 bg-linear-to-br from-saffron/5 via-surface to-royal/5 border border-border/50"
         >
           <h3 className="font-display text-2xl md:text-3xl font-bold text-gradient-saffron text-center mb-10">
             <LanguageAware
@@ -196,7 +196,7 @@ export function Events() {
           <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
             {[
               { src: "/assets/sant-ravidasss.jpg", alt: "Varanasi" },
-              { src: "/assets/lotsofsantravi.jpg", alt: "Diwali at Gali Begampura" },
+              { src: "/assets/lotsofsantravi.jpg", alt: "Diwali at Gali Be-gumpura" },
               { src: "/assets/booj-ravidas.webp", alt: "Janam Jayanti Mahotsav" },
               { src: "/assets/bjp-ravidas.jpg", alt: "UK House of Lords" },
               { src: "/assets/jp-nadda(bjp).jpg", alt: "Brussels Parliament" },
@@ -216,7 +216,7 @@ export function Events() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg/70 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-t from-bg/70 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" />
                 <figcaption className="absolute bottom-1.5 left-1.5 right-1.5 text-[8px] md:text-[10px] uppercase tracking-wider text-white/90 text-center opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md">
                   {img.alt}
                 </figcaption>
@@ -227,7 +227,7 @@ export function Events() {
           <div className="mt-12 text-center">
             <Link
               href="/events"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-linear-to-r from-saffron to-saffron-deep text-white font-bold text-sm shadow-xl shadow-saffron/20 hover:opacity-90 transition-opacity"
             >
               <LanguageAware en="View All Global Commemorative Events & Register" hi="सभी कार्यक्रम देखें और पंजीकरण करें" pa="ਸਾਰੇ ਕਾਰਯਕ੍ਰਮ ਵੇਖੋ ਅਤੇ ਰਜਿਸਟਰੇਸ਼ਨ ਕਰੋ" />
             </Link>

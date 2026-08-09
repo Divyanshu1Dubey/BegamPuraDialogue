@@ -207,7 +207,7 @@ export default function EventsPage() {
 
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-xl bg-gradient-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4"
+                      className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4"
                     >
                       Confirm Registration Pass
                     </button>

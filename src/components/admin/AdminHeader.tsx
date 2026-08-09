@@ -12,7 +12,7 @@ const navItems = [
   { href: "/admin/content/events", label: "Events" },
   { href: "/admin/content/gallery", label: "Gallery" },
   { href: "/admin/content/library", label: "Library" },
-  { href: "/admin/content/begampura", label: "Begampura" },
+  { href: "/admin/content/begampura", label: "Be-gumpura" },
   { href: "/admin/donations", label: "Donations" },
   { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/settings", label: "Settings" },

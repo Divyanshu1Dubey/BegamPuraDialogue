@@ -57,11 +57,11 @@ export const brhf = {
   mission: {
     primary: "To preserve, document, and propagate the teachings of Sant Ravidas Ji across the world, fostering a casteless, equal, and humane society.",
     secondary:
-      "Through research, exhibitions, publications, and international dialogue — making the universal message of Begampura accessible to all.",
+      "Through research, exhibitions, publications, and international dialogue — making the universal message of Be-gumpura accessible to all.",
   },
   tagline: {
-    en: "Bringing the Light of Begampura to the World",
-    hi: "बेगमपुरा का प्रकाश संसार में लाना",
+    en: "Bringing the Light of Be-gumpura to the World",
+    hi: "बे-गमपुरा का प्रकाश संसार में लाना",
     pa: "ਬੇਗਮਪੁਰਾ ਦੀ ਰੋਸ਼ਨੀ ਦੁਨੀਆਂ ਵਿੱਚ ਲਿਆਉਂਦੇ",
   },
   foundingYear: 2005,
@@ -76,20 +76,20 @@ export const brhf = {
   // 8 Global Yatras organised in UK to study Guru Ravidas
   exhibitions: [
     "Yatra 1: Early Life & Spiritual Awakening (Varanasi)",
-    "Yatra 2: Philosophical Teachings — Begampura & Equality",
-    "Yatra 3: Anti-Caste Movement & Social Revolution",
+    "Yatra 2: Philosophical Teachings — Be-gumpura & Equality",
+    "Yatra 3: Anti-Caste Movement & Social Revolution — Be-gumpura",
     "Yatra 4: The 40,000 km Journey — Travels & Contemporaries",
     "Yatra 5: Miracles, Legends & Popular Devotion",
-    "Yatra 6: Bani in Guru Granth Sahib — 16 Raags, 126 Shabads",
+    "Yatra 6: Bani in Guru Granth Sahib — 27 Raags, 40 Shabads (Amritvani tradition)",
     "Yatra 7: Global Diaspora — Ravidassia Communities in UK, USA, Canada, Brazil",
-    "Yatra 8: Begampura Vision for the 21st Century",
+    "Yatra 8: Be-gumpura Vision for the 21st Century",
   ],
   globalEvents: [
     {
       month: "November 2026",
       year: 2026,
-      title: "Bhashan Shivir — 'The Sound of Begampura'",
-      titleHindi: "भाषण शिविर — बेगमपुरा का स्वर",
+      title: "Bhashan Shivir — 'The Sound of Be-gumpura'",
+      titleHindi: "भाषण शिविर — 'बे-गमपुरा का स्वर'",
       location: "New Delhi, India",
       description:
         "A week-long programme of discourses, exhibitions, and cultural performances leading up to the 650th Janam Jayanti celebration.",
@@ -98,11 +98,11 @@ export const brhf = {
     {
       month: "Early 2027",
       year: 2027,
-      title: "Exhibition at the House of Lords, UK",
-      titleHindi: "UK हाउस ऑफ लॉर्ड्स में प्रदर्शनी",
+      title: "Exhibition at the Houses of Parliament, London",
+      titleHindi: "लंदन हाउस ऑफ पार्लियामेंट में प्रदर्शनी",
       location: "Palace of Westminster, London, United Kingdom",
       description:
-        "An exhibition on the life and teachings of Sant Ravidas Ji at the historic House of Lords — bringing the Begampura message to the UK Parliament.",
+        "An exhibition and dialogue on the life and teachings of Sant Ravidas Ji at the historic Houses of Parliament — bringing the Be-gumpura message to the UK Parliament.",
       icon: "🇬🇧",
     },
     {
@@ -112,7 +112,7 @@ export const brhf = {
       titleHindi: "यूरोपियन परlement में बेगमपुरा बातचीत",
       location: "European Parliament, Brussels, Belgium",
       description:
-        "A high-level policy dialogue on the Begampura vision and its relevance for contemporary European and global governance, hosted at the European Parliament.",
+        "A high-level policy dialogue on the Be-gumpura vision and its relevance for contemporary European and global governance, hosted at the European Parliament.",
       icon: "🇪🇺",
     },
     {
@@ -122,7 +122,7 @@ export const brhf = {
       titleHindi: "650वीं जन्म जयंती महोत्सव",
       location: "Varanasi (and globally simultaneous celebrations)",
       description:
-        "The pinnacle commemoration — spiritual gatherings, exhibitions, kirtan sewa, and global prayers honouring 650 years of the Begampura message.",
+        "The pinnacle commemoration — spiritual gatherings, exhibitions, kirtan sewa, and global prayers honouring 650 years of the Be-gumpura message.",
       icon: "🕉️",
     },
   ],
