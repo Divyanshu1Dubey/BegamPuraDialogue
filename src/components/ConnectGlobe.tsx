@@ -5,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Navigation } from "lucide-react";
+import { X } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════
 // Types & Data
@@ -57,66 +57,115 @@ function ll(lat: number, lng: number, r: number): THREE.Vector3 {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Procedural earth texture
+// Earth Texture — visible continents, blue ocean, 3D shading
 // ═══════════════════════════════════════════════════════════════
-function createEarthTexture() {
+function createEarthTexture(): THREE.CanvasTexture {
   const c = document.createElement("canvas");
-  c.width = 1024; c.height = 512;
+  const W = 1024, H = 512;
+  c.width = W; c.height = H;
   const ctx = c.getContext("2d")!;
+  const img = ctx.createImageData(W, H);
+  const d = img.data;
 
-  // Deep space ocean
-  const bg = ctx.createRadialGradient(460, 200, 0, 512, 256, 560);
-  bg.addColorStop(0, "#0d0a1a");
-  bg.addColorStop(1, "#04020a");
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1024, 512);
+  // Ocean base: deep blue #0d1b2a
+  const OCEAN_R = 0x0d, OCEAN_G = 0x1b, OCEAN_B = 0x2a;
+  // Land base: muted green-blue #1e3a32
+  const LAND_R = 0x2e, LAND_G = 0x5a, LAND_B = 0x4a;
+  // Highlight: warm amber-tinted land #c8860a → rgb(200,134,10)
+  const HILITE_R = 0xc8, HILITE_G = 0x86, HILITE_B = 0x0a;
+  // Grid line color: subtle saffron
+  const GRID_R = 0x55, GRID_G = 0x44, GRID_B = 0x66;
 
-  // Continents as soft gradient blobs
-  const land: [number, number, number, number][] = [
-    [22,80,14,11],[27,66,8,8],[50,18,12,28],[5,22,28,18],
-    [45,-100,25,30],[-15,-55,22,14],[10,108,8,18],
-    [-25,134,11,14],[62,100,14,70],[30,50,7,7],
-    [55,50,10,25],[15,-10,6,8],
+  // [latCenter, lngCenter, latHalfSpan, lngHalfSpan]
+  const landAreas: [number, number, number, number][] = [
+    [22, 80, 14, 11],      // India
+    [27, 66, 8, 8],        // Pakistan / Indus
+    [50, 18, 12, 28],      // Europe
+    [5, 22, 28, 18],       // Africa
+    [45, -100, 25, 30],    // North America
+    [-15, -55, 22, 14],    // South America
+    [10, 108, 8, 18],      // SE Asia / Indonesia
+    [-25, 134, 11, 14],    // Australia
+    [62, 100, 14, 70],     // Russia / Siberia
+    [30, 50, 7, 7],        // Middle East / Iran
+    [55, 50, 10, 25],      // Central Asia / steppe
+    [15, -10, 6, 8],       // West Africa bulge
+    [35, -90, 5, 10],      // Central America
+    [0, 20, 10, 10],       // Central Africa
+    [70, 40, 8, 20],       // Scandinavia / Arctic
   ];
 
-  const img = ctx.getImageData(0, 0, 1024, 512);
-  const d = img.data;
-  for (let y = 0; y < 512; y++) {
-    const lat = 90 - (y / 512) * 180;
-    for (let x = 0; x < 1024; x++) {
-      const lng = (x / 1024) * 360 - 180;
-      let intensity = 0;
-      for (const [cl, clng, ls, lgs] of land) {
-        const dy = (lat - cl) / ls, dx = (lng - clng) / lgs;
-        const dd = dx * dx + dy * dy;
-        if (dd < 1) intensity = Math.max(intensity, (1 - dd) * 0.22);
+  for (let py = 0; py < H; py++) {
+    const lat = 90 - (py / H) * 180;
+    // Hemisphere shading: lighter near the prime meridian center, darker at edges
+    const shadeBase = 1.0;
+
+    for (let px = 0; px < W; px++) {
+      const lng = (px / W) * 360 - 180;
+      const idx = (py * W + px) * 4;
+
+      // Hemisphere shading (lighter near center of view, darker at wrap edges)
+      const shade = shadeBase;
+
+      // Check land
+      let landIntensity = 0;
+      for (const [clat, clng, cLatS, cLngS] of landAreas) {
+        const dy = (lat - clat) / cLatS;
+        const dx = (lng - clng) / cLngS;
+        const dist2 = dx * dx + dy * dy;
+        if (dist2 < 1) {
+          landIntensity = Math.max(landIntensity, (1 - dist2));
+        }
       }
-      if (intensity > 0) {
-        const i = (y * 1024 + x) * 4;
-        d[i] = Math.min(255, d[i] + intensity * 40);
-        d[i+1] = Math.min(255, d[i+1] + intensity * 28);
-        d[i+2] = Math.min(255, d[i+2] + intensity * 50);
+
+      if (landIntensity > 0) {
+        // Mix land color with highlight based on intensity
+        const t = landIntensity;
+        // Edge of continents → darker, center → lighter with warm tint
+        const warm = t > 0.6 ? (t - 0.6) / 0.4 : 0; // 0 to 1 at center
+        d[idx]     = Math.min(255, Math.round((LAND_R * 0.6 + HILITE_R * 0.1 + warm * 0.08) * shade * 255 / 100));
+        d[idx + 1] = Math.min(255, Math.round((LAND_G * 0.5 + HILITE_G * 0.1 + warm * 0.05) * shade * 255 / 100));
+        d[idx + 2] = Math.min(255, Math.round((LAND_B * 0.6 + HILITE_B * 0.15) * shade * 255 / 100));
+      } else {
+        d[idx]     = Math.round(OCEAN_R * shade);
+        d[idx + 1] = Math.round(OCEAN_G * shade);
+        d[idx + 2] = Math.round(OCEAN_B * shade);
       }
-      // subtle grid
-      const lm = Math.abs(((lat % 30) + 30) % 30);
-      const gm = Math.abs(((lng % 30) + 180) % 30 - 15);
-      if (lm < 0.8 || gm < 0.6) {
-        const i = (y * 1024 + x) * 4;
-        d[i] += 4; d[i+1] += 3; d[i+2] += 8;
+
+      // Grid lines every 30 degrees — visible saffron
+      const latMod = Math.abs(((lat % 30) + 30) % 30);
+      const lngMod = Math.abs(((lng % 30) + 180) % 30 - 15);
+      const onLatGrid = latMod < 0.6;
+      const onLngGrid = lngMod < 0.5;
+      if (onLatGrid || onLngGrid) {
+        d[idx]     = Math.min(255, d[idx] + 35);
+        d[idx + 1] = Math.min(255, d[idx + 1] + 28);
+        d[idx + 2] = Math.min(255, d[idx + 2] + 45);
+      }
+
+      // Equator highlight
+      if (Math.abs(lat) < 0.5) {
+        d[idx]     = Math.min(255, d[idx] + 20);
+        d[idx + 1] = Math.min(255, d[idx + 1] + 18);
+        d[idx + 2] = Math.min(255, d[idx + 2] + 25);
       }
     }
   }
+
   ctx.putImageData(img, 0, 0);
 
-  // marker glows
-  LOCATIONS.forEach(loc => {
-    const px = ((loc.lng + 180) / 360) * 1024;
-    const py = ((90 - loc.lat) / 180) * 512;
-    const g = ctx.createRadialGradient(px, py, 0, px, py, 10);
-    g.addColorStop(0, "rgba(255,157,47,0.45)");
-    g.addColorStop(1, "rgba(255,157,47,0)");
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(px, py, 10, 0, Math.PI * 2); ctx.fill();
+  // Glow at each location
+  LOCATIONS.forEach((loc) => {
+    const px = ((loc.lng + 180) / 360) * W;
+    const py = ((90 - loc.lat) / 180) * H;
+    const grad = ctx.createRadialGradient(px, py, 0, px, py, 14);
+    grad.addColorStop(0, "rgba(255,157,47,0.8)");
+    grad.addColorStop(0.3, "rgba(255,157,47,0.35)");
+    grad.addColorStop(1, "rgba(255,157,47,0)");
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(px, py, 14, 0, Math.PI * 2);
+    ctx.fill();
   });
 
   const tex = new THREE.CanvasTexture(c);
@@ -125,42 +174,54 @@ function createEarthTexture() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Atmosphere — Fresnel shader
+// Atmosphere — Fresnel edge glow
 // ═══════════════════════════════════════════════════════════════
-const atmoVS = `varying vec3 vN; varying vec3 vP;
-void main(){
-  vec4 wp=modelMatrix*vec4(position,1.);
-  vP=wp.xyz; vN=normalize(mat3(modelMatrix)*normal);
-  gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);
-}`;
-const atmoFS = `varying vec3 vN; varying vec3 vP;
-void main(){
-  float f=1.-dot(normalize(cameraPosition-vP),vN);
-  f=pow(f,3.8);
-  gl_FragColor=vec4(0.78,0.52,0.04,f*0.45);
-}`;
-
 function Atmosphere() {
-  const mat = useMemo(() => new THREE.ShaderMaterial({
-    vertexShader: atmoVS, fragmentShader: atmoFS,
-    transparent: true, side: THREE.BackSide, depthWrite: false,
-  }), []);
-  return <mesh geometry={new THREE.SphereGeometry(R * 1.2, 64, 64)} material={mat} />;
+  const mat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: /* glsl */ `
+          varying vec3 vWorldNormal;
+          varying vec3 vWorldPos;
+          void main() {
+            vec4 wp = modelMatrix * vec4(position, 1.0);
+            vWorldPos = wp.xyz;
+            vWorldNormal = normalize(mat3(modelMatrix) * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: /* glsl */ `
+          varying vec3 vWorldNormal;
+          varying vec3 vWorldPos;
+          void main() {
+            vec3 viewDir = normalize(cameraPosition - vWorldPos);
+            float f = 1.0 - dot(viewDir, vWorldNormal);
+            f = pow(f, 3.5);
+            gl_FragColor = vec4(0.784, 0.525, 0.039, f * 0.45);
+          }
+        `,
+        transparent: true,
+        side: THREE.BackSide,
+        depthWrite: false,
+      }),
+    []
+  );
+  return <mesh geometry={new THREE.SphereGeometry(R * 1.15, 64, 64)} material={mat} />;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Flight Arc — dotted animated connection
+// Flight Arc
 // ═══════════════════════════════════════════════════════════════
 function FlightArc({ a, b, idx }: { a: THREE.Vector3; b: THREE.Vector3; idx: number }) {
   const { curve } = useMemo(() => {
-    const s = a.clone().normalize().multiplyScalar(R + 0.005);
-    const e = b.clone().normalize().multiplyScalar(R + 0.005);
+    const s = a.clone().normalize().multiplyScalar(R + 0.006);
+    const e = b.clone().normalize().multiplyScalar(R + 0.006);
     const m = s.clone().add(e).multiplyScalar(0.5);
     m.normalize().multiplyScalar(R + s.distanceTo(e) * 0.32);
     return { curve: new THREE.QuadraticBezierCurve3(s, m, e) };
   }, [a, b]);
 
-  const pts = useMemo(() => curve.getPoints(40), [curve]);
+  const pts = useMemo(() => curve.getPoints(48), [curve]);
   const dotsRef = useRef<THREE.Group>(null);
   const N = 5;
   const spd = 0.06 + (idx % 6) * 0.015;
@@ -183,10 +244,12 @@ function FlightArc({ a, b, idx }: { a: THREE.Vector3; b: THREE.Vector3; idx: num
 
   return (
     <group>
-      <primitive object={new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineBasicMaterial({ color: "#c8860a", transparent: true, opacity: 0.06, depthWrite: false })
-      )} />
+      <primitive
+        object={new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(pts),
+          new THREE.LineBasicMaterial({ color: "#c8860a", transparent: true, opacity: 0.08, depthWrite: false })
+        )}
+      />
       <group ref={dotsRef}>
         {Array.from({ length: N }).map((_, i) => (
           <mesh key={i} geometry={dotGeo}>
@@ -199,7 +262,7 @@ function FlightArc({ a, b, idx }: { a: THREE.Vector3; b: THREE.Vector3; idx: num
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Marker — glowing dot + hover label
+// Marker
 // ═══════════════════════════════════════════════════════════════
 function Marker({
   pos, loc, selected, hovered, onHover, onUnhover, onClick,
@@ -208,7 +271,6 @@ function Marker({
   onHover: () => void; onUnhover: () => void; onClick: () => void;
 }) {
   const ref = useRef<THREE.Mesh>(null);
-  const [showLabel, setShowLabel] = useState(false);
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
@@ -218,7 +280,7 @@ function Marker({
 
   return (
     <group position={pos}>
-      {/* Soft glow ring */}
+      {/* Pulse ring */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.05, 0.09, 32]} />
         <meshBasicMaterial color="#ff9d2f" transparent opacity={selected ? 0.4 : 0.15} side={THREE.DoubleSide} depthWrite={false} />
@@ -227,18 +289,18 @@ function Marker({
       {/* Dot */}
       <mesh
         ref={ref}
-        onPointerOver={(e) => { e.stopPropagation(); onHover(); setShowLabel(true); }}
-        onPointerOut={() => { onUnhover(); setShowLabel(false); }}
+        onPointerOver={(e) => { e.stopPropagation(); onHover(); }}
+        onPointerOut={() => onUnhover()}
         onClick={(e) => { e.stopPropagation(); onClick(); }}
       >
         <sphereGeometry args={[selected ? 0.032 : hovered ? 0.026 : 0.02, 16, 16]} />
         <meshBasicMaterial color="#ffb347" transparent opacity={selected ? 1 : 0.9} />
       </mesh>
 
-      {/* Hover / selected label */}
+      {/* Label */}
       {(hovered || selected) && (
         <Html position={[0, 0.16, 0]} center style={{ pointerEvents: "none" }}>
-          <div className="whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#0b0710]/90 backdrop-blur-md border border-saffron/50 text-[11px] font-semibold text-white shadow-xl shadow-black/40">
+          <div className="whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#0d1b2a]/90 backdrop-blur-md border border-saffron/50 text-[11px] font-semibold text-white shadow-xl shadow-black/40">
             <span className="mr-1">{loc.icon}</span>
             {loc.name}
           </div>
@@ -249,48 +311,35 @@ function Marker({
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Camera controller — smooth fly-to animation
+// Camera Controller — smooth fly-to animation
 // ═══════════════════════════════════════════════════════════════
 function CameraRig({ targetId, onDone }: { targetId: number | null; onDone: () => void }) {
   const { camera } = useThree();
-  const targetPos = useRef<THREE.Vector3>(new THREE.Vector3(0, 1.2, 5.5));
-  const targetLook = useRef<THREE.Vector3>(new THREE.Vector3(0, 0, 0));
+  const targetPos = useRef(new THREE.Vector3(0, 1.2, 5.5));
   const animating = useRef(false);
-  const startPos = useRef<THREE.Vector3>(camera.position.clone());
-  const startTarget = useRef<THREE.Vector3>(new THREE.Vector3(0, 0, 0));
+  const startPos = useRef(camera.position.clone());
   const progress = useRef(0);
 
   useEffect(() => {
     if (targetId === null) {
-      // Reset to overview
       targetPos.current.set(0, 1.2, 5.5);
-      targetLook.current.set(0, 0, 0);
-      animating.current = true;
-      startPos.current.copy(camera.position);
-      startTarget.current.set(0, 0, 0);
-      progress.current = 0;
     } else if (targetId >= 0 && targetId < LOCATIONS.length) {
       const loc = LOCATIONS[targetId];
       const surface = ll(loc.lat, loc.lng, R);
       const dir = surface.clone().normalize();
-      // Camera position: offset from surface outward
-      const camPos = dir.multiplyScalar(R + 2.2);
-      // Slight upward angle for better view
-      camPos.y += 1.0;
+      const camPos = dir.multiplyScalar(R + 2.4);
+      camPos.y += 0.8;
       targetPos.current.copy(camPos);
-      targetLook.current.copy(surface);
-      animating.current = true;
-      startPos.current.copy(camera.position);
-      startTarget.current.set(0, 0, 0);
-      progress.current = 0;
     }
+    animating.current = true;
+    startPos.current.copy(camera.position);
+    progress.current = 0;
   }, [targetId, camera]);
 
   useFrame((_, delta) => {
     if (!animating.current) return;
-    progress.current += delta * 0.8;
+    progress.current += delta * 0.7;
     const t = Math.min(progress.current, 1);
-    // easeInOutCubic
     const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     camera.position.lerpVectors(startPos.current, targetPos.current, ease);
     if (t >= 1) {
@@ -315,15 +364,8 @@ function GlobeScene({
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState<number | null>(null);
   const earthTex = useMemo(() => createEarthTexture(), []);
+  const positions = useMemo(() => LOCATIONS.map((l) => ll(l.lat, l.lng, R)), []);
 
-  const positions = useMemo(
-    () => LOCATIONS.map((l) => ll(l.lat, l.lng, R)),
-    []
-  );
-
-  // connectionPairs available for future use
-
-  // Slow rotation when not interacting
   useFrame((_, delta) => {
     if (groupRef.current && hovered === null && flyToId === null) {
       groupRef.current.rotation.y += delta * 0.04;
@@ -332,20 +374,16 @@ function GlobeScene({
 
   return (
     <group ref={groupRef}>
-      {/* Earth sphere */}
+      {/* Earth sphere — meshBasicMaterial shows texture exactly as painted */}
       <mesh>
         <sphereGeometry args={[R, 96, 72]} />
-        <meshStandardMaterial
-          map={earthTex}
-          roughness={0.9}
-          metalness={0.05}
-        />
+        <meshBasicMaterial map={earthTex} />
       </mesh>
 
-      {/* Atmosphere */}
+      {/* Atmosphere glow */}
       <Atmosphere />
 
-      {/* Flight arcs */}
+      {/* Connection arcs */}
       {CONNECTIONS.map(([a, b], i) => (
         <FlightArc key={i} a={positions[a]} b={positions[b]} idx={i} />
       ))}
@@ -372,16 +410,10 @@ function GlobeScene({
 // ═══════════════════════════════════════════════════════════════
 export function ConnectGlobe() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [ready, setReady] = useState(false);
-
   const selectedLoc = selectedId !== null ? LOCATIONS[selectedId] : null;
 
   const handleSelect = useCallback((id: number) => {
     setSelectedId((prev) => (prev === id ? null : id));
-  }, []);
-
-  const handleFlyDone = useCallback(() => {
-    setReady(true);
   }, []);
 
   return (
@@ -395,13 +427,13 @@ export function ConnectGlobe() {
           gl={{ antialias: true, alpha: false }}
           dpr={[1, 1.5]}
         >
-          <color attach="background" args={["#04020a"]} />
-          <ambientLight intensity={0.12} />
-          <pointLight position={[5, 3, 5]} intensity={0.6} color="#ff9d2f" />
-          <pointLight position={[-5, -2, -5]} intensity={0.2} color="#6366f1" />
+          <color attach="background" args={["#020510"]} />
+          <ambientLight intensity={0.3} />
+          <pointLight position={[5, 3, 5]} intensity={0.8} color="#ff9d2f" />
+          <pointLight position={[-5, -2, -5]} intensity={0.25} color="#6366f1" />
           <Stars radius={100} depth={50} count={1500} factor={3} saturation={0} fade speed={0.2} />
 
-          <CameraRig targetId={selectedId} onDone={handleFlyDone} />
+          <CameraRig targetId={selectedId} onDone={() => {}} />
           <GlobeScene onSelect={handleSelect} flyToId={selectedId} />
           <OrbitControls
             enablePan={false}
@@ -416,7 +448,7 @@ export function ConnectGlobe() {
 
         {/* Overlay UI */}
         <div className="absolute top-5 left-5 z-10 pointer-events-none">
-          <p className="text-[10px] font-bold text-saffron/50 uppercase tracking-[0.3em] mb-1">
+          <p className="text-[10px] font-bold text-saffron/60 uppercase tracking-[0.3em] mb-1">
             Global Network
           </p>
           <h3 className="font-display text-xl md:text-2xl font-bold text-white drop-shadow-lg">
@@ -426,11 +458,10 @@ export function ConnectGlobe() {
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
           <p className="text-[10px] text-white/25 uppercase tracking-widest">
-            Drag to rotate &middot; Scroll to zoom &middot; Click markers to explore
+            Drag to rotate · Scroll to zoom · Click markers to explore
           </p>
         </div>
 
-        {/* Location counter badge */}
         <div className="absolute top-5 right-5 z-10 pointer-events-none">
           <div className="px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10">
             <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
