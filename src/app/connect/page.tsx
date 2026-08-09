@@ -19,11 +19,8 @@ export default function ConnectPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Volunteer Registration — ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nCountry: ${formData.country}\nRole: ${formData.role}\nMessage: ${formData.message || "N/A"}`
-    );
-    window.location.href = `mailto:begumpura.tech@gmail.com?subject=${subject}&body=${body}`;
+    const form = e.target as HTMLFormElement;
+    form.submit();
   };
 
   return (
@@ -60,7 +57,6 @@ export default function ConnectPage() {
         <div className="grid lg:grid-cols-2 gap-12 mb-20">
           {/* Contact Details & Headquarters */}
           <div className="space-y-6">
-            {/* Interactive Globe */}
             <ConnectGlobe />
 
             {/* Contact Details & Headquarters */}
@@ -101,21 +97,30 @@ export default function ConnectPage() {
             <h2 className="font-display text-2xl font-bold text-ink mb-2">Volunteer & Ambassador Registration</h2>
             <p className="text-xs text-ink-soft mb-6 font-medium">Register to contribute toward research, event hosting, or community outreach.</p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              action="https://formsubmit.co/begumpura.tech@gmail.com"
+              method="POST"
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
+              <input type="hidden" name="_subject" value="New Volunteer Registration" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value={typeof window !== "undefined" ? window.location.href : ""} />
+
               <div>
                 <label htmlFor="fullname" className="block text-xs font-bold text-ink-soft mb-1">Your Full Name</label>
-                <input id="fullname" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Smt. Gurpreet Kaur" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
+                <input id="fullname" name="name" type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Smt. Gurpreet Kaur" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
-                <input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="you@example.com" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
+                <input id="email" name="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="you@example.com" className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="country" className="block text-xs font-bold text-ink-soft mb-1">Country</label>
-                  <select id="country" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
+                  <select id="country" name="country" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
                     <option>United Kingdom</option>
                     <option>India</option>
                     <option>Canada</option>
@@ -127,7 +132,7 @@ export default function ConnectPage() {
 
                 <div>
                   <label htmlFor="role" className="block text-xs font-bold text-ink-soft mb-1">Desired Role</label>
-                  <select id="role" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
+                  <select id="role" name="role" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className="w-full px-3 py-2.5 rounded-xl bg-surface border border-border text-xs text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50">
                     <option>Volunteer Event Coordinator</option>
                     <option>Gurbani Research Fellow</option>
                     <option>Youth Delegate</option>
@@ -138,7 +143,7 @@ export default function ConnectPage() {
 
               <div>
                 <label htmlFor="message" className="block text-xs font-bold text-ink-soft mb-1">Message / Note of Interest</label>
-                <textarea id="message" rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us how you would like to participate..." className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
+                <textarea id="message" name="message" rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us how you would like to participate..." className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50" />
               </div>
 
               <button type="submit" className="w-full py-3.5 rounded-xl bg-linear-to-r from-saffron via-saffron-deep to-sindoor text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2">

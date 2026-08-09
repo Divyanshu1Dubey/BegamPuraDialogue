@@ -57,114 +57,103 @@ function ll(lat: number, lng: number, r: number): THREE.Vector3 {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Earth Texture — visible continents, blue ocean, 3D shading
+// Earth Texture — vivid, clearly visible continents
 // ═══════════════════════════════════════════════════════════════
 function createEarthTexture(): THREE.CanvasTexture {
   const c = document.createElement("canvas");
   const W = 1024, H = 512;
   c.width = W; c.height = H;
   const ctx = c.getContext("2d")!;
-  const img = ctx.createImageData(W, H);
-  const d = img.data;
 
-  // Ocean base: deep blue #0d1b2a
-  const OCEAN_R = 0x0d, OCEAN_G = 0x1b, OCEAN_B = 0x2a;
-  // Land base: muted green-blue #1e3a32
-  const LAND_R = 0x2e, LAND_G = 0x5a, LAND_B = 0x4a;
-  // Highlight: warm amber-tinted land #c8860a → rgb(200,134,10)
-  const HILITE_R = 0xc8, HILITE_G = 0x86, HILITE_B = 0x0a;
-  // Grid line color: subtle saffron
-  const GRID_R = 0x55, GRID_G = 0x44, GRID_B = 0x66;
+  // ── Vivid, clearly visible colors ──
+  const OCEAN = [30, 100, 200];      // bright blue ocean
+  const LAND = [60, 165, 75];        // vivid green land
+  const LAND_EDGE = [45, 130, 60];   // darker green at coastlines
+  const GLOW = [255, 180, 50];       // saffron glow at locations
 
   // [latCenter, lngCenter, latHalfSpan, lngHalfSpan]
   const landAreas: [number, number, number, number][] = [
-    [22, 80, 14, 11],      // India
-    [27, 66, 8, 8],        // Pakistan / Indus
-    [50, 18, 12, 28],      // Europe
-    [5, 22, 28, 18],       // Africa
-    [45, -100, 25, 30],    // North America
-    [-15, -55, 22, 14],    // South America
-    [10, 108, 8, 18],      // SE Asia / Indonesia
-    [-25, 134, 11, 14],    // Australia
-    [62, 100, 14, 70],     // Russia / Siberia
-    [30, 50, 7, 7],        // Middle East / Iran
-    [55, 50, 10, 25],      // Central Asia / steppe
-    [15, -10, 6, 8],       // West Africa bulge
-    [35, -90, 5, 10],      // Central America
-    [0, 20, 10, 10],       // Central Africa
-    [70, 40, 8, 20],       // Scandinavia / Arctic
+    [22, 78, 14, 12],       // India
+    [27, 66, 8, 8],         // Pakistan
+    [50, 15, 14, 30],       // Europe
+    [5, 22, 30, 20],        // Africa
+    [45, -100, 25, 30],     // North America
+    [-15, -55, 22, 14],     // South America
+    [10, 108, 8, 18],       // SE Asia
+    [-25, 134, 11, 14],     // Australia
+    [62, 100, 14, 70],      // Russia
+    [30, 50, 7, 7],         // Middle East
+    [55, 50, 10, 25],       // Central Asia
+    [15, -10, 6, 8],        // West Africa bulge
+    [35, -90, 5, 10],       // Central America
+    [0, 20, 10, 10],        // Central Africa
+    [70, 40, 8, 20],        // Scandinavia
   ];
 
-  for (let py = 0; py < H; py++) {
-    const lat = 90 - (py / H) * 180;
-    // Hemisphere shading: lighter near the prime meridian center, darker at edges
-    const shadeBase = 1.0;
+  // Draw ocean background
+  ctx.fillStyle = `rgb(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]})`;
+  ctx.fillRect(0, 0, W, H);
 
-    for (let px = 0; px < W; px++) {
-      const lng = (px / W) * 360 - 180;
-      const idx = (py * W + px) * 4;
+  // Draw each land mass with a radial gradient (bright center → darker edge)
+  landAreas.forEach(([clat, clng, latSpan, lngSpan]) => {
+    const px = ((clng + 180) / 360) * W;
+    const py = ((90 - clat) / 180) * H;
+    const rx = (lngSpan / 360) * W * 1.15;
+    const ry = (latSpan / 180) * H * 1.15;
 
-      // Hemisphere shading (lighter near center of view, darker at wrap edges)
-      const shade = shadeBase;
+    const grad = ctx.createRadialGradient(px, py, Math.min(rx, ry) * 0.05, px, py, Math.max(rx, ry) * 1.1);
+    grad.addColorStop(0, `rgba(${LAND[0]},${LAND[1]},${LAND[2]},1)`);
+    grad.addColorStop(0.65, `rgba(${LAND[0]},${LAND[1]},${LAND[2]},0.9)`);
+    grad.addColorStop(0.85, `rgba(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]},0.5)`);
+    grad.addColorStop(1, `rgba(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]},0)`);
 
-      // Check land
-      let landIntensity = 0;
-      for (const [clat, clng, cLatS, cLngS] of landAreas) {
-        const dy = (lat - clat) / cLatS;
-        const dx = (lng - clng) / cLngS;
-        const dist2 = dx * dx + dy * dy;
-        if (dist2 < 1) {
-          landIntensity = Math.max(landIntensity, (1 - dist2));
-        }
-      }
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(px, py, rx, ry, 0, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  });
 
-      if (landIntensity > 0) {
-        // Mix land color with highlight based on intensity
-        const t = landIntensity;
-        // Edge of continents → darker, center → lighter with warm tint
-        const warm = t > 0.6 ? (t - 0.6) / 0.4 : 0; // 0 to 1 at center
-        d[idx]     = Math.min(255, Math.round((LAND_R * 0.6 + HILITE_R * 0.1 + warm * 0.08) * shade * 255 / 100));
-        d[idx + 1] = Math.min(255, Math.round((LAND_G * 0.5 + HILITE_G * 0.1 + warm * 0.05) * shade * 255 / 100));
-        d[idx + 2] = Math.min(255, Math.round((LAND_B * 0.6 + HILITE_B * 0.15) * shade * 255 / 100));
-      } else {
-        d[idx]     = Math.round(OCEAN_R * shade);
-        d[idx + 1] = Math.round(OCEAN_G * shade);
-        d[idx + 2] = Math.round(OCEAN_B * shade);
-      }
-
-      // Grid lines every 30 degrees — visible saffron
-      const latMod = Math.abs(((lat % 30) + 30) % 30);
-      const lngMod = Math.abs(((lng % 30) + 180) % 30 - 15);
-      const onLatGrid = latMod < 0.6;
-      const onLngGrid = lngMod < 0.5;
-      if (onLatGrid || onLngGrid) {
-        d[idx]     = Math.min(255, d[idx] + 35);
-        d[idx + 1] = Math.min(255, d[idx + 1] + 28);
-        d[idx + 2] = Math.min(255, d[idx + 2] + 45);
-      }
-
-      // Equator highlight
-      if (Math.abs(lat) < 0.5) {
-        d[idx]     = Math.min(255, d[idx] + 20);
-        d[idx + 1] = Math.min(255, d[idx + 1] + 18);
-        d[idx + 2] = Math.min(255, d[idx + 2] + 25);
-      }
-    }
+  // Grid lines every 30° — saffron
+  ctx.strokeStyle = "rgba(255,180,60,0.12)";
+  ctx.lineWidth = 1;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const y = ((90 - lat) / 180) * H;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+  }
+  for (let lng = -180; lng <= 180; lng += 30) {
+    const x = ((lng + 180) / 360) * W;
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+    ctx.stroke();
   }
 
-  ctx.putImageData(img, 0, 0);
+  // Equator — slightly brighter
+  ctx.strokeStyle = "rgba(255,200,100,0.2)";
+  ctx.lineWidth = 1.5;
+  const eqY = H / 2;
+  ctx.beginPath();
+  ctx.moveTo(0, eqY);
+  ctx.lineTo(W, eqY);
+  ctx.stroke();
 
-  // Glow at each location
+  // Saffron glow at each location
   LOCATIONS.forEach((loc) => {
     const px = ((loc.lng + 180) / 360) * W;
     const py = ((90 - loc.lat) / 180) * H;
-    const grad = ctx.createRadialGradient(px, py, 0, px, py, 14);
-    grad.addColorStop(0, "rgba(255,157,47,0.8)");
-    grad.addColorStop(0.3, "rgba(255,157,47,0.35)");
-    grad.addColorStop(1, "rgba(255,157,47,0)");
+    const grad = ctx.createRadialGradient(px, py, 0, px, py, 18);
+    grad.addColorStop(0, "rgba(255,160,40,0.9)");
+    grad.addColorStop(0.4, "rgba(255,140,30,0.3)");
+    grad.addColorStop(1, "rgba(255,100,0,0)");
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.arc(px, py, 14, 0, Math.PI * 2);
+    ctx.arc(px, py, 18, 0, Math.PI * 2);
     ctx.fill();
   });
 
@@ -375,21 +364,17 @@ function GlobeScene({
 
   return (
     <group ref={groupRef}>
-      {/* Earth sphere — meshBasicMaterial shows texture exactly as painted */}
       <mesh>
         <sphereGeometry args={[R, 96, 72]} />
         <meshBasicMaterial map={earthTex} />
       </mesh>
 
-      {/* Atmosphere glow */}
       <Atmosphere />
 
-      {/* Connection arcs */}
       {CONNECTIONS.map(([a, b], i) => (
         <FlightArc key={i} a={positions[a]} b={positions[b]} idx={i} />
       ))}
 
-      {/* Markers */}
       {LOCATIONS.map((loc, i) => (
         <Marker
           key={loc.id}

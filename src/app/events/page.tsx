@@ -173,21 +173,22 @@ export default function EventsPage() {
                   <p className="text-xs text-ink-soft mb-6">{selectedEventModal.location} · {selectedEventModal.month} {selectedEventModal.year}</p>
 
                   <form
+                    action="https://formsubmit.co/begumpura.tech@gmail.com"
+                    method="POST"
                     onSubmit={(e) => {
-                      e.preventDefault();
-                      const subject = encodeURIComponent(`Event Registration — ${eventForm.name}`);
-                      const body = encodeURIComponent(
-                        `Name: ${eventForm.name}\nEmail: ${eventForm.email}\nOrganization: ${eventForm.organization || "N/A"}\nEvent: ${selectedEventModal.title}\nLocation: ${selectedEventModal.location}`
-                      );
-                      window.location.href = `mailto:begumpura.tech@gmail.com?subject=${subject}&body=${body}`;
                       setRegistered(true);
                     }}
                     className="space-y-4"
                   >
+                    <input type="hidden" name="_subject" value={`Event Registration — ${selectedEventModal?.title}`} />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_next" value={typeof window !== "undefined" ? window.location.href : ""} />
+
                     <div>
                       <label className="block text-xs font-bold text-ink-soft mb-1">Full Name</label>
                       <input
                         type="text"
+                        name="name"
                         required
                         placeholder="Shri / Smt / Dr. Your Name"
                         value={eventForm.name}
@@ -199,6 +200,7 @@ export default function EventsPage() {
                       <label className="block text-xs font-bold text-ink-soft mb-1">Email Address</label>
                       <input
                         type="email"
+                        name="email"
                         required
                         placeholder="you@example.com"
                         value={eventForm.email}
@@ -210,12 +212,16 @@ export default function EventsPage() {
                       <label className="block text-xs font-bold text-ink-soft mb-1">Organization / Gurdwara / Sangat</label>
                       <input
                         type="text"
+                        name="organization"
                         placeholder="BRHF Delegate / Sangat Member"
                         value={eventForm.organization}
                         onChange={(e) => setEventForm({ ...eventForm, organization: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
                       />
                     </div>
+
+                    <input type="hidden" name="event_title" value={selectedEventModal?.title || ""} />
+                    <input type="hidden" name="event_location" value={selectedEventModal?.location || ""} />
 
                     <button
                       type="submit"
