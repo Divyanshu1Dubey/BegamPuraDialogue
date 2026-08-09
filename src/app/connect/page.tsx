@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Heart, Users, Sparkles, Send, CheckCircle2, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Heart, Users, Sparkles, Send, CheckCircle2 } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { ConnectGlobe } from "@/components/ConnectGlobe";
 
 export default function ConnectPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -56,6 +57,10 @@ export default function ConnectPage() {
         <div className="grid lg:grid-cols-2 gap-12 mb-20">
           {/* Contact Details & Headquarters */}
           <div className="space-y-6">
+            {/* Interactive Globe */}
+            <ConnectGlobe />
+
+            {/* Contact Details & Headquarters */}
             <div className="p-8 rounded-3xl card-glass card-saffron-glow">
               <h2 className="font-display text-2xl font-bold text-ink mb-6">Global Secretariat</h2>
 
@@ -86,30 +91,6 @@ export default function ConnectPage() {
               </div>
             </div>
 
-            {/* Global Chapters */}
-            <div className="p-8 rounded-3xl card-glass">
-              <h3 className="font-display text-xl font-bold text-ink mb-4 flex items-center gap-2">
-                <Globe className="h-5 w-5 text-saffron" /> Global Chapter Network
-              </h3>
-              <div className="grid grid-cols-2 gap-3 text-xs font-medium text-ink-soft">
-                <div className="p-3 rounded-xl bg-surface border border-border">
-                  <span className="text-saffron font-bold block">United Kingdom</span>
-                  London, Birmingham, Bedford
-                </div>
-                <div className="p-3 rounded-xl bg-surface border border-border">
-                  <span className="text-saffron font-bold block">India</span>
-                  Varanasi, New Delhi, Punjab
-                </div>
-                <div className="p-3 rounded-xl bg-surface border border-border">
-                  <span className="text-saffron font-bold block">Europe</span>
-                  Brussels, Frankfurt, Paris
-                </div>
-                <div className="p-3 rounded-xl bg-surface border border-border">
-                  <span className="text-saffron font-bold block">North America</span>
-                  Toronto, Vancouver, New York
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Interactive Volunteer Form */}
