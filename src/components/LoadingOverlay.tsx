@@ -1,12 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const PARTICLE_RADII = [160,170,175,185,190,195,180,200,165,188,192,178];
 const ANIMATION_DURATION = 4500; // ms total loading animation
 
+const emptySubscribe = () => () => {};
+
+function useIsMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
 export function LoadingOverlay() {
+  const isMounted = useIsMounted();
   const [visible, setVisible] = useState(true);
   const [fadingOut, setFadingOut] = useState(false);
 
@@ -18,6 +29,8 @@ export function LoadingOverlay() {
       clearTimeout(removeTimer);
     };
   }, []);
+
+  if (!isMounted || !visible) return null;
 
   return (
     <AnimatePresence>
@@ -56,8 +69,8 @@ export function LoadingOverlay() {
             {[...Array(12)].map((_, i) => {
               const angle = (i / 12) * Math.PI * 2;
               const radius = PARTICLE_RADII[i];
-              const x = Math.cos(angle) * radius;
-              const y = Math.sin(angle) * radius;
+              const x = Math.round(Math.cos(angle) * radius);
+              const y = Math.round(Math.sin(angle) * radius);
               return (
                 <motion.div
                   key={i}

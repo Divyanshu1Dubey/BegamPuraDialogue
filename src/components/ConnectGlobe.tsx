@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useMemo, useCallback, useEffect } from "react";
+import { useRef, useState, useMemo, useCallback, useEffect, useSyncExternalStore } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars, Html } from "@react-three/drei";
 import * as THREE from "three";
@@ -532,25 +532,46 @@ function GlobeScene({
   );
 }
 
+const emptySubscribe = () => () => {};
+
+function useIsMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
+function subscribeResize(callback: () => void) {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+}
+
+function getIsMobileSnapshot() {
+  return window.innerWidth < 640;
+}
+
+function getIsMobileServerSnapshot() {
+  return false;
+}
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    subscribeResize,
+    getIsMobileSnapshot,
+    getIsMobileServerSnapshot
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════
 // Main Component
 // ═══════════════════════════════════════════════════════════════
 export function ConnectGlobe() {
-  const [isMounted, setIsMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const isMounted = useIsMounted();
+  const isMobile = useIsMobile();
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  useEffect(() => {
-    setIsMounted(true);
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const handleSelect = useCallback((id: number) => {
     setSelectedId((prev) => (prev === id ? null : id));
@@ -583,12 +604,12 @@ export function ConnectGlobe() {
       <div className="space-y-2.5">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
           {/* Category Filter Chips */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-none touch-pan-x">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-none touch-pan-x min-w-0 flex-1">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] ${
+                className={`whitespace-nowrap shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all min-h-[36px] ${
                   activeCategory === cat
                     ? "bg-sky-500 text-black font-bold shadow-md shadow-sky-500/20"
                     : "bg-surface/80 hover:bg-surface text-ink-soft hover:text-ink border border-border"
@@ -600,7 +621,7 @@ export function ConnectGlobe() {
           </div>
 
           {/* Quick Search */}
-          <div className="relative shrink-0">
+          <div className="relative shrink-0 w-full sm:w-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-soft" />
             <input
               type="text"
@@ -613,15 +634,15 @@ export function ConnectGlobe() {
         </div>
 
         {/* Location Chips Row */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none touch-pan-x">
-          <span className="text-[11px] font-bold text-sky-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none touch-pan-x min-w-0">
+          <span className="text-[11px] font-bold text-sky-400 uppercase tracking-wider shrink-0 flex items-center gap-1 whitespace-nowrap">
             <Sparkles className="w-3 h-3" /> Quick Focus:
           </span>
           {filteredLocations.map((loc) => (
             <button
               key={loc.id}
               onClick={() => handleSelect(loc.id)}
-              className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all min-h-[34px] ${
+              className={`whitespace-nowrap shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all min-h-[34px] ${
                 selectedId === loc.id
                   ? "bg-sky-500 text-black font-bold scale-105 shadow-md shadow-sky-500/20"
                   : "bg-surface/60 hover:bg-surface text-ink-soft hover:text-ink border border-border"
@@ -636,7 +657,7 @@ export function ConnectGlobe() {
 
       {/* Main 3D Globe Container (Responsive Heights & Touch Optimizations) */}
       <div
-        className="w-full rounded-3xl overflow-hidden relative bg-[#030712] touch-none h-[380px] sm:h-[480px] md:h-[580px] lg:h-[650px]"
+        className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative bg-[#030712] touch-none h-[350px] sm:h-[480px] md:h-[580px] lg:h-[650px]"
         style={{ border: "1px solid rgba(255,255,255,0.12)" }}
       >
         {!isMounted ? (
@@ -673,14 +694,14 @@ export function ConnectGlobe() {
         )}
 
         {/* Top-Left Header Overlay */}
-        <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10 pointer-events-none max-w-[70%] sm:max-w-none">
+        <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-10 pointer-events-none max-w-[55%] sm:max-w-[65%] md:max-w-none">
           <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-            <p className="text-[9px] sm:text-[10px] font-bold text-sky-400 uppercase tracking-[0.2em] sm:tracking-[0.25em]">
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse shrink-0" />
+            <p className="text-[9px] sm:text-[10px] font-bold text-sky-400 uppercase tracking-[0.15em] sm:tracking-[0.25em] truncate">
               India Sacred Pilgrimage
             </p>
           </div>
-          <h3 className="font-display text-base sm:text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+          <h3 className="font-display text-sm sm:text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
             Historic Gurudwaras of India
           </h3>
           <p className="text-[10px] sm:text-xs text-white/60 font-medium mt-0.5 hidden sm:block">
@@ -692,16 +713,16 @@ export function ConnectGlobe() {
         {selectedId !== null && (
           <button
             onClick={() => setSelectedId(null)}
-            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 px-3 py-1.5 rounded-full bg-[#030712]/90 hover:bg-[#030712] backdrop-blur-md border border-sky-500/50 text-[11px] sm:text-xs font-semibold text-sky-300 flex items-center gap-1.5 transition-all shadow-xl"
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[#030712]/90 hover:bg-[#030712] backdrop-blur-md border border-sky-500/50 text-[10px] sm:text-xs font-semibold text-sky-300 flex items-center gap-1 sm:gap-1.5 transition-all shadow-xl whitespace-nowrap"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             Focus India
           </button>
         )}
 
         {/* Bottom Help Instructions */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none hidden sm:block">
-          <div className="px-4 py-1.5 rounded-full bg-[#030712]/80 backdrop-blur-md border border-white/10 text-[10px] text-white/70 font-medium tracking-wider uppercase flex items-center gap-2">
+          <div className="px-4 py-1.5 rounded-full bg-[#030712]/80 backdrop-blur-md border border-white/10 text-[10px] text-white/70 font-medium tracking-wider uppercase flex items-center gap-2 whitespace-nowrap">
             <Compass className="w-3 h-3 text-sky-400" />
             <span>Drag to rotate · Scroll to zoom · Tap Gurudwara markers to explore</span>
           </div>
@@ -715,22 +736,22 @@ export function ConnectGlobe() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 25, scale: 0.95 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:right-5 sm:left-auto z-30 sm:w-88"
+              className="absolute bottom-2 left-2 right-2 sm:bottom-5 sm:right-5 sm:left-auto z-30 sm:w-88"
             >
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#030712]/95 backdrop-blur-xl border border-sky-500/40 shadow-2xl shadow-black max-h-[50vh] overflow-y-auto">
-                <div className="flex items-start justify-between mb-2.5">
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-2xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-sky-500/10 border border-sky-500/30">
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-[#030712]/95 backdrop-blur-xl border border-sky-500/40 shadow-2xl shadow-black max-h-[55vh] sm:max-h-[50vh] overflow-y-auto">
+                <div className="flex items-start justify-between gap-2 mb-2.5">
+                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span className="text-xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-sky-500/10 border border-sky-500/30 shrink-0">
                       {selectedLoc.icon}
                     </span>
-                    <div>
-                      <span className="inline-block px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider mb-0.5">
+                    <div className="min-w-0 flex-1">
+                      <span className="inline-block px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider mb-0.5 truncate max-w-full">
                         {selectedLoc.category}
                       </span>
-                      <h4 className="font-display text-sm sm:text-base md:text-lg font-bold text-white leading-snug">
+                      <h4 className="font-display text-xs sm:text-base md:text-lg font-bold text-white leading-tight truncate">
                         {selectedLoc.name}
                       </h4>
-                      <p className="text-[11px] sm:text-xs text-sky-300/90 font-medium">
+                      <p className="text-[10px] sm:text-xs text-sky-300/90 font-medium truncate">
                         {selectedLoc.city}, {selectedLoc.state}
                       </p>
                     </div>
@@ -744,17 +765,17 @@ export function ConnectGlobe() {
                   </button>
                 </div>
 
-                <p className="text-xs text-white/90 font-medium leading-relaxed p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/10">
+                <p className="text-[11px] sm:text-xs text-white/90 font-medium leading-relaxed p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/10">
                   {selectedLoc.significance}
                 </p>
 
                 <div className="mt-2.5 flex items-center justify-between text-[10px] sm:text-[11px] text-white/60 pt-2 border-t border-white/10">
-                  <div className="flex items-center gap-1 text-sky-300 font-mono">
-                    <MapPin className="w-3 h-3" />
-                    <span>{selectedLoc.lat.toFixed(4)}° N, {selectedLoc.lng.toFixed(4)}° E</span>
+                  <div className="flex items-center gap-1 text-sky-300 font-mono truncate">
+                    <MapPin className="w-3 h-3 shrink-0" />
+                    <span className="truncate">{selectedLoc.lat.toFixed(4)}° N, {selectedLoc.lng.toFixed(4)}° E</span>
                   </div>
-                  <span className="text-[9px] sm:text-[10px] text-sky-300/80 uppercase tracking-widest font-semibold flex items-center gap-1">
-                    <Navigation className="w-3 h-3" /> Gurudwara Location
+                  <span className="text-[9px] sm:text-[10px] text-sky-300/80 uppercase tracking-widest font-semibold flex items-center gap-1 shrink-0">
+                    <Navigation className="w-3 h-3" /> Location
                   </span>
                 </div>
               </div>
