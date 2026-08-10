@@ -57,211 +57,199 @@ function ll(lat: number, lng: number, r: number): THREE.Vector3 {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Earth Texture — recognizable continents via polygon outlines
+// Canvas Earth Texture — vivid continents drawn with Canvas 2D
 // ═══════════════════════════════════════════════════════════════
 function createEarthTexture(): THREE.CanvasTexture {
   const c = document.createElement("canvas");
-  const W = 1024, H = 512;
+  const W = 2048, H = 1024;
   c.width = W; c.height = H;
   const ctx = c.getContext("2d")!;
 
-  // ── Colors ──
-  const OCEAN_DARK = [20, 75, 170];
-  const OCEAN_LIGHT = [45, 130, 220];
-  const LAND = [52, 160, 68];
-  const LAND_DARK = [32, 110, 42];
-  const LAND_EDGE = [28, 90, 35];
+  // Vivid high-contrast colors
+  const OCEAN   = [30, 110, 220];   // saturated bright blue
+  const LAND    = [48, 170, 55];    // vivid green
+  const LAND_HI = [78, 215, 86];    // lighter green for highlights
+  const LAND_DK = [25, 110, 32];    // darker green for shading
+  const ICE     = [230, 245, 255];  // polar ice caps
+  const COAST   = [15, 60, 18];     // dark coast outline
 
-  // Ocean with vertical gradient (slightly lighter at equator)
-  const oceanGrad = ctx.createLinearGradient(0, 0, 0, H);
-  oceanGrad.addColorStop(0, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
-  oceanGrad.addColorStop(0.3, `rgb(${OCEAN_LIGHT[0]},${OCEAN_LIGHT[1]},${OCEAN_LIGHT[2]})`);
-  oceanGrad.addColorStop(0.5, `rgb(${OCEAN_LIGHT[0]},${OCEAN_LIGHT[1]},${OCEAN_LIGHT[2]})`);
-  oceanGrad.addColorStop(0.7, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
-  oceanGrad.addColorStop(1, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
-  ctx.fillStyle = oceanGrad;
+  // Ocean background
+  ctx.fillStyle = `rgb(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]})`;
   ctx.fillRect(0, 0, W, H);
 
-  // ── Continent polygons [lng, lat] — simplified recognizable outlines ──
-  const continents: [number, number][][] = [
-    // North America (main body)
-    [
-      [-130, 50], [-125, 60], [-115, 62], [-100, 65], [-85, 70],
-      [-65, 62], [-55, 50], [-65, 45], [-75, 35], [-82, 25],
-      [-90, 18], [-100, 20], [-105, 22], [-110, 30], [-118, 34],
-      [-122, 37], [-125, 42], [-130, 50],
-    ],
-    // Alaska
-    [
-      [-165, 65], [-160, 70], [-145, 70], [-135, 58],
-      [-140, 60], [-152, 60], [-165, 65],
-    ],
-    // South America
-    [
-      [-80, 10], [-65, 12], [-50, 5], [-35, -5], [-35, -15],
-      [-38, -22], [-45, -24], [-48, -28], [-53, -34], [-58, -38],
-      [-65, -48], [-68, -55], [-72, -50], [-72, -40], [-70, -18],
-      [-75, -5], [-77, 0], [-80, 5], [-80, 10],
-    ],
-    // Africa
-    [
-      [-15, 35], [10, 37], [25, 32], [35, 30], [42, 12],
-      [50, 12], [50, 0], [42, -12], [35, -25], [28, -33],
-      [18, -35], [15, -30], [12, -18], [8, -5], [10, 5],
-      [0, 5], [-5, 5], [-10, 8], [-15, 10], [-17, 15],
-      [-15, 20], [-13, 28], [-15, 35],
-    ],
-    // Europe
-    [
-      [-10, 36], [-5, 43], [-10, 44], [0, 48], [-5, 48],
-      [2, 51], [5, 48], [8, 54], [12, 55], [15, 58],
-      [25, 60], [30, 65], [32, 70], [25, 71], [15, 69],
-      [10, 63], [5, 62], [0, 58], [-5, 55], [-10, 52],
-      [-10, 44], [-10, 36],
-    ],
-    // Asia
-    [
-      [30, 65], [40, 68], [50, 55], [55, 50], [60, 45],
-      [68, 38], [75, 35], [80, 28], [88, 22], [90, 23],
-      [92, 20], [95, 16], [100, 14], [105, 10], [108, 2],
-      [105, -2], [100, -5], [95, -2], [90, 5], [80, 8],
-      [75, 12], [70, 18], [65, 25], [60, 25], [55, 25],
-      [50, 28], [45, 35], [40, 38], [35, 35], [30, 42],
-      [28, 45], [25, 40], [28, 42], [30, 65],
-    ],
-    // India subcontinent
-    [
-      [68, 35], [72, 20], [75, 15], [78, 8], [80, 12],
-      [82, 17], [85, 22], [88, 22], [90, 25], [88, 27],
-      [85, 28], [80, 30], [75, 32], [68, 35],
-    ],
-    // Australia
-    [
-      [115, -15], [130, -12], [137, -12], [142, -15],
-      [148, -18], [153, -25], [153, -30], [150, -35],
-      [145, -38], [140, -38], [135, -35], [130, -32],
-      [120, -35], [115, -33], [114, -25], [115, -15],
-    ],
-    // Southeast Asia / Indonesia
-    [
-      [95, 5], [100, 2], [105, -2], [108, -5], [110, -7],
-      [115, -8], [118, -5], [120, -3], [118, 2], [115, 0],
-      [110, 2], [105, 5], [100, 5], [95, 5],
-    ],
-    // New Zealand
-    [
-      [166, -35], [168, -37], [172, -40], [175, -42],
-      [178, -42], [178, -38], [175, -36], [172, -34],
-      [168, -34], [166, -35],
-    ],
-    // Japan
-    [
-      [130, 31], [132, 33], [135, 35], [137, 37],
-      [140, 40], [142, 43], [145, 45], [143, 42],
-      [140, 39], [137, 36], [134, 34], [130, 31],
-    ],
-    // Indonesia / Borneo
-    [
-      [108, 2], [112, 0], [116, -2], [118, -4],
-      [117, -6], [114, -8], [110, -8], [107, -4],
-      [106, -1], [108, 2],
-    ],
-    // Sri Lanka
-    [
-      [80, 10], [81, 8], [82, 7], [82, 6],
-      [81, 6], [80, 8], [80, 10],
-    ],
-    // Madagascar
-    [
-      [44, -13], [46, -16], [48, -22], [50, -25],
-      [48, -25], [46, -22], [44, -18], [43, -15],
-      [44, -13],
-    ],
-    // Philippines
-    [
-      [118, 10], [120, 12], [122, 15], [124, 14],
-      [123, 12], [121, 10], [119, 9], [118, 10],
-    ],
-  ];
+  // Subtle ocean texture
+  for (let i = 0; i < 5000; i++) {
+    const x = Math.random() * W, y = Math.random() * H;
+    const a = Math.random() * 0.05;
+    ctx.fillStyle = `rgba(255,255,255,${a})`;
+    ctx.fillRect(x, y, 3, 3);
+  }
 
-  // Convert [lng, lat] → canvas pixel
-  const toCanvas = (lng: number, lat: number): [number, number] => [
+  // Convert [lng, lat] → canvas pixels
+  const toXY = (lng: number, lat: number): [number, number] => [
     ((lng + 180) / 360) * W,
     ((90 - lat) / 180) * H,
   ];
 
-  // Draw each continent
-  ctx.fillStyle = `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`;
-  ctx.strokeStyle = `rgb(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]})`;
-  ctx.lineWidth = 1.5;
-  ctx.lineJoin = "round";
+  // Continent polygons [lng, lat] — recognizable outlines
+  const continents: [number, number][][] = [
+    // North America (main)
+    [[-130,50],[-125,60],[-115,62],[-100,65],[-85,70],[-65,62],[-55,50],[-65,45],[-75,35],[-82,25],[-90,18],[-100,20],[-105,22],[-110,30],[-118,34],[-122,37],[-125,42],[-130,50]],
+    // Alaska
+    [[-165,65],[-160,70],[-145,70],[-135,58],[-140,60],[-152,60],[-165,65]],
+    // South America
+    [[-80,10],[-65,12],[-50,5],[-35,-5],[-35,-15],[-38,-22],[-45,-24],[-48,-28],[-53,-34],[-58,-38],[-65,-48],[-72,-55],[-72,-40],[-70,-18],[-75,-5],[-77,0],[-80,5],[-80,10]],
+    // Africa
+    [[-15,35],[10,37],[25,32],[35,30],[42,12],[50,12],[50,0],[42,-12],[35,-25],[28,-33],[18,-35],[12,-18],[8,-5],[10,5],[0,5],[-5,5],[-10,8],[-15,10],[-17,15],[-15,20],[-13,28],[-15,35]],
+    // Europe (expanded)
+    [[-10,36],[-5,43],[-10,44],[0,48],[-5,48],[2,51],[5,48],[8,54],[12,55],[15,58],[25,60],[30,65],[32,70],[40,70],[45,65],[40,55],[30,50],[28,45],[25,40],[20,38],[15,38],[10,36],[5,38],[0,38],[-5,36],[-10,36]],
+    // Asia (simplified, larger)
+    [[30,65],[40,68],[50,55],[60,50],[68,45],[75,38],[80,30],[88,25],[92,22],[95,18],[100,14],[105,10],[108,2],[105,-2],[100,-5],[95,-2],[90,5],[80,8],[70,18],[60,25],[50,28],[40,38],[30,42],[28,45],[25,40],[20,38],[15,38],[10,36],[5,38],[0,38],[-5,36],[-10,36],[-5,43],[0,48],[5,48],[8,54],[15,58],[25,60],[30,65]],
+    // India subcontinent
+    [[68,30],[72,25],[75,15],[78,8],[80,12],[82,18],[85,22],[88,23],[90,25],[88,28],[85,30],[78,32],[72,32],[68,30]],
+    // Australia
+    [[115,-15],[130,-12],[137,-12],[142,-15],[148,-18],[153,-25],[153,-30],[150,-35],[145,-38],[140,-38],[135,-35],[130,-32],[120,-35],[115,-33],[114,-25],[115,-15]],
+    // New Zealand
+    [[166,-35],[168,-37],[172,-40],[175,-42],[178,-42],[178,-38],[175,-36],[172,-34],[166,-35]],
+    // Japan
+    [[130,31],[132,33],[135,35],[137,37],[140,40],[142,43],[145,45],[143,42],[140,39],[137,36],[134,34],[130,31]],
+    // Indonesia / Borneo
+    [[108,2],[112,0],[116,-2],[118,-4],[117,-6],[114,-8],[110,-8],[107,-4],[106,-1],[108,2]],
+    // Sri Lanka
+    [[80,10],[81,8],[82,7],[82,6],[81,6],[80,8],[80,10]],
+    // Madagascar
+    [[44,-13],[46,-16],[48,-22],[50,-25],[48,-25],[46,-22],[44,-18],[43,-15],[44,-13]],
+    // UK / Ireland
+    [[-10,50],[-6,50],[-5,52],[2,52],[2,55],[-1,56],[-3,58],[-5,58],[-6,55],[-3,52],[-6,50],[-10,50]],
+    // Scandinavia
+    [[5,58],[8,60],[12,62],[15,65],[18,68],[22,70],[25,71],[30,70],[25,65],[18,62],[12,58],[8,56],[5,58]],
+    // Greenland
+    [[-55,60],[-45,60],[-20,65],[-18,72],[-20,78],[-30,82],[-45,83],[-55,80],[-55,75],[-50,70],[-55,60]],
+    // Philippines
+    [[118,10],[120,12],[122,15],[124,14],[123,12],[121,10],[119,9],[118,10]],
+  ];
 
   continents.forEach((poly) => {
-    const pts = poly.map(([lng, lat]) => toCanvas(lng, lat));
-
-    // Green fill
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1]);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.closePath();
-
-    // Radial gradient for 3D-ish shading (bright center, darker edges)
+    const pts = poly.map(([lng, lat]) => toXY(lng, lat));
     const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
     const cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+
     let maxDist = 0;
     for (const p of pts) {
       const d = Math.hypot(p[0] - cx, p[1] - cy);
       if (d > maxDist) maxDist = d;
     }
     maxDist = Math.max(maxDist, 1);
-    const grad = ctx.createRadialGradient(cx, cy, maxDist * 0.05, cx, cy, maxDist * 1.1);
-    grad.addColorStop(0, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
-    grad.addColorStop(0.6, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
-    grad.addColorStop(0.85, `rgb(${LAND_DARK[0]},${LAND_DARK[1]},${LAND_DARK[2]})`);
-    grad.addColorStop(1, `rgb(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]})`);
-    ctx.fillStyle = grad;
-    ctx.fill();
 
-    // Coastline outline
+    // Polar ice detection
+    const avgLat = poly.reduce((s, p) => s + p[1], 0) / poly.length;
+    const isPolar = Math.abs(avgLat) > 60;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.closePath();
+    ctx.clip();
+
+    if (isPolar) {
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxDist * 1.1);
+      grad.addColorStop(0, `rgb(${ICE[0]},${ICE[1]},${ICE[2]})`);
+      grad.addColorStop(0.7, `rgb(${ICE[0]},${ICE[1]},${ICE[2]})`);
+      grad.addColorStop(1, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    } else {
+      const grad = ctx.createRadialGradient(cx, cy, maxDist * 0.02, cx, cy, maxDist * 1.15);
+      grad.addColorStop(0, `rgb(${LAND_HI[0]},${LAND_HI[1]},${LAND_HI[2]})`);
+      grad.addColorStop(0.3, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
+      grad.addColorStop(0.7, `rgb(${LAND_DK[0]},${LAND_DK[1]},${LAND_DK[2]})`);
+      grad.addColorStop(1, `rgb(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]})`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    }
+    ctx.restore();
+
+    // Coastline
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.closePath();
+    ctx.strokeStyle = `rgba(${COAST[0]},${COAST[1]},${COAST[2]},0.6)`;
+    ctx.lineWidth = 2.5;
     ctx.stroke();
   });
 
-  // Grid lines every 30° — saffron
-  ctx.strokeStyle = "rgba(255,180,60,0.1)";
+  // Grid lines — subtle
+  ctx.strokeStyle = "rgba(255,255,255,0.05)";
   ctx.lineWidth = 1;
   for (let lat = -60; lat <= 60; lat += 30) {
     const y = ((90 - lat) / 180) * H;
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
   }
   for (let lng = -180; lng <= 180; lng += 30) {
     const x = ((lng + 180) / 360) * W;
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, H);
+    ctx.stroke();
   }
 
-  // Equator
-  ctx.strokeStyle = "rgba(255,200,100,0.18)";
-  ctx.lineWidth = 1.5;
-  ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
+  // Equator — slightly brighter
+  ctx.strokeStyle = "rgba(255,255,255,0.12)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, H / 2);
+  ctx.lineTo(W, H / 2);
+  ctx.stroke();
 
-  // Saffron glow at each location
+  // Saffron location markers
   LOCATIONS.forEach((loc) => {
-    const [px, py] = toCanvas(loc.lng, loc.lat);
-    const grad = ctx.createRadialGradient(px, py, 0, px, py, 18);
-    grad.addColorStop(0, "rgba(255,160,40,0.9)");
-    grad.addColorStop(0.4, "rgba(255,140,30,0.3)");
-    grad.addColorStop(1, "rgba(255,100,0,0)");
-    ctx.fillStyle = grad;
-    ctx.beginPath(); ctx.arc(px, py, 18, 0, Math.PI * 2); ctx.fill();
+    const [x, y] = toXY(loc.lng, loc.lat);
+
+    // Soft glow
+    const glow = ctx.createRadialGradient(x, y, 0, x, y, 18);
+    glow.addColorStop(0, "rgba(255,153,51,0.35)");
+    glow.addColorStop(1, "rgba(255,153,51,0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(x - 18, y - 18, 36, 36);
+
+    // Dot
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255,153,51,0.95)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,220,150,0.8)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
   });
 
   const tex = new THREE.CanvasTexture(c);
   tex.anisotropy = 8;
   tex.colorSpace = THREE.SRGBColorSpace;
+  tex.magFilter = THREE.LinearFilter;
   return tex;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Atmosphere — Fresnel edge glow
+// Earth Mesh — canvas texture with MeshBasicMaterial for
+// maximum visibility (no shading darkening the colors)
+// ═══════════════════════════════════════════════════════════════
+function EarthMesh() {
+  const texture = useMemo(() => createEarthTexture(), []);
+  return (
+    <mesh>
+      <sphereGeometry args={[R, 128, 96]} />
+      <meshBasicMaterial map={texture} />
+    </mesh>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Atmosphere — Fresnel edge glow (saffron)
 // ═══════════════════════════════════════════════════════════════
 function Atmosphere() {
   const mat = useMemo(
@@ -278,6 +266,7 @@ function Atmosphere() {
           }
         `,
         fragmentShader: /* glsl */ `
+          precision highp float;
           varying vec3 vWorldNormal;
           varying vec3 vWorldPos;
           void main() {
@@ -290,6 +279,7 @@ function Atmosphere() {
         transparent: true,
         side: THREE.BackSide,
         depthWrite: false,
+        blending: THREE.AdditiveBlending,
       }),
     []
   );
@@ -450,7 +440,6 @@ function GlobeScene({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState<number | null>(null);
-  const earthTex = useMemo(() => createEarthTexture(), []);
   const positions = useMemo(() => LOCATIONS.map((l) => ll(l.lat, l.lng, R)), []);
 
   useFrame((_, delta) => {
@@ -461,11 +450,7 @@ function GlobeScene({
 
   return (
     <group ref={groupRef}>
-      <mesh>
-        <sphereGeometry args={[R, 96, 72]} />
-        <meshBasicMaterial map={earthTex} />
-      </mesh>
-
+      <EarthMesh />
       <Atmosphere />
 
       {CONNECTIONS.map(([a, b], i) => (
@@ -545,44 +530,50 @@ export function ConnectGlobe() {
           </p>
         </div>
 
-        <div className="absolute top-5 right-5 z-10 pointer-events-none">
-          <div className="px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10">
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider">
-              {LOCATIONS.length} Locations
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Detail Panel */}
-      <AnimatePresence>
-        {selectedLoc && (
-          <motion.div
-            initial={{ opacity: 0, y: 14, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 14, scale: 0.97 }}
-            transition={{ duration: 0.35, ease: [0.22, 0.61, 0.36, 1] }}
-            className="mt-4 p-5 md:p-6 rounded-2xl card-glass card-saffron-glow"
-          >
-            <div className="flex items-start gap-4">
-              <div className="text-4xl shrink-0">{selectedLoc.icon}</div>
-              <div className="flex-1 min-w-0">
-                <h4 className="font-display text-base font-bold text-ink">{selectedLoc.name}</h4>
-                <p className="text-[10px] text-saffron font-bold uppercase tracking-[0.2em] mt-0.5">
-                  Significance
+        {/* Detail Panel */}
+        <AnimatePresence>
+          {selectedLoc && (
+            <motion.div
+              initial={{ opacity: 0, x: 40, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 40, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute top-5 right-5 z-20 w-72"
+            >
+              <div className="p-5 rounded-2xl bg-[#0d1b2a]/85 backdrop-blur-xl border border-saffron/30 shadow-2xl">
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <span className="text-2xl">{selectedLoc.icon}</span>
+                    <h4 className="font-display text-lg font-bold text-white leading-tight">{selectedLoc.name}</h4>
+                  </div>
+                  <button
+                    onClick={() => setSelectedId(null)}
+                    className="p-1.5 rounded-lg hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <p className="text-xs text-saffron/80 font-medium leading-relaxed">
+                  {selectedLoc.significance}
                 </p>
-                <p className="text-sm text-ink-soft mt-1 leading-relaxed">{selectedLoc.significance}</p>
+                <div className="mt-3 flex items-center gap-2 text-[10px] text-white/40">
+                  <MapPinIcon />
+                  <span>{selectedLoc.lat.toFixed(2)}°, {selectedLoc.lng.toFixed(2)}°</span>
+                </div>
               </div>
-              <button
-                onClick={() => setSelectedId(null)}
-                className="shrink-0 p-1.5 rounded-lg hover:bg-surface transition-colors"
-              >
-                <X className="h-4 w-4 text-ink-soft" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
+  );
+}
+
+function MapPinIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
   );
 }
