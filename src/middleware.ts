@@ -29,8 +29,8 @@ export function middleware(request: NextRequest) {
     "connect-src 'self' https://www.google-analytics.com https://analytics.google.com",
     // Frames: none (DENY via X-Frame-Options already set)
     "frame-ancestors 'none'",
-    // Form actions: self only
-    "form-action 'self'",
+    // Form actions: self + FormSubmit (mail forwarding service)
+    "form-action 'self' https://formsubmit.co",
     // Base URI: self only
     "base-uri 'self'",
     // Upgrade insecure requests (harmless if already HTTPS)
