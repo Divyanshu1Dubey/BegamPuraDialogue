@@ -57,7 +57,7 @@ function ll(lat: number, lng: number, r: number): THREE.Vector3 {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Earth Texture — vivid, clearly visible continents
+// Earth Texture — recognizable continents via polygon outlines
 // ═══════════════════════════════════════════════════════════════
 function createEarthTexture(): THREE.CanvasTexture {
   const c = document.createElement("canvas");
@@ -65,96 +65,193 @@ function createEarthTexture(): THREE.CanvasTexture {
   c.width = W; c.height = H;
   const ctx = c.getContext("2d")!;
 
-  // ── Vivid, clearly visible colors ──
-  const OCEAN = [30, 100, 200];      // bright blue ocean
-  const LAND = [60, 165, 75];        // vivid green land
-  const LAND_EDGE = [45, 130, 60];   // darker green at coastlines
-  const GLOW = [255, 180, 50];       // saffron glow at locations
+  // ── Colors ──
+  const OCEAN_DARK = [20, 75, 170];
+  const OCEAN_LIGHT = [45, 130, 220];
+  const LAND = [52, 160, 68];
+  const LAND_DARK = [32, 110, 42];
+  const LAND_EDGE = [28, 90, 35];
 
-  // [latCenter, lngCenter, latHalfSpan, lngHalfSpan]
-  const landAreas: [number, number, number, number][] = [
-    [22, 78, 14, 12],       // India
-    [27, 66, 8, 8],         // Pakistan
-    [50, 15, 14, 30],       // Europe
-    [5, 22, 30, 20],        // Africa
-    [45, -100, 25, 30],     // North America
-    [-15, -55, 22, 14],     // South America
-    [10, 108, 8, 18],       // SE Asia
-    [-25, 134, 11, 14],     // Australia
-    [62, 100, 14, 70],      // Russia
-    [30, 50, 7, 7],         // Middle East
-    [55, 50, 10, 25],       // Central Asia
-    [15, -10, 6, 8],        // West Africa bulge
-    [35, -90, 5, 10],       // Central America
-    [0, 20, 10, 10],        // Central Africa
-    [70, 40, 8, 20],        // Scandinavia
-  ];
-
-  // Draw ocean background
-  ctx.fillStyle = `rgb(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]})`;
+  // Ocean with vertical gradient (slightly lighter at equator)
+  const oceanGrad = ctx.createLinearGradient(0, 0, 0, H);
+  oceanGrad.addColorStop(0, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
+  oceanGrad.addColorStop(0.3, `rgb(${OCEAN_LIGHT[0]},${OCEAN_LIGHT[1]},${OCEAN_LIGHT[2]})`);
+  oceanGrad.addColorStop(0.5, `rgb(${OCEAN_LIGHT[0]},${OCEAN_LIGHT[1]},${OCEAN_LIGHT[2]})`);
+  oceanGrad.addColorStop(0.7, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
+  oceanGrad.addColorStop(1, `rgb(${OCEAN_DARK[0]},${OCEAN_DARK[1]},${OCEAN_DARK[2]})`);
+  ctx.fillStyle = oceanGrad;
   ctx.fillRect(0, 0, W, H);
 
-  // Draw each land mass with a radial gradient (bright center → darker edge)
-  landAreas.forEach(([clat, clng, latSpan, lngSpan]) => {
-    const px = ((clng + 180) / 360) * W;
-    const py = ((90 - clat) / 180) * H;
-    const rx = (lngSpan / 360) * W * 1.15;
-    const ry = (latSpan / 180) * H * 1.15;
+  // ── Continent polygons [lng, lat] — simplified recognizable outlines ──
+  const continents: [number, number][][] = [
+    // North America (main body)
+    [
+      [-130, 50], [-125, 60], [-115, 62], [-100, 65], [-85, 70],
+      [-65, 62], [-55, 50], [-65, 45], [-75, 35], [-82, 25],
+      [-90, 18], [-100, 20], [-105, 22], [-110, 30], [-118, 34],
+      [-122, 37], [-125, 42], [-130, 50],
+    ],
+    // Alaska
+    [
+      [-165, 65], [-160, 70], [-145, 70], [-135, 58],
+      [-140, 60], [-152, 60], [-165, 65],
+    ],
+    // South America
+    [
+      [-80, 10], [-65, 12], [-50, 5], [-35, -5], [-35, -15],
+      [-38, -22], [-45, -24], [-48, -28], [-53, -34], [-58, -38],
+      [-65, -48], [-68, -55], [-72, -50], [-72, -40], [-70, -18],
+      [-75, -5], [-77, 0], [-80, 5], [-80, 10],
+    ],
+    // Africa
+    [
+      [-15, 35], [10, 37], [25, 32], [35, 30], [42, 12],
+      [50, 12], [50, 0], [42, -12], [35, -25], [28, -33],
+      [18, -35], [15, -30], [12, -18], [8, -5], [10, 5],
+      [0, 5], [-5, 5], [-10, 8], [-15, 10], [-17, 15],
+      [-15, 20], [-13, 28], [-15, 35],
+    ],
+    // Europe
+    [
+      [-10, 36], [-5, 43], [-10, 44], [0, 48], [-5, 48],
+      [2, 51], [5, 48], [8, 54], [12, 55], [15, 58],
+      [25, 60], [30, 65], [32, 70], [25, 71], [15, 69],
+      [10, 63], [5, 62], [0, 58], [-5, 55], [-10, 52],
+      [-10, 44], [-10, 36],
+    ],
+    // Asia
+    [
+      [30, 65], [40, 68], [50, 55], [55, 50], [60, 45],
+      [68, 38], [75, 35], [80, 28], [88, 22], [90, 23],
+      [92, 20], [95, 16], [100, 14], [105, 10], [108, 2],
+      [105, -2], [100, -5], [95, -2], [90, 5], [80, 8],
+      [75, 12], [70, 18], [65, 25], [60, 25], [55, 25],
+      [50, 28], [45, 35], [40, 38], [35, 35], [30, 42],
+      [28, 45], [25, 40], [28, 42], [30, 65],
+    ],
+    // India subcontinent
+    [
+      [68, 35], [72, 20], [75, 15], [78, 8], [80, 12],
+      [82, 17], [85, 22], [88, 22], [90, 25], [88, 27],
+      [85, 28], [80, 30], [75, 32], [68, 35],
+    ],
+    // Australia
+    [
+      [115, -15], [130, -12], [137, -12], [142, -15],
+      [148, -18], [153, -25], [153, -30], [150, -35],
+      [145, -38], [140, -38], [135, -35], [130, -32],
+      [120, -35], [115, -33], [114, -25], [115, -15],
+    ],
+    // Southeast Asia / Indonesia
+    [
+      [95, 5], [100, 2], [105, -2], [108, -5], [110, -7],
+      [115, -8], [118, -5], [120, -3], [118, 2], [115, 0],
+      [110, 2], [105, 5], [100, 5], [95, 5],
+    ],
+    // New Zealand
+    [
+      [166, -35], [168, -37], [172, -40], [175, -42],
+      [178, -42], [178, -38], [175, -36], [172, -34],
+      [168, -34], [166, -35],
+    ],
+    // Japan
+    [
+      [130, 31], [132, 33], [135, 35], [137, 37],
+      [140, 40], [142, 43], [145, 45], [143, 42],
+      [140, 39], [137, 36], [134, 34], [130, 31],
+    ],
+    // Indonesia / Borneo
+    [
+      [108, 2], [112, 0], [116, -2], [118, -4],
+      [117, -6], [114, -8], [110, -8], [107, -4],
+      [106, -1], [108, 2],
+    ],
+    // Sri Lanka
+    [
+      [80, 10], [81, 8], [82, 7], [82, 6],
+      [81, 6], [80, 8], [80, 10],
+    ],
+    // Madagascar
+    [
+      [44, -13], [46, -16], [48, -22], [50, -25],
+      [48, -25], [46, -22], [44, -18], [43, -15],
+      [44, -13],
+    ],
+    // Philippines
+    [
+      [118, 10], [120, 12], [122, 15], [124, 14],
+      [123, 12], [121, 10], [119, 9], [118, 10],
+    ],
+  ];
 
-    const grad = ctx.createRadialGradient(px, py, Math.min(rx, ry) * 0.05, px, py, Math.max(rx, ry) * 1.1);
-    grad.addColorStop(0, `rgba(${LAND[0]},${LAND[1]},${LAND[2]},1)`);
-    grad.addColorStop(0.65, `rgba(${LAND[0]},${LAND[1]},${LAND[2]},0.9)`);
-    grad.addColorStop(0.85, `rgba(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]},0.5)`);
-    grad.addColorStop(1, `rgba(${OCEAN[0]},${OCEAN[1]},${OCEAN[2]},0)`);
+  // Convert [lng, lat] → canvas pixel
+  const toCanvas = (lng: number, lat: number): [number, number] => [
+    ((lng + 180) / 360) * W,
+    ((90 - lat) / 180) * H,
+  ];
 
-    ctx.save();
+  // Draw each continent
+  ctx.fillStyle = `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`;
+  ctx.strokeStyle = `rgb(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]})`;
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = "round";
+
+  continents.forEach((poly) => {
+    const pts = poly.map(([lng, lat]) => toCanvas(lng, lat));
+
+    // Green fill
     ctx.beginPath();
-    ctx.ellipse(px, py, rx, ry, 0, 0, Math.PI * 2);
-    ctx.clip();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.closePath();
+
+    // Radial gradient for 3D-ish shading (bright center, darker edges)
+    const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+    const cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+    let maxDist = 0;
+    for (const p of pts) {
+      const d = Math.hypot(p[0] - cx, p[1] - cy);
+      if (d > maxDist) maxDist = d;
+    }
+    maxDist = Math.max(maxDist, 1);
+    const grad = ctx.createRadialGradient(cx, cy, maxDist * 0.05, cx, cy, maxDist * 1.1);
+    grad.addColorStop(0, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
+    grad.addColorStop(0.6, `rgb(${LAND[0]},${LAND[1]},${LAND[2]})`);
+    grad.addColorStop(0.85, `rgb(${LAND_DARK[0]},${LAND_DARK[1]},${LAND_DARK[2]})`);
+    grad.addColorStop(1, `rgb(${LAND_EDGE[0]},${LAND_EDGE[1]},${LAND_EDGE[2]})`);
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
-    ctx.restore();
+    ctx.fill();
+
+    // Coastline outline
+    ctx.stroke();
   });
 
   // Grid lines every 30° — saffron
-  ctx.strokeStyle = "rgba(255,180,60,0.12)";
+  ctx.strokeStyle = "rgba(255,180,60,0.1)";
   ctx.lineWidth = 1;
   for (let lat = -60; lat <= 60; lat += 30) {
     const y = ((90 - lat) / 180) * H;
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(W, y);
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
   }
   for (let lng = -180; lng <= 180; lng += 30) {
     const x = ((lng + 180) / 360) * W;
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, H);
-    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
   }
 
-  // Equator — slightly brighter
-  ctx.strokeStyle = "rgba(255,200,100,0.2)";
+  // Equator
+  ctx.strokeStyle = "rgba(255,200,100,0.18)";
   ctx.lineWidth = 1.5;
-  const eqY = H / 2;
-  ctx.beginPath();
-  ctx.moveTo(0, eqY);
-  ctx.lineTo(W, eqY);
-  ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
 
   // Saffron glow at each location
   LOCATIONS.forEach((loc) => {
-    const px = ((loc.lng + 180) / 360) * W;
-    const py = ((90 - loc.lat) / 180) * H;
+    const [px, py] = toCanvas(loc.lng, loc.lat);
     const grad = ctx.createRadialGradient(px, py, 0, px, py, 18);
     grad.addColorStop(0, "rgba(255,160,40,0.9)");
     grad.addColorStop(0.4, "rgba(255,140,30,0.3)");
     grad.addColorStop(1, "rgba(255,100,0,0)");
     ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(px, py, 18, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(px, py, 18, 0, Math.PI * 2); ctx.fill();
   });
 
   const tex = new THREE.CanvasTexture(c);

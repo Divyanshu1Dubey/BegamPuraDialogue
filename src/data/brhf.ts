@@ -18,9 +18,20 @@ export interface CommemorativeEvent {
   year: number;
   title: string;
   titleHindi?: string;
+  subtitle?: string;
+  occasion?: string;
   location: string;
+  time?: string;
+  day?: string;
   description: string;
   icon?: string;
+  isToday?: boolean;
+  isProposed?: boolean;
+  status?: string;
+  quote?: string;
+  quoteAuthor?: string;
+  organizers?: readonly string[];
+  ageGroups?: readonly string[];
 }
 
 export interface GlobalChapter {
@@ -86,6 +97,43 @@ export const brhf = {
   ],
   globalEvents: [
     {
+      month: "10 August 2026",
+      year: 2026,
+      title: "Begumpura Dialogue Inaugural Conclave & Website Launch",
+      titleHindi: "बेगमपुरा संवाद का उदघाटन सम्मेलन एवं वेबसाइट लोकार्पण",
+      subtitle: "Reflecting • Deliberating • Advancing the Dialogue",
+      occasion: "Commemorating the 650th Birth Anniversary of Sant Shiromani Guru Ravidas Ji",
+      location: "Constitution Club of India, New Delhi",
+      time: "6:30 PM Onwards",
+      day: "Monday",
+      isToday: true,
+      status: "Live Today",
+      icon: "🌟",
+      description:
+        "On the occasion of the 650th Birth Anniversary of Sant Shiromani Guru Ravidas Ji, the Begumpura Dialogue is envisioned as a two-year initiative inspired by his timeless philosophy and Shabds, promoting the values of equality, dignity, fraternity, justice, compassion, social harmony and freedom from discrimination. The Inaugural Conclave marks the commencement of this collective journey, bringing together stakeholders to shape the intellectual framework, thematic architecture and long-term roadmap, alongside the official launch of the website.",
+      quote: "ऐसा चाहूँ राज मैं, जहाँ मिले सबन को अन्न। छोट बड़ो सब सम बसैं, रविदास रहे प्रसन्न॥",
+      quoteAuthor: "Sant Shiromani Guru Ravidas Ji",
+      organizers: [
+        "British Ravidassia Heritage Foundation",
+        "NAMO Foundation (Network for Access to Justice & Multidisciplinary Outreach Foundation)",
+        "Pathway Global Alliance",
+        "Advanced Study Institute of ASIA (ASIA)",
+      ],
+    },
+    {
+      month: "Proposed Event",
+      year: 2026,
+      title: "Viksit Bharat Generation – Reel Making Competition",
+      titleHindi: "विकसित भारत पीढ़ी — रील्स मेकिंग प्रतियोगिता",
+      location: "Online / Global Submissions",
+      isProposed: true,
+      status: "Proposed Event",
+      icon: "🎬",
+      description:
+        "A national youth competition encouraging creative reel submissions reflecting the vision of Viksit Bharat and egalitarian values of Sant Ravidas Ji. Full event details will be filled in later.",
+      ageGroups: ["14–18 years", "18–23 years"],
+    },
+    {
       month: "November 2026",
       year: 2026,
       title: "Bhashan Shivir — 'The Sound of Be-gumpura'",
@@ -138,7 +186,7 @@ export const brhf = {
 
 // Upcoming deadlines
 export const deadlines = [
-  { date: new Date("2026-08-10"), label: "Be-gumpura Dialogue — National Dialogue & Community Leadership Conclave, New Delhi", urgent: true },
+  { date: new Date("2026-08-10"), label: "Begumpura Dialogue — Inaugural Conclave & Website Launch, Constitution Club of India, New Delhi", urgent: true },
   { date: new Date("2026-11-01"), label: "650th Janam Jayanti Global Commemorative Series Begins (Bhashan Shivir, Delhi)", urgent: true },
   { date: new Date("2026-11-15"), label: "UK House of Lords Exhibition — Opening", urgent: false },
   { date: new Date("2027-01-20"), label: "European Parliament Be-gumpura Dialogue, Brussels", urgent: false },

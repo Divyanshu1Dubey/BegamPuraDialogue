@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, Mail, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, Search, ArrowRight, Sparkles, Filter, X, Mail, CheckCircle2, Clock, Award, Video } from "lucide-react";
 import { brhf } from "@/data/brhf";
 import { LanguageAware } from "@/components/LanguageAware";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -13,15 +13,21 @@ export default function EventsPage() {
   const [search, setSearch] = useState("");
   const [selectedEventModal, setSelectedEventModal] = useState<(typeof brhf.globalEvents)[number] | null>(null);
   const [registered, setRegistered] = useState(false);
-  const [eventForm, setEventForm] = useState({ name: "", email: "", organization: "" });
+  const [eventForm, setEventForm] = useState({ name: "", email: "", organization: "", ageGroup: "14-18 years" });
 
   const filteredEvents = brhf.globalEvents.filter((ev) => {
     const matchesSearch =
       ev.title.toLowerCase().includes(search.toLowerCase()) ||
       ev.location.toLowerCase().includes(search.toLowerCase()) ||
       ev.description.toLowerCase().includes(search.toLowerCase());
+    
+    const isToday = "isToday" in ev && ev.isToday;
+    const isProposed = "isProposed" in ev && ev.isProposed;
+
     const matchesCat =
       categoryFilter === "all" ||
+      (categoryFilter === "today" && isToday) ||
+      (categoryFilter === "proposed" && isProposed) ||
       (categoryFilter === "uk" && ev.location.includes("UK")) ||
       (categoryFilter === "eu" && (ev.location.includes("Brussels") || ev.location.includes("Parliament"))) ||
       (categoryFilter === "india" && (ev.location.includes("Varanasi") || ev.location.includes("Delhi")));
@@ -73,13 +79,15 @@ export default function EventsPage() {
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
             <Filter className="h-4 w-4 text-saffron shrink-0" />
             {[
               { id: "all", label: "All Events" },
-              { id: "india", label: "India (Varanasi/Delhi)" },
-              { id: "uk", label: "UK (London)" },
-              { id: "eu", label: "EU (Brussels)" },
+              { id: "today", label: "🌟 Today's Event" },
+              { id: "proposed", label: "🎬 Proposed Events" },
+              { id: "india", label: "India" },
+              { id: "uk", label: "UK" },
+              { id: "eu", label: "EU" },
             ].map((btn) => (
               <button
                 key={btn.id}
@@ -98,55 +106,118 @@ export default function EventsPage() {
 
         {/* Events Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {filteredEvents.map((ev, i) => (
-            <motion.div
-              key={ev.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group relative flex flex-col justify-between p-6 rounded-3xl card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-300"
-            >
-              <div>
-                <div className="text-4xl mb-3">{ev.icon || "🏛️"}</div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="h-3.5 w-3.5 text-saffron" />
-                  <span className="text-xs text-saffron font-bold uppercase tracking-wider">
-                    {ev.month} {ev.year}
-                  </span>
-                </div>
-                <h3 className="font-display text-xl font-bold text-ink leading-snug mb-2 group-hover:text-saffron transition-colors">
-                  {ev.title}
-                </h3>
-                <div className="flex items-start gap-1.5 mb-4 text-xs text-ink-soft font-medium">
-                  <MapPin className="h-3.5 w-3.5 text-saffron shrink-0 mt-0.5" />
-                  <span>{ev.location}</span>
-                </div>
-                <p className="text-sm text-ink-soft line-clamp-3 leading-relaxed mb-6 font-medium">
-                  {ev.description}
-                </p>
-              </div>
+          {filteredEvents.map((ev, i) => {
+            const isToday = "isToday" in ev && ev.isToday;
+            const isProposed = "isProposed" in ev && ev.isProposed;
+            const ageGroups = "ageGroups" in ev && Array.isArray(ev.ageGroups) ? (ev.ageGroups as readonly string[]) : [];
 
-              <div className="pt-4 border-t border-border/50 flex items-center justify-between">
-                <button
-                  onClick={() => setSelectedEventModal(ev)}
-                  className="px-4 py-2 rounded-xl bg-saffron text-white text-xs font-bold hover:bg-saffron-deep transition-colors shadow-md shadow-saffron/20"
-                >
-                  <LanguageAware en="Register Delegate" hi="प्रतिनिधि पंजीकरण" pa="ਰਜਿਸਟਰੇਸ਼ਨ ਕਰੋ" />
-                </button>
-                <Link
-                  href={`/events/${ev.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-saffron hover:gap-2 transition-all"
-                >
-                  <LanguageAware en="Details" hi="विवरण" pa="ਵੇਰਵੇ" />
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </motion.div>
-          ))}
+            return (
+              <motion.div
+                key={ev.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className={`group relative flex flex-col justify-between p-6 rounded-3xl card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-300 ${
+                  isToday ? "border-2 border-saffron/50 bg-saffron/5 shadow-xl shadow-saffron/10" : ""
+                } ${isProposed ? "border border-saffron/30 bg-surface-2/40" : ""}`}
+              >
+                <div>
+                  {/* Status Badges */}
+                  {isToday ? (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-saffron text-white text-[11px] font-bold uppercase tracking-wider shadow-md shadow-saffron/30">
+                      <Sparkles className="h-3 w-3 animate-pulse" />
+                      Live Today • 10 Aug 2026
+                    </div>
+                  ) : isProposed ? (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-3 rounded-full bg-saffron/20 text-saffron border border-saffron/30 text-[11px] font-bold uppercase tracking-wider">
+                      <Sparkles className="h-3 w-3" />
+                      Proposed Event
+                    </div>
+                  ) : null}
+
+                  <div className="text-4xl mb-3">{ev.icon || "🏛️"}</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="h-3.5 w-3.5 text-saffron" />
+                    <span className="text-xs text-saffron font-bold uppercase tracking-wider">
+                      {ev.month} {ev.year}
+                      {"time" in ev && ` · ${ev.time}`}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display text-xl font-bold text-ink leading-snug mb-2 group-hover:text-saffron transition-colors">
+                    {ev.title}
+                  </h3>
+                  {ev.titleHindi && (
+                    <p className="text-xs text-saffron/80 font-medium mb-2">{ev.titleHindi}</p>
+                  )}
+
+                  <div className="flex items-start gap-1.5 mb-3 text-xs text-ink-soft font-medium">
+                    <MapPin className="h-3.5 w-3.5 text-saffron shrink-0 mt-0.5" />
+                    <span>{ev.location}</span>
+                  </div>
+
+                  {/* Display Age Groups for Proposed Event */}
+                  {isProposed && ageGroups.length > 0 && (
+                    <div className="my-3 p-3 rounded-xl bg-saffron/10 border border-saffron/20">
+                      <p className="text-[11px] font-bold text-saffron uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                        <Award className="h-3.5 w-3.5" /> Age Groups
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {ageGroups.map((group) => (
+                          <span
+                            key={group}
+                            className="px-2.5 py-1 rounded-lg bg-surface text-ink text-xs font-bold border border-saffron/20"
+                          >
+                            🎯 {group}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <p className="text-sm text-ink-soft line-clamp-3 leading-relaxed mb-6 font-medium">
+                    {ev.description}
+                  </p>
+
+                  {/* Sacred Quote snippet for Today's Event */}
+                  {isToday && "quote" in ev && (
+                    <div className="mb-4 p-3 rounded-xl bg-saffron/10 border border-saffron/30 text-xs italic font-serif text-ink">
+                      “{ev.quote as string}”
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-4 border-t border-border/50 flex flex-wrap items-center justify-between gap-2">
+                  <button
+                    onClick={() => setSelectedEventModal(ev)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
+                      isProposed
+                        ? "bg-surface-2 border border-saffron/40 text-saffron hover:bg-saffron hover:text-white"
+                        : "bg-saffron text-white hover:bg-saffron-deep shadow-saffron/20"
+                    }`}
+                  >
+                    {isProposed ? (
+                      "Proposed Event — Details"
+                    ) : (
+                      <LanguageAware en="Register Delegate" hi="प्रतिनिधि पंजीकरण" pa="ਰਜਿਸਟਰੇਸ਼ਨ ਕਰੋ" />
+                    )}
+                  </button>
+
+                  <Link
+                    href={`/events/${ev.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-saffron hover:gap-2 transition-all"
+                  >
+                    <LanguageAware en="Details" hi="विवरण" pa="ਵੇਰਵੇ" />
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Event Registration Modal */}
+      {/* Event Registration / Interest Modal */}
       <AnimatePresence>
         {selectedEventModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -168,9 +239,30 @@ export default function EventsPage() {
 
               {!registered ? (
                 <div>
-                  <span className="text-xs font-bold text-saffron uppercase tracking-widest">Event Delegate Pass</span>
-                  <h2 className="font-display text-2xl font-bold text-ink mt-1 mb-2">{selectedEventModal.title}</h2>
-                  <p className="text-xs text-ink-soft mb-6">{selectedEventModal.location} · {selectedEventModal.month} {selectedEventModal.year}</p>
+                  <span className="text-xs font-bold text-saffron uppercase tracking-widest">
+                    {"isProposed" in selectedEventModal && selectedEventModal.isProposed
+                      ? "Proposed Event Interest"
+                      : "Event Delegate Pass"}
+                  </span>
+                  <h2 className="font-display text-2xl font-bold text-ink mt-1 mb-2">
+                    {selectedEventModal.title}
+                  </h2>
+                  <p className="text-xs text-ink-soft mb-4">
+                    {selectedEventModal.location} · {selectedEventModal.month} {selectedEventModal.year}
+                  </p>
+
+                  {"isProposed" in selectedEventModal && selectedEventModal.isProposed && (
+                    <div className="mb-5 p-3 rounded-xl bg-saffron/10 border border-saffron/30 text-xs text-ink">
+                      <p className="font-bold text-saffron mb-1">🎯 Competition Age Groups:</p>
+                      <ul className="list-disc list-inside space-y-0.5 text-ink-soft">
+                        <li>14–18 years</li>
+                        <li>18–23 years</li>
+                      </ul>
+                      <p className="mt-2 text-[11px] text-ink-soft">
+                        <em>Event details & submission guidelines will be filled in later. Pre-register your interest below!</em>
+                      </p>
+                    </div>
+                  )}
 
                   <form
                     action="https://formsubmit.co/begumpura.tech@gmail.com"
@@ -180,9 +272,17 @@ export default function EventsPage() {
                     }}
                     className="space-y-4"
                   >
-                    <input type="hidden" name="_subject" value={`Event Registration — ${selectedEventModal?.title}`} />
+                    <input
+                      type="hidden"
+                      name="_subject"
+                      value={`Event Registration — ${selectedEventModal?.title}`}
+                    />
                     <input type="hidden" name="_captcha" value="false" />
-                    <input type="hidden" name="_next" value={typeof window !== "undefined" ? window.location.href : ""} />
+                    <input
+                      type="hidden"
+                      name="_next"
+                      value={typeof window !== "undefined" ? window.location.href : ""}
+                    />
 
                     <div>
                       <label className="block text-xs font-bold text-ink-soft mb-1">Full Name</label>
@@ -208,17 +308,33 @@ export default function EventsPage() {
                         className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
                       />
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold text-ink-soft mb-1">Organization / Gurdwara / Sangat</label>
-                      <input
-                        type="text"
-                        name="organization"
-                        placeholder="BRHF Delegate / Sangat Member"
-                        value={eventForm.organization}
-                        onChange={(e) => setEventForm({ ...eventForm, organization: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
-                      />
-                    </div>
+
+                    {"isProposed" in selectedEventModal && selectedEventModal.isProposed ? (
+                      <div>
+                        <label className="block text-xs font-bold text-ink-soft mb-1">Select Age Group</label>
+                        <select
+                          name="age_group"
+                          value={eventForm.ageGroup}
+                          onChange={(e) => setEventForm({ ...eventForm, ageGroup: e.target.value })}
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
+                        >
+                          <option value="14-18 years">14–18 years</option>
+                          <option value="18-23 years">18–23 years</option>
+                        </select>
+                      </div>
+                    ) : (
+                      <div>
+                        <label className="block text-xs font-bold text-ink-soft mb-1">Organization / Gurdwara / Sangat</label>
+                        <input
+                          type="text"
+                          name="organization"
+                          placeholder="BRHF Delegate / Sangat Member"
+                          value={eventForm.organization}
+                          onChange={(e) => setEventForm({ ...eventForm, organization: e.target.value })}
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-border text-sm text-ink focus:outline-none focus:ring-2 focus:ring-saffron/50"
+                        />
+                      </div>
+                    )}
 
                     <input type="hidden" name="event_title" value={selectedEventModal?.title || ""} />
                     <input type="hidden" name="event_location" value={selectedEventModal?.location || ""} />
@@ -228,16 +344,18 @@ export default function EventsPage() {
                       className="w-full py-3 rounded-xl bg-linear-to-r from-saffron to-saffron-deep text-white text-sm font-bold shadow-lg shadow-saffron/20 hover:opacity-90 transition-opacity mt-4"
                     >
                       <Mail className="h-4 w-4 inline mr-1.5 -mt-0.5" />
-                      <LanguageAware en="Confirm Registration" hi="पंजीकरण की पुष्टि" pa="ਰਜਿਸਟਰੇਸ਼ਨ ਪੁਸ਼ਟੀ" />
+                      {"isProposed" in selectedEventModal && selectedEventModal.isProposed
+                        ? "Register Interest"
+                        : "Confirm Registration"}
                     </button>
                   </form>
                 </div>
               ) : (
                 <div className="text-center py-6">
                   <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-4 animate-bounce" />
-                  <h3 className="font-display text-2xl font-bold text-ink mb-2">Registration Confirmed!</h3>
+                  <h3 className="font-display text-2xl font-bold text-ink mb-2">Details Received!</h3>
                   <p className="text-sm text-ink-soft mb-6">
-                    Thank you for registering for {selectedEventModal.title}. Confirmation and entry pass details have been sent to your email.
+                    Thank you for your interest in {selectedEventModal.title}. We will keep you updated with full details and entry passes.
                   </p>
                   <button
                     onClick={() => {
@@ -257,3 +375,4 @@ export default function EventsPage() {
     </div>
   );
 }
+

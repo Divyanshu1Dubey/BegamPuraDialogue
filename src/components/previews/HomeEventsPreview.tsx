@@ -35,30 +35,68 @@ export function HomeEventsPreview() {
       </div>
 
       {/* Featured events — compact cards */}
-      <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-        {featuredEvents.map((event, i) => (
-          <motion.div
-            key={event.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="rounded-2xl p-5 card-glass card-saffron-glow"
-          >
-            <div className="text-4xl mb-3">{event.icon}</div>
-            <div className="flex items-center gap-1.5 mb-2">
-              <Calendar className="h-3 w-3 text-saffron" />
-              <span className="text-xs text-saffron font-medium uppercase tracking-wider">
-                {event.month} {event.year}
-              </span>
-            </div>
-            <h3 className="font-display text-sm font-bold text-ink leading-tight">{event.title}</h3>
-            <div className="flex items-start gap-1.5 mt-2 text-ink-soft">
-              <MapPin className="h-3 w-3 text-saffron shrink-0 mt-0.5" />
-              <span className="text-xs">{event.location}</span>
-            </div>
-          </motion.div>
-        ))}
+      <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto px-4">
+        {featuredEvents.map((event, i) => {
+          const isToday = "isToday" in event && event.isToday;
+          const isProposed = "isProposed" in event && event.isProposed;
+          const ageGroups = "ageGroups" in event && Array.isArray(event.ageGroups) ? (event.ageGroups as readonly string[]) : [];
+
+          return (
+            <Link
+              key={event.title}
+              href={`/events/${event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              className="block group"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`rounded-2xl p-5 card-glass card-saffron-glow group-hover:scale-[1.02] transition-all h-full flex flex-col justify-between ${
+                  isToday ? "border border-saffron/50 bg-saffron/10" : ""
+                } ${isProposed ? "border border-saffron/30" : ""}`}
+              >
+                <div>
+                  {isToday ? (
+                    <span className="inline-block px-2.5 py-0.5 mb-2 rounded-full bg-saffron text-white text-[10px] font-bold uppercase tracking-wider">
+                      🌟 Live Today
+                    </span>
+                  ) : isProposed ? (
+                    <span className="inline-block px-2.5 py-0.5 mb-2 rounded-full bg-saffron/20 text-saffron border border-saffron/30 text-[10px] font-bold uppercase tracking-wider">
+                      🎬 Proposed Event
+                    </span>
+                  ) : null}
+
+                  <div className="text-4xl mb-3">{event.icon}</div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Calendar className="h-3 w-3 text-saffron" />
+                    <span className="text-xs text-saffron font-bold uppercase tracking-wider">
+                      {event.month} {event.year}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-sm font-bold text-ink leading-tight group-hover:text-saffron transition-colors">
+                    {event.title}
+                  </h3>
+                  <div className="flex items-start gap-1.5 mt-2 text-ink-soft">
+                    <MapPin className="h-3 w-3 text-saffron shrink-0 mt-0.5" />
+                    <span className="text-xs">{event.location}</span>
+                  </div>
+
+                  {isProposed && ageGroups.length > 0 && (
+                    <div className="mt-2 text-[11px] font-bold text-saffron">
+                      🎯 Age Groups: {ageGroups.join(" & ")}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-border/40 text-[11px] font-bold text-saffron flex items-center justify-between">
+                  <span>View Details</span>
+                  <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </motion.div>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Exhibition count badge */}

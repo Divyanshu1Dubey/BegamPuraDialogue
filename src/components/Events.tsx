@@ -42,50 +42,93 @@ export function Events() {
 
         {/* Featured global events */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {brhf.globalEvents.map((event, i) => (
-            <motion.div
-              key={event.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group relative rounded-3xl overflow-hidden card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-500"
-            >
-              {/* Icon header */}
-              <div className="relative p-8 pb-5">
-                <div className="text-5xl mb-4">{event.icon}</div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="h-3.5 w-3.5 text-saffron" />
-                  <span className="text-xs text-saffron font-medium uppercase tracking-wider">
-                    {event.month} {event.year}
-                  </span>
-                </div>
-                <h3 className="font-display text-xl font-bold text-ink leading-tight mb-1">
-                  {event.title}
-                </h3>
-                {event.titleHindi && (
-                  <p className="text-xs text-ink-soft/60">{event.titleHindi}</p>
-                )}
-                <div className="flex items-start gap-1.5 mt-4 text-ink-soft">
-                  <MapPin className="h-4 w-4 text-saffron shrink-0 mt-0.5" />
-                  <span className="text-sm">{event.location}</span>
-                </div>
-              </div>
+          {brhf.globalEvents.map((event, i) => {
+            const isToday = "isToday" in event && event.isToday;
+            const isProposed = "isProposed" in event && event.isProposed;
+            const ageGroups = "ageGroups" in event && Array.isArray(event.ageGroups) ? (event.ageGroups as readonly string[]) : [];
 
-              <div className="px-8 pb-8">
-                <p className="text-sm text-ink-soft leading-relaxed">
-                  {event.description}
-                </p>
-                <button className="mt-4 flex items-center gap-1.5 text-sm text-saffron font-medium group-hover:gap-2.5 transition-all">
-                  <LanguageAware en="Learn More" hi="और जानें" pa="ਹੋਰ ਜਾਣੋ" />
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
-              </div>
+            return (
+              <motion.div
+                key={event.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12 }}
+                className={`group relative flex flex-col justify-between rounded-3xl overflow-hidden card-glass card-saffron-glow hover:scale-[1.02] transition-all duration-500 ${
+                  isToday ? "border-2 border-saffron/50 bg-saffron/5 shadow-xl shadow-saffron/10" : ""
+                } ${isProposed ? "border border-saffron/30 bg-surface-2/40" : ""}`}
+              >
+                {/* Icon header */}
+                <div className="relative p-8 pb-5">
+                  {isToday ? (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-saffron text-white text-[11px] font-bold uppercase tracking-wider shadow-md shadow-saffron/30">
+                      <span>🌟</span> Live Today • 10 Aug 2026
+                    </div>
+                  ) : isProposed ? (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-saffron/20 text-saffron border border-saffron/30 text-[11px] font-bold uppercase tracking-wider">
+                      <span>🎬</span> Proposed Event
+                    </div>
+                  ) : null}
 
-              {/* Glow on hover */}
-              <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-saffron/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-            </motion.div>
-          ))}
+                  <div className="text-5xl mb-4">{event.icon}</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="h-3.5 w-3.5 text-saffron" />
+                    <span className="text-xs text-saffron font-bold uppercase tracking-wider">
+                      {event.month} {event.year}
+                      {"time" in event && ` · ${event.time}`}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-ink leading-tight mb-1 group-hover:text-saffron transition-colors">
+                    {event.title}
+                  </h3>
+                  {event.titleHindi && (
+                    <p className="text-xs text-saffron/80 font-medium mb-2">{event.titleHindi}</p>
+                  )}
+                  <div className="flex items-start gap-1.5 mt-3 text-ink-soft">
+                    <MapPin className="h-4 w-4 text-saffron shrink-0 mt-0.5" />
+                    <span className="text-sm">{event.location}</span>
+                  </div>
+
+                  {/* Age groups for proposed event */}
+                  {isProposed && ageGroups.length > 0 && (
+                    <div className="mt-3 p-3 rounded-xl bg-saffron/10 border border-saffron/20">
+                      <p className="text-[11px] font-bold text-saffron uppercase tracking-wider mb-1">
+                        Target Age Groups:
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {ageGroups.map((g) => (
+                          <span key={g} className="px-2 py-0.5 rounded-lg bg-surface text-ink text-xs font-bold border border-saffron/20">
+                            🎯 {g}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="px-8 pb-8 pt-0 flex flex-col justify-between flex-1">
+                  <p className="text-sm text-ink-soft leading-relaxed line-clamp-3 mb-4 font-medium">
+                    {event.description}
+                  </p>
+
+                  <Link
+                    href={`/events/${event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                    className="flex items-center gap-1.5 text-sm text-saffron font-bold group-hover:gap-2.5 transition-all mt-auto"
+                  >
+                    {isProposed ? (
+                      <span>Proposed Event — View Details</span>
+                    ) : (
+                      <LanguageAware en="View Invitation & Details" hi="निमंत्रण और विवरण देखें" pa="ਸੱਦਾ ਅਤੇ ਵੇਰਵੇ ਵੇਖੋ" />
+                    )}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+
+                {/* Glow on hover */}
+                <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-saffron/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Yatras exhibition info */}
